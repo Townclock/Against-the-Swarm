@@ -1,7 +1,20 @@
+function update_value_by_id(id, value){
+    document.getElementById(id).innerHTML = value;
+}
+
 function update_ui(player, monster){
-    document.getElementsByClassName('player_level')[0].innerHTML = player.level; 
+    update_value_by_id("player_level", player.level);
+
     document.getElementById('number_of_processors').innerHTML = player.processors; 
     
+    var resources = ["meat", "scales", "claws", "fiber", "metal", "gelatin"];
+    for (i in resources){
+        update_value_by_id(resources[i], player_inventory[resources[i]]);
+    }
+
+
+
+
     var h_width = 100 * (player.hp / player.max_hp) + "%";
         document.getElementById('player_health').style.width = h_width;
         document.getElementsByClassName('player_money')[0].innerHTML = player.money; 

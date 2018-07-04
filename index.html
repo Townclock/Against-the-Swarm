@@ -13,6 +13,7 @@
 <script> 
     var player = new Player();
     var monster = new Monster();
+    var player_inventory = new Player_Inventory;
     function click_fight_button(){fight(player, monster);}
     function click_rest_button(){rest(player, monster);}
     function click_engage_button(){engage(player, monster)};
@@ -65,7 +66,7 @@
 
         <div class="column_3 left">
             
-            <p>Level: <span class="player_level">1</span> 
+            <p>Level: <span id="player_level">1</span>
                 (<span class="exp_counter"> 0 </span> 
                 / <span class="exp_until_level">1</span>)
             </p>
@@ -73,6 +74,8 @@
             </p>
             <div class="experience_bar" id="player_experience_bar">
                 <div class="experience" id="player_experience" style="width:0px"></div>
+
+
             </div>
             <div class="health_bar" id="player_health_bar">
                 <div class="health" id="player_health"></div>
@@ -88,6 +91,24 @@
             <div class="monster"></monster>
         </div>
     </div>
+    </div>
+<div class="right">
+        <div class="column_1">
+            <p> RESOURCES </p>
 
+            <div>
+                <div class="column_2">
+                    <p>Meat: <span id="meat">0</span></p>
+                    <p>Scales: <span id="scales">0</span></p>
+                    <p>Claws: <span id="claws">0</span></p>
+                 </div>
+                <div class="column_2">
+                    <p>Fiber: <span id="fiber">0</span></p>
+                    <p>Metal: <span id="metal">0</span></p>
+                    <p>Gelatin: <span id="gelatin">0</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
