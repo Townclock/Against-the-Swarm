@@ -31,8 +31,8 @@ function Player(){
         this.held_resources = this.held_resources.concat(resources);
     }
 
-    this.deposit_resources = function(resources){
-        this.processor_queue = this.processor_queue.concat(this.held_resources);
+    this.deposit_resources = function(follower){
+        follower.deposit_resources(held_resources);
         this.held_resources = [];
     }
 
