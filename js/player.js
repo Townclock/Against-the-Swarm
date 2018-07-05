@@ -7,7 +7,12 @@ function Player(){
     this.experience_last_level = 0;
     this.money = 0;
 
+    //followers
+    this.processors = 3;
+
+
     this.held_resources = [];
+    this.processor_queue = [];
 
     this.heal = function(){
         this.hp = this.max_hp;
@@ -38,5 +43,18 @@ function Player(){
             this.experience_until_level = player.experience_until_level * 2;
             this.level_up();
         }
+    }
+
+    this.followers_act = function (){
+        if (this.processor_queue.length > 0){
+        this.processor_queue[0].process_time += this.processors;
+            if  (this.processor_queue[0].process_time >= this.processor_queue[0].max_process_time){
+                this.money += this.processor_queue[0].value;
+                this.processor_queue.shift();
+            }
+        }
+    }
+    this.pay_followers = function(){
+        this.money -= this.processors;
     }
 }
