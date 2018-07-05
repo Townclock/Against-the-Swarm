@@ -1,7 +1,7 @@
 function Follower(player){
     this.owner = player;
     this.followers = 0;
-    this.processors = 3;
+    this.processors = 50;
     this.processor_queue = [];
 
     this.deposit_resources = function(resources){
@@ -12,12 +12,12 @@ function Follower(player){
         if (this.processor_queue.length > 0){
         this.processor_queue[0].process_time += this.processors;
             if  (this.processor_queue[0].process_time >= this.processor_queue[0].max_process_time){
-                owner.gain_money(this.processor_queue[0].value);
+                this.owner.gain_money(this.processor_queue[0].value);
                 this.processor_queue.shift();
             }
         }
     }
     this.pay_followers = function(){
-        owner.money -= this.processors;
+        this.owner.money -= this.processors;
     }
 }
