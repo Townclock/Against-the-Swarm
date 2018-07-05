@@ -1,6 +1,6 @@
-function update_ui(player, monster){
+function update_ui(player, monster, follower){
     document.getElementsByClassName('player_level')[0].innerHTML = player.level; 
-    document.getElementById('number_of_processors').innerHTML = player.processors; 
+    document.getElementById('number_of_processors').innerHTML = follower.processors; 
     
     var h_width = 100 * (player.hp / player.max_hp) + "%";
         document.getElementById('player_health').style.width = h_width;
@@ -52,8 +52,8 @@ function update_ui(player, monster){
         }
     }
 
-    if (player.processor_queue.length > 0){
-        var unit = player.processor_queue[0];
+    if (follower.processor_queue.length > 0){
+        var unit = follower.processor_queue[0];
         var h_width = 100 * (unit.process_time / unit.max_process_time) + "%";
         document.getElementById('processor_bar').style.width = h_width;
     } 
