@@ -1,23 +1,20 @@
-
 function update_value_by_id(id, value){
     document.getElementById(id).innerHTML = value;
 }
 
 function update_ui(player, monster){
     update_value_by_id("player_level", player.level);
+    
+    update_value_by_id("technology_list", technology_list_html);
 
     document.getElementById('number_of_processors').innerHTML = player.processors; 
-}
-function update_ui(player, monster){
-    //document.getElementById('number_of_processors').innerHTML = follower.processors; 
-
     
     var resources = ["meat", "scales", "claws", "fiber", "metal", "gelatin"];
     for (i in resources){
         update_value_by_id(resources[i], player_inventory[resources[i]]);
     }
 
-    update_value_by_id("follower_resource", follower_resource);
+
 
 
     var h_width = 100 * (player.hp / player.max_hp) + "%";
@@ -70,8 +67,8 @@ function update_ui(player, monster){
         }
     }
 
-    if (follower.processor_queue.length > 0){
-        var unit = follower.processor_queue[0];
+    if (player.processor_queue.length > 0){
+        var unit = player.processor_queue[0];
         var h_width = 100 * (unit.process_time / unit.max_process_time) + "%";
         document.getElementById('processor_bar').style.width = h_width;
     } 
