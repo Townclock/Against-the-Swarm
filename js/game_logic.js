@@ -6,6 +6,8 @@ var invasion_progress = 0;
 
 var under_siege = false;
 
+var follower_resource = 10;
+
 var current_town = 4;
 
 var towns = [

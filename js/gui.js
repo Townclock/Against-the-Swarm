@@ -17,7 +17,7 @@ function update_ui(player, monster){
         update_value_by_id(resources[i], player_inventory[resources[i]]);
     }
 
-
+    update_value_by_id("follower_resource", follower_resource);
 
 
     var h_width = 100 * (player.hp / player.max_hp) + "%";
