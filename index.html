@@ -10,10 +10,12 @@
 <script src="js/player_inventory.js"></script>
 <script src="js/gui.js"></script>
 <script src="js/game_logic.js"></script>
+<script src="js/follower.js"></script>
 <script> 
     var player = new Player();
     var monster = new Monster();
     var player_inventory = new Player_Inventory;
+    var follower = new Follower(player);
     function click_fight_button(){fight(player, monster);}
     function click_rest_button(){rest(player, monster);}
     function click_engage_button(){engage(player, monster)};
@@ -23,9 +25,7 @@
     console.log(player)
     var timer = setInterval(function(){
         update_ui(player, monster);
-        if (! under_siege) {
-            player.followers_act();
-            player.pay_followers();
+        if (! under_siege) {        
             invasion_progress += 1;
             if (invasion_progress > towns[current_town].location){
                 under_siege = true;        
@@ -43,7 +43,7 @@
 
     <div class="left">
         <div class="column_1">
-            <p> FOLLOWERS </p>
+            <p> FOLLOWERS <span id="follower_resource"></span></p>
             
             <div class="follower_row"> 
                 Processors: <span id="number_of_processors"></span> 
