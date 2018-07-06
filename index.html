@@ -30,7 +30,7 @@
         update_ui(player, monster);
         if (! under_siege) {
             invasion_progress += invasion_rate;
-
+            increment_resource(current_town);
             if (invasion_progress > towns[current_town].location){
                 under_siege = true;        
             }

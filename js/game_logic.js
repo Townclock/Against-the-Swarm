@@ -87,3 +87,7 @@ function replace_monster(monster, challenge_level){
 function change_rate(monsters){
     invasion_rate = monsters.length/5;
 }
+
+function increment_resource(current_town){
+    follower_resource += current_town;     
+}
