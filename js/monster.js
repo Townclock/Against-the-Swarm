@@ -57,4 +57,3 @@ Monster.prototype.attack = function(player){
 Monster.prototype.heal = function(){
         this.hp = this.max_hp;
 }
-
