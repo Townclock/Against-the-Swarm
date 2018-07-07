@@ -1,11 +1,13 @@
 function Player(){
     this.hp = 10;
     this.max_hp = 10;
-    this.level = 1; 
+    this.level = 1;
     this.experience = 0;
     this.experience_until_level = 1;
     this.experience_last_level = 0;
     this.money = 0;
+
+    this.location = 0;
 
     //followers
     this.processors = 3;
