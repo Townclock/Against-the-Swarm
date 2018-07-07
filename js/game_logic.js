@@ -8,17 +8,19 @@ var under_siege = false;
 
 follower_resource = 0;
 
-var current_town = 4;
+var current_town  = 0;
+var current_world = 0;
 
 var  invasion_rate = 1;
 
 var towns = [
-    new Town("Safety", 95, false),
-    new Town("Concern", 80, false),
+    new Town("Safety", 20, false),
+    new Town("Concern", 40, false),
     new Town("Worry", 60, false),
-    new Town("Panic", 40, false),
-    new Town("Doom", 20, true)
-]
+    new Town("Panic", 85, false),
+    new Town("Doom", 95, true)
+];
+var world = [towns];
 
 var technology_list_html= "";
 tech_placeholders=[
@@ -38,6 +40,23 @@ for (i in tech_placeholders){
     }
 }
 
+function change_town(player){
+	if(current_town == 4){
+		world.push( [new Town("test",  20,  false),
+			     new Town("test2", 40,  false),
+			     new Town("test3", 60,  false),
+			     new Town("test4", 80,  false),
+			     new Town("test5", 100, false)]);
+		current_world++;
+		current_town = 0;
+		invasion_progress = 0;
+	}
+	else{
+		current_town++;
+	}
+	player.location = world[current_world][current_town].location;
+
+}
 function fight(player, monsters){
     number_of_clicks++;
     var rand = Math.floor(Math.random(0, monsters.length));
@@ -88,9 +107,9 @@ function disengage(player, monsters){
     }
     else {
         towns[current_town].destroyed = true;
-        current_town -= 1;
         engaged = false;
         under_siege = false;
+	change_town(player);
     }
 
     update_ui(player, monsters[0]);
@@ -107,6 +126,6 @@ function change_rate(monsters){
     invasion_rate = monsters.length/5;
 }
 
-function increment_resource(current_town){
-    follower_resource += current_town;     
+function increment_follower_resource(current_town){
+    follower_resource += (5 - current_town);     
 }

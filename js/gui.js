@@ -14,7 +14,6 @@ function update_ui(player, monster){
 
 
     update_value_by_id("number_of_processors", player.processors);
-    update_value_by_id("player_money", player.money);
 
     var resources = ["meat", "scales", "claws", "fiber", "metal", "gelatin"];
     for (i in resources){
@@ -27,10 +26,12 @@ function update_ui(player, monster){
 
 
     
-
     update_value_by_id('exp_counter',  player.experience);
     update_value_by_id('exp_until_level',  player.experience_until_level);
     
+   
+    document.getElementById('currentTown').innerHTML = world[current_world][current_town].town_name;
+
 
     update_bar_by_id("invasion", invasion_progress, 100);
 
@@ -73,10 +74,10 @@ function update_ui(player, monster){
         document.getElementById('processor_bar').style.width = 0;
     }
 
-    if (invasion_progress >= 100){
-        alert("you did not stop the invasion");
-        window.location.reload(false);
-    }
+    //if (invasion_progress >= 100){
+    //   alert("you did not stop the invasion");
+    //    window.location.reload(false);
+    //}
 
     var width_scalar = document.getElementById("towns").offsetWidth;
     
