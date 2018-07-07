@@ -27,7 +27,7 @@
     
     console.log(player)
     var timer = setInterval(function(){
-        update_ui(player, monster);
+        update_ui(player, monster[0]);
         if (! under_siege) {
             invasion_progress += invasion_rate;
             increment_resource(current_town);
@@ -114,5 +114,7 @@
             </div>
         </div>
     </div>
+
++    <div id="technology_list"></div>
 </body>
 </html>
