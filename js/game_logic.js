@@ -6,17 +6,35 @@ var invasion_progress = 0;
 
 var under_siege = false;
 
-var current_town = 4;
+var current_town  = 0;
+var current_world = 0;
 
 var towns = [
-    new Town("Safety", 95, false),
-    new Town("Concern", 80, false),
+    new Town("Safety", 20, false),
+    new Town("Concern", 40, false),
     new Town("Worry", 60, false),
-    new Town("Panic", 40, false),
-    new Town("Doom", 20, true)
-]
+    new Town("Panic", 85, false),
+    new Town("Doom", 95, true)
+];
+var world = [towns];
 
+function change_town(player){
+	if(current_town == 4){
+		world.push( [new Town("test",  20,  false),
+			     new Town("test2", 40,  false),
+			     new Town("test3", 60,  false),
+			     new Town("test4", 80,  false),
+			     new Town("test5", 100, false)]);
+		current_world++;
+		current_town = 0;
+		invasion_progress = 0;
+	}
+	else{
+		current_town++;
+	}
+	player.location = world[current_world][current_town].location;
 
+}
 
 function fight(player, monster){
     number_of_clicks++;
@@ -58,9 +76,9 @@ function disengage(player, monster){
     }
     else {
         towns[current_town].destroyed = true;
-        current_town -= 1;
         engaged = false;
         under_siege = false;
+	change_town(player);
     }
 
     update_ui(player, monster);
