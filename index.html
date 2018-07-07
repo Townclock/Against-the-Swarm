@@ -3,7 +3,6 @@
 <link rel="stylesheet" type="text/css" href="gui.css">
 </head>
 
-<script src="{{=URL('static', 'js/vue.js')}}"></script>
 
 <script src="js/player.js"></script>
 <script src="js/monster.js"></script>
@@ -26,31 +25,19 @@
             player.followers_act();
             player.pay_followers();
             invasion_progress += 1;
-
-		
-	    if (invasion_progress > 100){
-		invasion_progress = 0;
-
-		change_town(player);
-		alert('you did not save this town. We must retreat!');
+            if (invasion_progress > towns[current_town].location){
+                under_siege = true;        
             }
-
-            //if (invasion_progress > towns[current_town].location){
-            //	under_siege = true;        
-            //}
         }
-	console.log(world);
-    }
+
+        }
         , 1000);
 </script>
 <body>
-    <div id="vue-div">
-	<div v-if="false">true</div>
-	<span id="currentTown"></span>
             <div class="invasion_bar">
                 <div class="invasion" id="invasion" style="width:0px"></div>
             </div>
-        <div id="towns"></div>
+            <div id="towns"> </div>
 
     <div class="left">
         <div class="column_1">
@@ -76,7 +63,7 @@
     <div class="center">
 
         <div class="column_3 left">
-		  
+            
             <p>Level: <span class="player_level">1</span> 
                 (<span class="exp_counter"> 0 </span> 
                 / <span class="exp_until_level">1</span>)
@@ -99,7 +86,6 @@
             </div>
             <div class="monster"></monster>
         </div>
-    </div>
     </div>
 
 </body>
