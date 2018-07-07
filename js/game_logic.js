@@ -6,26 +6,61 @@ var invasion_progress = 0;
 
 var under_siege = false;
 
-var follower_resource = 10;
+follower_resource = 0;
 
-var current_town = 4;
+var current_town  = 0;
+var current_world = 0;
 
 var  invasion_rate = 1;
 
 var towns = [
-    new Town("Safety", 95, false),
-    new Town("Concern", 80, false),
+    new Town("Safety", 20, false),
+    new Town("Concern", 40, false),
     new Town("Worry", 60, false),
-    new Town("Panic", 40, false),
-    new Town("Doom", 20, true)
-]
+    new Town("Panic", 85, false),
+    new Town("Doom", 95, true)
+];
+var world = [towns];
 
+var technology_list_html= "";
+tech_placeholders=[
+{description: "researched tech", can_be_researched: true, has_been_researched: true},
+{description: "unresearched tech", can_be_researched: true, has_been_researched: false},
+{description: "unresearchbal tech", can_be_researched: false, has_been_researched: false},
+];
+for (i in tech_placeholders){
+    if (tech_placeholders[i].has_been_researched){
+        technology_list_html += ("<p>" + tech_placeholders[i].description + "</p>");
+    }
+}
+technology_list_html += "<hr>";
+for (i in tech_placeholders){
+    if (!tech_placeholders[i].has_been_researched && tech_placeholders[i].can_be_researched){
+        technology_list_html += ("<p>" + tech_placeholders[i].description + "</p>");
+    }
+}
 
+function change_town(player){
+	if(current_town == 4){
+		world.push( [new Town("test",  20,  false),
+			     new Town("test2", 40,  false),
+			     new Town("test3", 60,  false),
+			     new Town("test4", 80,  false),
+			     new Town("test5", 100, false)]);
+		current_world++;
+		current_town = 0;
+		invasion_progress = 0;
+	}
+	else{
+		current_town++;
+	}
+	player.location = world[current_world][current_town].location;
 
+}
 function fight(player, monsters){
     number_of_clicks++;
     var rand = Math.floor(Math.random(0, monsters.length));
-    if (monsters[rand].present) {
+    if (monsters.length > 0) {
         monsters[rand].hp--;
         monsters[rand].attack(player);
         if (monsters[rand].hp < 1) {
@@ -38,23 +73,26 @@ function fight(player, monsters){
             }
     }
 
-    update_ui(player, monsters[rand]);
+    update_ui(player, monsters[0]);
 
 };
 function rest(player, monsters){
     number_of_clicks++;
     player.heal();
+
     for(var i = 0; i < monsters.length; i++)
     {
         monsters[i].heal();
     }
     update_ui(player, monsters[0]);
 
+
     invasion_progress += 2;
 }
 function engage(player, monsters){
     number_of_clicks++;
     engaged = true;
+
     update_ui(player, monsters[0])
 };
 function disengage(player, monsters){
@@ -65,13 +103,12 @@ function disengage(player, monsters){
     } 
     if (! under_siege) {
         engaged = false;
-        player.deposit_resources(follower);
     }
     else {
         towns[current_town].destroyed = true;
-        current_town -= 1;
         engaged = false;
         under_siege = false;
+	change_town(player);
     }
 
     update_ui(player, monsters[0]);
@@ -88,6 +125,6 @@ function change_rate(monsters){
     invasion_rate = monsters.length/5;
 }
 
-function increment_resource(current_town){
-    follower_resource += current_town;     
+function increment_follower_resource(current_town){
+    follower_resource += (5 - current_town);     
 }

@@ -1,3 +1,16 @@
+var sliding_panel_offset = -49;
+
+function slide_panel(engaged){
+    var width = document.getElementById("town_panel").offsetWidth;
+    console.log(sliding_panel_offset, width, engaged);
+    if ( (sliding_panel_offset > -width) && ( engaged || under_siege)){
+        sliding_panel_offset -= 20;
+    }
+    if ( (sliding_panel_offset < 0) && ! engaged && ! under_siege){
+        sliding_panel_offset += 20;
+    }
+        document.getElementById("panel_track").style.left  = sliding_panel_offset;
+}
 
 function update_value_by_id(id, value){
     document.getElementById(id).innerHTML = value;
@@ -9,25 +22,32 @@ function update_bar_by_id(id, current, max){
 }
 
 function update_ui(player, monster){
+
+    slide_panel(engaged);
     update_value_by_id("player_level", player.level);
+    
+    update_value_by_id("technology_list", technology_list_html);
+
 
     update_value_by_id("number_of_processors", player.processors);
-    update_value_by_id("player_money", player.money);
-
 
     var resources = ["meat", "scales", "claws", "fiber", "metal", "gelatin"];
     for (i in resources){
         update_value_by_id(resources[i], player_inventory[resources[i]]);
     }
+
     update_bar_by_id("player_health", player.hp, player.max_hp);
     update_bar_by_id("player_experience", player.experience, player.experience_until_level);
     update_value_by_id("follower_resource", follower_resource);
 
-    
 
+    
     update_value_by_id('exp_counter',  player.experience);
     update_value_by_id('exp_until_level',  player.experience_until_level);
     
+   
+    document.getElementById('currentTown').innerHTML = world[current_world][current_town].town_name;
+
 
     update_bar_by_id("invasion", invasion_progress, 100);
 
@@ -62,6 +82,7 @@ function update_ui(player, monster){
 
     if (player.processor_queue.length > 0){
         var unit = player.processor_queue[0];
+
         update_bar_by_id(processpr_bar, unit.process_time, unit.max_process_time);
 
     } 
@@ -69,10 +90,6 @@ function update_ui(player, monster){
         document.getElementById('processor_bar').style.width = 0;
     }
 
-    if (invasion_progress >= 100){
-        alert("you did not stop the invasion");
-        window.location.reload(false);
-    }
 
     var width_scalar = document.getElementById("towns").offsetWidth;
     
@@ -85,6 +102,6 @@ function update_ui(player, monster){
             towns_status += ('<div class="destroyed_town" style="left:' + (95 - towns[x].location)/100 * width_scalar + 'px"></div>');
         }
     }
-    document.getElementById("towns").innerHTML = towns_status;
+    update_value_by_id("towns", towns_status);
 
 }
