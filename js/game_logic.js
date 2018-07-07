@@ -60,7 +60,6 @@ function change_town(player){
 function fight(player, monsters){
     number_of_clicks++;
     var rand = Math.floor(Math.random(0, monsters.length));
-    console.log(monsters, monsters[rand], rand);
     if (monsters.length > 0) {
         monsters[rand].hp--;
         monsters[rand].attack(player);

@@ -26,9 +26,7 @@
 
 
     
-    console.log(player)
     var timer = setInterval(function(){
-        update_ui(player, monsters[0]);
         if (! under_siege) {
             invasion_progress += invasion_rate;
             increment_follower_resource(current_town);
@@ -41,12 +39,16 @@
 		//alert('you did not save this town. We must retreat!');
             }
         }
-	console.log(world);
     }
         , 1000);
+
+    var gui_update = setInterval(function(){
+        update_ui(player, monsters[0]);
+    }, 17);
+
 </script>
 <body>
-    <div id="vue-div">
+    <div id="vue-div panel_track">
 	<div v-if="false">true</div>
 	<span id="currentTown"></span>
             <div class="invasion_bar">
@@ -54,7 +56,9 @@
             </div>
         <div id="towns"></div>
 
-    <div class="left">
+<div id="technology_list"></div>
+    <div id="panel_track">
+    <div class="left" id="town_panel">
         <div class="column_1">
             <p> FOLLOWERS <span id="follower_resource"></span></p>
             
@@ -71,6 +75,22 @@
             </div>
                 <div class="column_2">
                     <button class="button town_button" onclick="click_engage_button()"> "ENGAGE!" </button>
+                </div>
+            </div>
+        </div>
+        <div class="column_1">
+            <p> RESOURCES </p>
+
+            <div>
+                <div class="column_2">
+                    <p>Meat: <span id="meat">0</span></p>
+                    <p>Scales: <span id="scales">0</span></p>
+                    <p>Claws: <span id="claws">0</span></p>
+                 </div>
+                <div class="column_2">
+                    <p>Fiber: <span id="fiber">0</span></p>
+                    <p>Metal: <span id="metal">0</span></p>
+                    <p>Gelatin: <span id="gelatin">0</span></p>
                 </div>
             </div>
         </div>
@@ -104,24 +124,8 @@
     </div>
     </div>
 <div class="right">
-        <div class="column_1">
-            <p> RESOURCES </p>
-
-            <div>
-                <div class="column_2">
-                    <p>Meat: <span id="meat">0</span></p>
-                    <p>Scales: <span id="scales">0</span></p>
-                    <p>Claws: <span id="claws">0</span></p>
-                 </div>
-                <div class="column_2">
-                    <p>Fiber: <span id="fiber">0</span></p>
-                    <p>Metal: <span id="metal">0</span></p>
-                    <p>Gelatin: <span id="gelatin">0</span></p>
-                </div>
-            </div>
-        </div>
     </div>
-
-    <div id="technology_list"></div>
+</div>
+</div>
 </body>
 </html>
