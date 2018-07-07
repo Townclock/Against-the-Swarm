@@ -26,7 +26,10 @@ function update_ui(player, monster){
     update_value_by_id("follower_resource", follower_resource);
 
 
-    
+
+    document.getElementById('currentTown').innerHTML = world[current_world][current_town].town_name;
+
+
 
     update_value_by_id('exp_counter',  player.experience);
     update_value_by_id('exp_until_level',  player.experience_until_level);
@@ -73,10 +76,10 @@ function update_ui(player, monster){
         document.getElementById('processor_bar').style.width = 0;
     }
 
-    if (invasion_progress >= 100){
-        alert("you did not stop the invasion");
-        window.location.reload(false);
-    }
+    //if (invasion_progress >= 100){
+    //   alert("you did not stop the invasion");
+    //    window.location.reload(false);
+    //}
 
     var width_scalar = document.getElementById("towns").offsetWidth;
     

@@ -29,21 +29,28 @@
     var timer = setInterval(function(){
         update_ui(player, monster);
         if (! under_siege) {
+            player.followers_act();
+            player.pay_followers();
+
             invasion_progress += invasion_rate;
             increment_resource(current_town);
             if (invasion_progress > towns[current_town].location){
-                under_siege = true;        
+            	under_siege = true;
+	        //change_town(player);
+		//alert('you did not save this town. We must retreat!');
             }
         }
-
-        }
+	console.log(world);
+    }
         , 1000);
 </script>
 <body>
+	<div v-if="false">true</div>
+	<span id="currentTown"></span>
             <div class="invasion_bar">
                 <div class="invasion" id="invasion" style="width:0px"></div>
             </div>
-            <div id="towns"> </div>
+        <div id="towns"></div>
 
     <div class="left">
         <div class="column_1">
@@ -69,10 +76,12 @@
     <div class="center">
 
         <div class="column_3 left">
-            
-            <p>Level: <span id="player_level">1</span>
-                (<span id="exp_counter"> 0 </span>
-                / <span id="exp_until_level">1</span>)
+
+		  
+            <p>Level: <span class="player_level">1</span> 
+                (<span class="exp_counter"> 0 </span> 
+                / <span class="exp_until_level">1</span>)
+
             </p>
             <p>Money: <span id="player_money">0</span>
             </p>
@@ -96,6 +105,7 @@
         </div>
     </div>
     </div>
+
 <div class="right">
         <div class="column_1">
             <p> RESOURCES </p>
