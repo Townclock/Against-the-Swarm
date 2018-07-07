@@ -6,7 +6,11 @@ var invasion_progress = 0;
 
 var under_siege = false;
 
+var follower_resource = 10;
+
 var current_town = 4;
+
+var  invasion_rate = 1;
 
 var towns = [
     new Town("Safety", 95, false),
@@ -18,43 +22,50 @@ var towns = [
 
 
 
-function fight(player, monster){
+function fight(player, monsters){
     number_of_clicks++;
-    if (monster.present) {
-        monster.hp--;
-        monster.attack(player);
-        if (monster.hp < 1) {
-            monster.die(monster);
+    var rand = Math.floor(Math.random(0, monsters.length));
+    if (monsters[rand].present) {
+        monsters[rand].hp--;
+        monsters[rand].attack(player);
+        if (monsters[rand].hp < 1) {
+            monsters[rand].die(monsters[rand]);
             player.gain_experience(1);
-            player.gain_resources(monster.loot);
-            setTimeout( replace_monster(monster, player.level - 1)
+            player.gain_resources(monsters[rand].loot);
+            setTimeout( replace_monster(monsters[rand], player.level - 1)
                 , 500);
             invasion_progress -=3;
             }
     }
 
-    update_ui(player, monster);
+    update_ui(player, monsters[rand]);
+
 };
-function rest(player, monster){
+function rest(player, monsters){
     number_of_clicks++;
     player.heal();
-    monster.heal();
-    update_ui(player, monster);
+    for(var i = 0; i < monsters.length; i++)
+    {
+        monsters[i].heal();
+    }
+    update_ui(player, monsters[0]);
+
     invasion_progress += 2;
 }
-function engage(player, monster){
+function engage(player, monsters){
     number_of_clicks++;
     engaged = true;
-    update_ui(player, monster)
+    update_ui(player, monsters[0])
 };
-function disengage(player, monster){
+function disengage(player, monsters){
+
     number_of_clicks++;
-    if (monster.present) {
-        monster.attack(player);
+    if (monsters[0].present) {
+        monsters[0].attack(player);
     } 
     if (! under_siege) {
         engaged = false;
-        player.deposit_resources();
+        player.deposit_resources(follower);
     }
     else {
         towns[current_town].destroyed = true;
@@ -63,11 +74,20 @@ function disengage(player, monster){
         under_siege = false;
     }
 
-    update_ui(player, monster);
+    update_ui(player, monsters[0]);
+
 };
 
 function replace_monster(monster, challenge_level){
-    console.log(monster);
-    monster.replace(challenge_level);
-    console.log(monster);
+    console.log(monsters[0]);
+    monsters[0].replace(challenge_level);
+    console.log(monsters[0]);
+}
+
+function change_rate(monsters){
+    invasion_rate = monsters.length/5;
+}
+
+function increment_resource(current_town){
+    follower_resource += current_town;     
 }
