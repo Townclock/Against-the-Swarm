@@ -15,9 +15,14 @@ function update_ui(player, monster){
     document.getElementsByClassName('exp_until_level')[0].innerHTML = player.experience_until_level 
                     - player.experience_last_level;
     document.getElementById('player_experience').style.width = h_width;
+   
     
+    //code used to store city an the current situation of city
     var h_width = invasion_progress + "%";
-        document.getElementById('invasion').style.width = h_width;
+    document.getElementById('invasion').style.width = h_width;
+   
+    document.getElementById('townsss').innerHTML = world[current_world][current_town].town_name;
+
 
 
     var h_width = 100 * (monster.hp / monster.max_hp) + "%";
@@ -61,10 +66,10 @@ function update_ui(player, monster){
         document.getElementById('processor_bar').style.width = 0;
     }
 
-    if (invasion_progress >= 100){
-        alert("you did not stop the invasion");
-        window.location.reload(false);
-    }
+    //if (invasion_progress >= 100){
+    //   alert("you did not stop the invasion");
+    //    window.location.reload(false);
+    //}
 
     var width_scalar = document.getElementById("towns").offsetWidth;
     
