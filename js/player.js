@@ -33,8 +33,8 @@ function Player(){
         this.held_resources = this.held_resources.concat(resources);
     }
 
-    this.deposit_resources = function(resources){
-        this.processor_queue = this.processor_queue.concat(this.held_resources);
+    this.deposit_resources = function(follower){
+        follower.deposit_resources(this.held_resources);
         this.held_resources = [];
     }
 
@@ -45,18 +45,5 @@ function Player(){
             this.experience_until_level = player.experience_until_level * 2;
             this.level_up();
         }
-    }
-
-    this.followers_act = function (){
-        if (this.processor_queue.length > 0){
-        this.processor_queue[0].process_time += this.processors;
-            if  (this.processor_queue[0].process_time >= this.processor_queue[0].max_process_time){
-                this.money += this.processor_queue[0].value;
-                this.processor_queue.shift();
-            }
-        }
-    }
-    this.pay_followers = function(){
-        this.money -= this.processors;
     }
 }

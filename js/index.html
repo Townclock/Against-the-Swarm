@@ -10,19 +10,14 @@
 <script src="js/player_inventory.js"></script>
 <script src="js/gui.js"></script>
 <script src="js/game_logic.js"></script>
-<script src="js/follower.js"></script>
 <script> 
     var player = new Player();
     var monster = new Monster();
-    var monsters = [monster];
     var player_inventory = new Player_Inventory;
-
-    var follower = new Follower(player);
     function click_fight_button(){fight(player, monster);}
     function click_rest_button(){rest(player, monster);}
     function click_engage_button(){engage(player, monster)};
     function click_disengage_button(){disengage(player, monster)};
-
 
     
     console.log(player)
@@ -31,30 +26,24 @@
         if (! under_siege) {
             player.followers_act();
             player.pay_followers();
-
-            invasion_progress += invasion_rate;
-            increment_resource(current_town);
+            invasion_progress += 1;
             if (invasion_progress > towns[current_town].location){
-            	under_siege = true;
-	        //change_town(player);
-		//alert('you did not save this town. We must retreat!');
+                under_siege = true;        
             }
         }
-	console.log(world);
-    }
+
+        }
         , 1000);
 </script>
 <body>
-	<div v-if="false">true</div>
-	<span id="currentTown"></span>
             <div class="invasion_bar">
                 <div class="invasion" id="invasion" style="width:0px"></div>
             </div>
-        <div id="towns"></div>
+            <div id="towns"> </div>
 
     <div class="left">
         <div class="column_1">
-            <p> FOLLOWERS <span id="follower_resource"></span></p>
+            <p> FOLLOWERS </p>
             
             <div class="follower_row"> 
                 Processors: <span id="number_of_processors"></span> 
@@ -76,14 +65,12 @@
     <div class="center">
 
         <div class="column_3 left">
-
-		  
-            <p>Level: <span class="player_level">1</span> 
+            
+            <p>Level: <span id="player_level">1</span>
                 (<span class="exp_counter"> 0 </span> 
                 / <span class="exp_until_level">1</span>)
-
             </p>
-            <p>Money: <span id="player_money">0</span>
+            <p>Money: <span class="player_money">0</span> 
             </p>
             <div class="experience_bar" id="player_experience_bar">
                 <div class="experience" id="player_experience" style="width:0px"></div>
@@ -105,7 +92,6 @@
         </div>
     </div>
     </div>
-
 <div class="right">
         <div class="column_1">
             <p> RESOURCES </p>
@@ -124,5 +110,6 @@
             </div>
         </div>
     </div>
+    <div id="technology_list"></div>
 </body>
 </html>
