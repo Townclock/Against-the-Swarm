@@ -6,6 +6,8 @@ var invasion_progress = 0;
 
 var under_siege = false;
 
+follower_resource = 0;
+
 var current_town = 4;
 
 var  invasion_rate = 1;
@@ -39,7 +41,8 @@ for (i in tech_placeholders){
 function fight(player, monsters){
     number_of_clicks++;
     var rand = Math.floor(Math.random(0, monsters.length));
-    if (monsters[rand].present) {
+    console.log(monsters, monsters[rand], rand);
+    if (monsters.length > 0) {
         monsters[rand].hp--;
         monsters[rand].attack(player);
         if (monsters[rand].hp < 1) {
@@ -52,8 +55,7 @@ function fight(player, monsters){
             }
     }
 
-
-    update_ui(player, monsters[rand]);
+    update_ui(player, monsters[0]);
 
 };
 function rest(player, monsters){
@@ -83,7 +85,6 @@ function disengage(player, monsters){
     } 
     if (! under_siege) {
         engaged = false;
-        player.deposit_resources();
     }
     else {
         towns[current_town].destroyed = true;
