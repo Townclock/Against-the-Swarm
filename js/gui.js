@@ -1,3 +1,4 @@
+
 function update_value_by_id(id, value){
     document.getElementById(id).innerHTML = value;
 }
@@ -18,9 +19,10 @@ function update_ui(player, monster){
     for (i in resources){
         update_value_by_id(resources[i], player_inventory[resources[i]]);
     }
-
     update_bar_by_id("player_health", player.hp, player.max_hp);
     update_bar_by_id("player_experience", player.experience, player.experience_until_level);
+    update_value_by_id("follower_resource", follower_resource);
+
     
 
     update_value_by_id('exp_counter',  player.experience);
@@ -60,7 +62,8 @@ function update_ui(player, monster){
 
     if (player.processor_queue.length > 0){
         var unit = player.processor_queue[0];
-        update_var_by_id(processpr_bar, unit.process_time, unit.max_process_time);
+        update_bar_by_id(processpr_bar, unit.process_time, unit.max_process_time);
+
     } 
     else{
         document.getElementById('processor_bar').style.width = 0;
