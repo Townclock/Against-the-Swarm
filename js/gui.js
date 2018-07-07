@@ -3,46 +3,36 @@ function update_value_by_id(id, value){
     document.getElementById(id).innerHTML = value;
 }
 
+function update_bar_by_id(id, current, max){
+    var h_width = 100 * (current / max) + "%";
+    document.getElementById(id).style.width = h_width;
+}
+
 function update_ui(player, monster){
     update_value_by_id("player_level", player.level);
 
-    document.getElementById('number_of_processors').innerHTML = player.processors; 
-}
-function update_ui(player, monster){
-    //document.getElementById('number_of_processors').innerHTML = follower.processors; 
+    update_value_by_id("number_of_processors", player.processors);
+    update_value_by_id("player_money", player.money);
 
-    
+
     var resources = ["meat", "scales", "claws", "fiber", "metal", "gelatin"];
     for (i in resources){
         update_value_by_id(resources[i], player_inventory[resources[i]]);
     }
-
+    update_bar_by_id("player_health", player.hp, player.max_hp);
+    update_bar_by_id("player_experience", player.experience, player.experience_until_level);
     update_value_by_id("follower_resource", follower_resource);
 
-
-    var h_width = 100 * (player.hp / player.max_hp) + "%";
-        document.getElementById('player_health').style.width = h_width;
-        document.getElementsByClassName('player_money')[0].innerHTML = player.money; 
     
-    var h_width = 100 * ( ( player.experience - player.experience_last_level ) 
-                    / (player.experience_until_level 
-                    - player.experience_last_level ) ) + "%";
 
-    document.getElementsByClassName('exp_counter')[0].innerHTML = player.experience 
-                    - player.experience_last_level;
-    document.getElementsByClassName('exp_until_level')[0].innerHTML = player.experience_until_level 
-                    - player.experience_last_level;
-    document.getElementById('player_experience').style.width = h_width;
+    update_value_by_id('exp_counter',  player.experience);
+    update_value_by_id('exp_until_level',  player.experience_until_level);
     
-    var h_width = invasion_progress + "%";
-        document.getElementById('invasion').style.width = h_width;
 
+    update_bar_by_id("invasion", invasion_progress, 100);
 
-    var h_width = 100 * (monster.hp / monster.max_hp) + "%";
-    document.getElementById('monster_health').style.width = h_width;
+    update_bar_by_id("monster_health", monster.hp, monster.max_hp);
     
-    var h_width = 100 * (player.hp / player.max_hp) + "%";
-    document.getElementById('player_health').style.width = h_width;
     
     if (monster.present){
         document.getElementsByClassName('monster')[0].style.visibility = "visible";
@@ -70,10 +60,10 @@ function update_ui(player, monster){
         }
     }
 
-    if (follower.processor_queue.length > 0){
-        var unit = follower.processor_queue[0];
-        var h_width = 100 * (unit.process_time / unit.max_process_time) + "%";
-        document.getElementById('processor_bar').style.width = h_width;
+    if (player.processor_queue.length > 0){
+        var unit = player.processor_queue[0];
+        update_bar_by_id(processpr_bar, unit.process_time, unit.max_process_time);
+
     } 
     else{
         document.getElementById('processor_bar').style.width = 0;
