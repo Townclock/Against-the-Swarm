@@ -1,4 +1,3 @@
-
 function update_value_by_id(id, value){
     document.getElementById(id).innerHTML = value;
 }
@@ -10,18 +9,22 @@ function update_bar_by_id(id, current, max){
 
 function update_ui(player, monster){
     update_value_by_id("player_level", player.level);
+    
+    update_value_by_id("technology_list", technology_list_html);
+
 
     update_value_by_id("number_of_processors", player.processors);
     update_value_by_id("player_money", player.money);
-
 
     var resources = ["meat", "scales", "claws", "fiber", "metal", "gelatin"];
     for (i in resources){
         update_value_by_id(resources[i], player_inventory[resources[i]]);
     }
+
     update_bar_by_id("player_health", player.hp, player.max_hp);
     update_bar_by_id("player_experience", player.experience, player.experience_until_level);
     update_value_by_id("follower_resource", follower_resource);
+
 
     
 
@@ -62,6 +65,7 @@ function update_ui(player, monster){
 
     if (player.processor_queue.length > 0){
         var unit = player.processor_queue[0];
+
         update_bar_by_id(processpr_bar, unit.process_time, unit.max_process_time);
 
     } 

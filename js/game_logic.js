@@ -6,8 +6,6 @@ var invasion_progress = 0;
 
 var under_siege = false;
 
-var follower_resource = 10;
-
 var current_town = 4;
 
 var  invasion_rate = 1;
@@ -20,7 +18,23 @@ var towns = [
     new Town("Doom", 20, true)
 ]
 
-
+var technology_list_html= "";
+tech_placeholders=[
+{description: "researched tech", can_be_researched: true, has_been_researched: true},
+{description: "unresearched tech", can_be_researched: true, has_been_researched: false},
+{description: "unresearchbal tech", can_be_researched: false, has_been_researched: false},
+];
+for (i in tech_placeholders){
+    if (tech_placeholders[i].has_been_researched){
+        technology_list_html += ("<p>" + tech_placeholders[i].description + "</p>");
+    }
+}
+technology_list_html += "<hr>";
+for (i in tech_placeholders){
+    if (!tech_placeholders[i].has_been_researched && tech_placeholders[i].can_be_researched){
+        technology_list_html += ("<p>" + tech_placeholders[i].description + "</p>");
+    }
+}
 
 function fight(player, monsters){
     number_of_clicks++;
@@ -38,23 +52,27 @@ function fight(player, monsters){
             }
     }
 
+
     update_ui(player, monsters[rand]);
 
 };
 function rest(player, monsters){
     number_of_clicks++;
     player.heal();
+
     for(var i = 0; i < monsters.length; i++)
     {
         monsters[i].heal();
     }
     update_ui(player, monsters[0]);
 
+
     invasion_progress += 2;
 }
 function engage(player, monsters){
     number_of_clicks++;
     engaged = true;
+
     update_ui(player, monsters[0])
 };
 function disengage(player, monsters){
@@ -65,7 +83,7 @@ function disengage(player, monsters){
     } 
     if (! under_siege) {
         engaged = false;
-        player.deposit_resources(follower);
+        player.deposit_resources();
     }
     else {
         towns[current_town].destroyed = true;
