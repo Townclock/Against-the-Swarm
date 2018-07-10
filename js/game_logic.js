@@ -23,9 +23,46 @@ var towns = [
     new Town("Safety", 20, false),
     new Town("Concern", 40, false),
     new Town("Worry", 60, false),
-    new Town("Panic", 40, false),
-    new Town("Doom", 20, true)
+    new Town("Panic", 85, false),
+    new Town("Doom", 95, true)
+];
+var world = [towns];
+
+var technology_list_html = "";
+
+var technology = [
+   new Technology("Researched", true, true),
+   new Technology("Unresearched", true, false),
+   new Technology("Unresearchable", false, false)
 ]
+   for (i in technology){
+       if (technology[i].has_been_researched){
+           technology_list_html += ("<p>" + technology[i].description + "</p>");
+       }
+   }
+   technology_list_html += "<hr>";
+   for (i in technology){
+       if (!technology[i].has_been_researched && technology[i].can_be_researched){
+           technology_list_html += ("<p>" + technology[i].description + "</p>");
+       }
+   }
+function change_town(player){
+	if(current_town == 4){
+		world.push( [new Town("test",  20,  false),
+			     new Town("test2", 40,  false),
+			     new Town("test3", 60,  false),
+			     new Town("test4", 80,  false),
+			     new Town("test5", 100, false)]);
+		current_world++;
+		current_town = 0;
+		invasion_progress = 0;
+	}
+	else{
+		current_town++;
+	}
+	player.location = world[current_world][current_town].location;
+
+}
 
 function multi_fight(fighters, monsters){
     if(fighters.length != 0 && monsters.length != 0){
@@ -41,8 +78,9 @@ function multi_fight(fighters, monsters){
             monsters[temp].hp -= fighters[f].atk;
 
             if(monsters[temp].hp <= 0){
+                monsters[temp].die();                
                 monsters.splice(temp,1);
-            }
+                }
         }
 
         //same for loop for fighters but instead for monsters

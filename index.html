@@ -1,4 +1,4 @@
-<html> 
+<html>
 <head><title> Against The Swarm </title>
 <link rel="stylesheet" type="text/css" href="gui.css">
 </head>
@@ -8,6 +8,7 @@
 <script src="js/player.js"></script>
 <script src="js/monster.js"></script>
 <script src="js/town.js"></script>
+<script src="js/technology.js"></script>
 <script src="js/player_inventory.js"></script>
 <script src="js/gui.js"></script>
 <script src="js/game_logic.js"></script>
@@ -27,11 +28,12 @@
     };
 
     var player = new Player();
-    var monster = new Monster("zerg",420,20);
+    var monster = new Monster("zerg",5,20);
     var monsters = [monster,
-                    new Monster("protoss",312,40),
-                    new Monster("tassadar",111,60),
-                    new Monster("terran",132,80)];
+                    //new Monster("protoss",5,40),
+                    //new Monster("tassadar",5,60),
+                    //new Monster("terran",5,80)
+                    ];
 
     var fighters = [new Fighter(player, "hero 1", 169,  30),
                     new Fighter(player, "hero 2", 269,  63),
@@ -75,7 +77,6 @@
 
 </script>
 
-
 <body><div id="vue-div">
 
     <div class="invasion_bar">
@@ -86,7 +87,7 @@
     <div v-if="current_monster != null">
         Current Monster has {{current_monster.hp}} hp
     </div>
-    <div v-for="m in monsterss">
+    <div v-for="m in monsters">
         <div v-on:click="current_monster = m">{{m.monster_name}} hp: {{m.hp}}</div>
     </div>
 
@@ -97,8 +98,8 @@
         <div class="column_1">
             <p> FOLLOWERS <span id="follower_resource"></span></p>
             
-            <div class="follower_row"> 
-                Processors: <span id="number_of_processors"></span> 
+            <div class="follower_row">
+                Processors: <span id="number_of_processors"></span>
                 <div class="completion_bar">
                     <div class="completion" id="processor_bar"></div>
                 </div>
@@ -150,7 +151,7 @@
             <button class="button combat_button" onclick="click_disengage_button()"> "DISENGAGE!" </button>
         </div>
         <div class="column_3"> </div>
-        <div class="column_3 right"> 
+        <div class="column_3 right">
             <div class="health_bar" id="monster_health_bar">
                 <div class="health" id="monster_health"></div>
             </div>
