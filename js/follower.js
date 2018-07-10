@@ -8,36 +8,17 @@ function Follower(player){
     this.processor_queue = [];
 
     //New variables of different jobs
-<<<<<<< HEAD
     this.meat_processors = 1;
     this.claw_processors = 0;
     this.scale_processors = 0;
-=======
-    this.meat_processors = 0;
-    this.meat_processor_queue = [];
-    this.claw_processors = 0;
-    this.claw_processor_queue = [];
-    this.scale_processors = 0;
-    this.scale_processor_queue = [];
->>>>>>> Follower_Object
 
     this.fighters = 0;
     this.miners = 0;
     this.researchers = 0;
     this.teleporters = 0;
-<<<<<<< HEAD
 
 
     //Update function for the followers. Use this function for updates when calling from outside.
-=======
-    
-
-    this.deposit_resources = function(resources){
-        this.processor_queue = this.processor_queue.concat(resources);
-    }
-
-    //Update function for the followers. Use this function for updates when calling from outside. 
->>>>>>> Follower_Object
     this.followers_act = function (){
         this.processors_act(); //Processes claws, scales, meat...
         this.fighters_act();
@@ -46,15 +27,7 @@ function Follower(player){
         this.teleporters_act();
     }
 
-<<<<<<< HEAD
     //A function to Hire Followers into different jobs. Use this function for hiring.
-=======
-    this.pay_followers = function(){
-        this.owner.money -= this.processors;
-    }
-
-    //A function to Hire Followers into different jobs. Use this function for hiring. 
->>>>>>> Follower_Object
     this.hire = function(job, number_to_hire){
         if (number_to_hire <= this.followers) {
             this.followers -= number_to_hire;
@@ -81,20 +54,12 @@ function Follower(player){
     }
 
     this.processors_act = function(){
-<<<<<<< HEAD
         var raw_goods = ["meat", "scales", "claws"];
         var fin_goods = ["fiber", metal, "gelatin"];
         for (g in raw_goods){
             if (this[raw_goods[g] + "_processors"] > 0){
                 player_inventory.increment([fin_goods[g]],player_inventory[raw_goods[g]]);
                 player_inventory.decrement([raw_goods[g]],player_inventory[raw_goods[g]]);
-=======
-        if (this.processor_queue.length > 0){
-        this.processor_queue[0].process_time += this.processors;
-            if  (this.processor_queue[0].process_time >= this.processor_queue[0].max_process_time){
-                this.owner.gain_money(this.processor_queue[0].value);
-                this.processor_queue.shift();
->>>>>>> Follower_Object
             }
         }
         }
@@ -107,17 +72,6 @@ function Follower(player){
         //Write what miner does
     }
 
-<<<<<<< HEAD
-=======
-    this.fighters_act = function(){
-        //Write what fighter does
-    }
-
-    this.miners_act = function() {
-        //Write what miner does
-    }
-
->>>>>>> Follower_Object
     this.researchers_act = function() {
         //Write what researcher does
     }
@@ -127,7 +81,6 @@ function Follower(player){
     }
 }
 
-<<<<<<< HEAD
 function Fighter(player, fname, health, attack){
     this.owner  =       player;
     this.fighter_name = fname;
@@ -137,15 +90,3 @@ function Fighter(player, fname, health, attack){
 
 }
 
-=======
-//Enum for different kinds of jobs that Followers can be hired to. 
-var Job = {
-    MEAT_PROCESSOR: 1,
-    CLAW_PROCESSOR: 2,
-    SCALE_PROCESSOR: 3,
-    FIGHTER: 4,
-    MINER: 5,
-    RESEARCHERS: 6,
-    TELEPORTERS: 7
-};
->>>>>>> Follower_Object
