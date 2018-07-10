@@ -18,31 +18,32 @@
         var vm = new Vue({
             el: "#vue-div",
             data: {
-                fighters: towns,
-                monsterss: monsters,
+                monsters: monsters,
 
-                current_monster:null,
-                current_fighter:null,
+                current_monster: current_monster,
+                current_fighter: current_fighter,
             }
         });
     };
 
     var player = new Player();
-    var monster = new Monster("zerg",5);
+    var monster = new Monster("zerg",420,20);
     var monsters = [monster,
-                    new Monster("protoss",5),
-                    new Monster("tassadar",5),
-                    new Monster("terran",5)];
-    var fighters = [];
+                    new Monster("protoss",312,40),
+                    new Monster("tassadar",111,60),
+                    new Monster("terran",132,80)];
+
+    var fighters = [new Fighter(player, "hero 1", 169,  30),
+                    new Fighter(player, "hero 2", 269,  63),
+                    new Fighter(player, "hero 3", 1000, 2)];
+
     var player_inventory = new Player_Inventory;
 
     var follower = new Follower(player);
-    function click_fight_button(){fight(player, monsters);}
-    function click_rest_button(){rest(player, monsters);}
-    function click_engage_button(){engage(player, monsters)};
-    function click_disengage_button(){disengage(player, monsters)};
-
-
+    function click_fight_button(){  multi_fight(fighters, monsters);}
+    function click_rest_button(){          rest(fighters, monsters);}
+    function click_engage_button(){      engage(fighters, monsters)};
+    function click_disengage_button(){disengage(fighters, monsters)};
     
     var timer = setInterval(function(){
         update_ui(player, monster);
@@ -57,6 +58,13 @@
 	        //change_town(player);
 		//alert('you did not save this town. We must retreat!');
             }
+
+        }
+        //code that spawns new enemy every interval
+        time_left++;
+        if(time_left == spawn_time){
+            monsters.push(new Monster("test", 50,10));
+            time_left = 0;
         }
     }
         , 1000);
@@ -67,6 +75,7 @@
 
 </script>
 
+
 <body><div id="vue-div">
 
     <div class="invasion_bar">
@@ -74,7 +83,6 @@
     </div>
     <div id="towns"> </div>
 
-<!--.......................vue code......................................-->
     <div v-if="current_monster != null">
         Current Monster has {{current_monster.hp}} hp
     </div>
@@ -152,4 +160,5 @@
     </div>
 <div class="right">
     </div>
+</div></body>
 </html>

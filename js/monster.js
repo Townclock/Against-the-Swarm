@@ -1,8 +1,8 @@
-function Monster (monster_name, health) {
+function Monster (monster_name, health, attack) {
     this.monster_name = monster_name;
     this.hp = health;
     this.max_hp = health;
-    this.attack_bonus = 1;
+    this.attack_bonus = attack;
     this.armor = 0;
     this.loot = {meat:1, scales:1, claws:1};
     this.present = true;
