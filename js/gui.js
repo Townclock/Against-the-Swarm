@@ -46,7 +46,6 @@ function update_ui(player, monster){
     update_value_by_id('exp_until_level',  player.experience_until_level);
     
    
-    document.getElementById('currentTown').innerHTML = world[current_world][current_town].town_name;
 
 
     update_bar_by_id("invasion", invasion_progress, 100);

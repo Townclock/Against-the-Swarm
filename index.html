@@ -3,7 +3,7 @@
 <link rel="stylesheet" type="text/css" href="gui.css">
 </head>
 
-<script src="{{=URL('static', 'js/vue.js')}}"></script>
+<script src="js/vue.js"></script>
 
 <script src="js/player.js"></script>
 <script src="js/monster.js"></script>
@@ -13,9 +13,27 @@
 <script src="js/game_logic.js"></script>
 <script src="js/follower.js"></script>
 <script> 
+    //every variable or function that wants to be called from html has to have reference in //Vue function
+    window.onload = function(){
+        var vm = new Vue({
+            el: "#vue-div",
+            data: {
+                fighters: towns,
+                monsterss: monsters,
+
+                current_monster:null,
+                current_fighter:null,
+            }
+        });
+    };
+
     var player = new Player();
-    var monster = new Monster();
-    var monsters = [monster];
+    var monster = new Monster("zerg",420);
+    var monsters = [monster,
+                    new Monster("protoss",312),
+                    new Monster("tassadar",111),
+                    new Monster("terran",132)];
+    var fighters = [];
     var player_inventory = new Player_Inventory;
 
     var follower = new Follower(player);
@@ -27,6 +45,8 @@
 
     
     var timer = setInterval(function(){
+        update_ui(player, monster);
+
         if (! under_siege) {
             invasion_progress += invasion_rate;
             increment_follower_resource(current_town);
@@ -47,14 +67,22 @@
     }, 17);
 
 </script>
-<body>
-    <div id="vue-div panel_track">
-	<div v-if="false">true</div>
-	<span id="currentTown"></span>
-            <div class="invasion_bar">
-                <div class="invasion" id="invasion" style="width:0px"></div>
-            </div>
-        <div id="towns"></div>
+
+<body><div id="vue-div">
+
+    <div class="invasion_bar">
+        <div class="invasion" id="invasion" style="width:0px"></div>
+    </div>
+    <div id="towns"> </div>
+
+<!--.......................vue code......................................-->
+    <div v-if="current_monster != null">
+        Current Monster has {{current_monster.hp}} hp
+    </div>
+    <div v-for="m in monsterss">
+        <div v-on:click="current_monster = m">{{m.monster_name}} hp: {{m.hp}}</div>
+    </div>
+
 
 <div id="technology_list"></div>
     <div id="panel_track">
@@ -125,7 +153,4 @@
     </div>
 <div class="right">
     </div>
-</div>
-</div>
-</body>
 </html>

@@ -1,6 +1,7 @@
-function Monster () {
-    this.hp = 5;
-    this.max_hp = 5;
+function Monster (monster_name, health) {
+    this.monster_name = monster_name;
+    this.hp = health;
+    this.max_hp = health;
     this.attack_bonus = 1;
     this.armor = 0;
     this.loot = [];
