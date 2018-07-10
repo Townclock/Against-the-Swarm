@@ -8,22 +8,15 @@ function Follower(player){
     this.processor_queue = [];
 
     //New variables of different jobs
-    this.meat_processors = 0;
-    this.meat_processor_queue = [];
+    this.meat_processors = 1;
     this.claw_processors = 0;
-    this.claw_processor_queue = [];
     this.scale_processors = 0;
-    this.scale_processor_queue = [];
 
     this.fighters = 0;
     this.miners = 0;
     this.researchers = 0;
     this.teleporters = 0;
 
-
-    this.deposit_resources = function(resources){
-        this.processor_queue = this.processor_queue.concat(resources);
-    }
 
     //Update function for the followers. Use this function for updates when calling from outside.
     this.followers_act = function (){
@@ -32,10 +25,6 @@ function Follower(player){
         this.miners_act();
         this.researchers_act();
         this.teleporters_act();
-    }
-
-    this.pay_followers = function(){
-        this.owner.money -= this.processors;
     }
 
     //A function to Hire Followers into different jobs. Use this function for hiring.
@@ -65,14 +54,14 @@ function Follower(player){
     }
 
     this.processors_act = function(){
-        if (this.processor_queue.length > 0){
-        this.processor_queue[0].process_time += this.processors;
-            if  (this.processor_queue[0].process_time >= this.processor_queue[0].max_process_time){
-                this.owner.gain_money(this.processor_queue[0].value);
-                this.processor_queue.shift();
+        var raw_goods = ["meat", "scales", "claws"];
+        var fin_goods = ["fiber", metal, "gelatin"];
+        for (g in raw_goods){
+            if (this[raw_goods[g] + "_processors"] > 1){
+                player_inventory.increment([fin_goods[g]],player_inventory[raw_goods[g]]);
             }
         }
-    }
+        }
 
     this.fighters_act = function(){
         //Write what fighter does
@@ -90,14 +79,3 @@ function Follower(player){
         //Write what teleporter does. Might not need this function at all.
     }
 }
-
-//Enum for different kinds of jobs that Followers can be hired to.
-var Job = {
-    MEAT_PROCESSOR: 1,
-    CLAW_PROCESSOR: 2,
-    SCALE_PROCESSOR: 3,
-    FIGHTER: 4,
-    MINER: 5,
-    RESEARCHERS: 6,
-    TELEPORTERS: 7
-};
