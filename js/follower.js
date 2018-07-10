@@ -57,8 +57,9 @@ function Follower(player){
         var raw_goods = ["meat", "scales", "claws"];
         var fin_goods = ["fiber", metal, "gelatin"];
         for (g in raw_goods){
-            if (this[raw_goods[g] + "_processors"] > 1){
+            if (this[raw_goods[g] + "_processors"] > 0){
                 player_inventory.increment([fin_goods[g]],player_inventory[raw_goods[g]]);
+                player_inventory.decrement([raw_goods[g]],player_inventory[raw_goods[g]]);
             }
         }
         }
