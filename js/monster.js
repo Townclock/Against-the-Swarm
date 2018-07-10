@@ -4,7 +4,7 @@ function Monster (monster_name, health) {
     this.max_hp = health;
     this.attack_bonus = 1;
     this.armor = 0;
-    this.loot = [];
+    this.loot = {meat:1, scales:1, claws:1};
     this.present = true;
 }
 
@@ -13,23 +13,20 @@ Monster.prototype.replace = function (challenge_level) {
     this.max_hp = 5;
     this.attack_bonus = 1;
     this.armor = 0;
-    this.loot = [];
+    this.loot = {meat:1, scales:1, claws:1};
     var ability_pool = Math.floor(Math.pow(1.5, challenge_level));
     while (ability_pool > 0){
         var selection = Math.floor(Math.random() * 5);
         switch(selection){
             case 0:
                 this.attack_bonus += 2;
-                this.loot.push({description: "claws", process_time: 0, max_process_time: 200, value: 300});
                 break;
             case 1:
                 this.armor += 1;
-                this.loot.push({description: "scales", process_time: 0, max_process_time: 100, value: 200});
                 break;
             default:
                 this.hp += 5;
                 this.max_hp+= 5;
-                this.loot.push({description: "meat", process_time: 0, max_process_time: 50, value: 100});
                 break;
 
         }
@@ -46,7 +43,10 @@ Monster.prototype.respawn = function(monster){
         monster.present = true;
 }
 Monster.prototype.die = function(monster){
-        this.present = false;
+    player_inventory.increment("meat", monster.loot.meat);
+    player_inventory.increment("scales", monster.loot.scales);
+    player_inventory.increment("claws", monster.loot.claws);
+    this.present = false;
 }
 Monster.prototype.attack = function(player){
         player.hp -= this.attack_bonus;
