@@ -51,7 +51,6 @@
             invasion_progress += invasion_rate;
             increment_follower_resource(current_town);
             follower.followers_act();
-            follower.pay_followers();
 
             if (invasion_progress > towns[current_town].location){
             	under_siege = true;
