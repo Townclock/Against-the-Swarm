@@ -8,6 +8,11 @@ function Monster (monster_name, health, attack) {
     this.present = true;
 }
 
+Monster.prototype.hp_in_percent = function(){
+    return ((this.hp / this.max_hp) *100) + "%";
+}
+
+
 Monster.prototype.replace = function (challenge_level) {
     this.hp = 5;
     this.max_hp = 5;

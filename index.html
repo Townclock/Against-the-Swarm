@@ -22,9 +22,7 @@
             data: {
                 monsters: monsters,
 
-                current_monster: current_monster,
-                current_fighter: current_fighter,
-            }
+                fighters: fighters}
         });
     };
 
@@ -78,23 +76,19 @@
 
 </script>
 
-<body><div id="vue-div">
+<body>
+<div id="vue-div">
 
     <div class="invasion_bar">
         <div class="invasion" id="invasion" style="width:0px"></div>
     </div>
     <div id="towns"> </div>
 
-    <div v-if="current_monster != null">
-        Current Monster has {{current_monster.hp}} hp
-    </div>
-    <div v-for="m in monsters">
-        <div v-on:click="current_monster = m">{{m.monster_name}} hp: {{m.hp}}</div>
-    </div>
 
 
 <div id="technology_list"></div>
-    <div id="panel_track">
+<div class="column_1" id="track_container">
+<div id="panel_track" class="column_1">
     <div class="left" id="town_panel">
         <div class="column_1">
             <p> FOLLOWERS <span id="follower_resource"></span></p>
@@ -132,35 +126,34 @@
             </div>
         </div>
     </div>
-    <div class="center">
 
-        <div class="column_3 left">
-		  
-            <p>Level: <span id="player_level">1</span>
-                (<span id="exp_counter"> 0 </span>
-                / <span id="exp_until_level">1</span>)
-            </p>
-            <div class="experience_bar" id="player_experience_bar">
-                <div class="experience" id="player_experience" style="width:0px"></div>
-
-
+        <div class="column_3 center"> 
+            <div v-for="f in fighters" class="character_container" >
+                <div v-on:click="current_monster = m">{{f.fighter_name}} hp: {{f.hp}}</div>
+                <div class="health_bar">
+                    <div class="health" v-bind:style="{width: f.hp_in_percent()}"></div>
+                </div>
+                <div class="fighter"></monster>
             </div>
-            <div class="health_bar" id="player_health_bar">
-                <div class="health" id="player_health"></div>
             </div>
-            <button class="button combat_button" onclick="click_fight_button()"> "FIGHT!" </button>
-            <button class="button combat_button" onclick="click_disengage_button()"> "DISENGAGE!" </button>
         </div>
-        <div class="column_3"> </div>
+        
         <div class="column_3 right">
-            <div class="health_bar" id="monster_health_bar">
-                <div class="health" id="monster_health"></div>
+            <div v-for="m in monsters" class="character_container">
+                <div v-on:click="current_monster = m">{{m.monster_name}} hp: {{m.hp}}</div>
+                <div class="health_bar" id="monster_health_bar">
+                    <div class="health" v-bind:style="{width: m.hp_in_percent()}"></div>
+                </div>
+                <div class="monster"></monster>
             </div>
-            <div class="monster"></monster>
         </div>
     </div>
     </div>
-<div class="right">
-    </div>
-</div></body>
+        </div>
+
+        <div class="column_1">
+          <button class="button combat_button" onclick="click_disengage_button()"> "DISENGAGE!" </button>
+          <button class="button combat_button" onclick="click_fight_button()"> "FIGHT!" </button>
+        </div>
+</body>
 </html>

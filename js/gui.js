@@ -21,9 +21,9 @@ function update_bar_by_id(id, current, max){
 }
 
 function update_ui(player, monster){
+    document.getElementById("track_container").style.height  = document.getElementById("panel_track").offsetHeight;
 
     slide_panel(engaged);
-    update_value_by_id("player_level", player.level);
     
     update_value_by_id("technology_list", technology_list_html);
 
@@ -35,31 +35,11 @@ function update_ui(player, monster){
         update_value_by_id(resources[i], player_inventory[resources[i]]);
     }
 
-    update_bar_by_id("player_health", player.hp, player.max_hp);
-    update_bar_by_id("player_experience", player.experience, player.experience_until_level);
     update_value_by_id("follower_resource", follower_resource);
-
-
-    
-    update_value_by_id('exp_counter',  player.experience);
-    update_value_by_id('exp_until_level',  player.experience_until_level);
-    
-   
 
 
     update_bar_by_id("invasion", invasion_progress, 100);
 
-    update_bar_by_id("monster_health", monster.hp, monster.max_hp);
-    
-    
-    if (monster.present){
-        document.getElementsByClassName('monster')[0].style.visibility = "visible";
-        document.getElementById('monster_health_bar').style.visibility = "visible";
-    }
-    else {
-        document.getElementsByClassName('monster')[0].style.visibility = "hidden";
-        document.getElementById('monster_health_bar').style.visibility = "hidden";
-    }
     
     if (! under_siege){
         for (i in document.getElementsByClassName('combat_button')) {
