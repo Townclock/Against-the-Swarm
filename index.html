@@ -11,8 +11,9 @@
 <script src="js/technology.js"></script>
 <script src="js/player_inventory.js"></script>
 <script src="js/gui.js"></script>
+<script src="js/followers.js"></script>
+<script src="js/fighter.js"></script>
 <script src="js/game_logic.js"></script>
-<script src="js/follower.js"></script>
 <script> 
     //every variable or function that wants to be called from html has to have reference in //Vue function
     window.onload = function(){
@@ -41,7 +42,7 @@
 
     var player_inventory = new Player_Inventory;
 
-    var follower = new Follower(player);
+    var followers = new Followers(player);
     function click_fight_button(){  multi_fight(fighters, monsters);}
     function click_rest_button(){          rest(fighters, monsters);}
     function click_engage_button(){      engage(fighters, monsters)};
@@ -53,7 +54,7 @@
         if (! under_siege) {
             invasion_progress += invasion_rate;
             increment_follower_resource(current_town);
-            follower.followers_act();
+            followers.followers_act();
 
             if (invasion_progress > towns[current_town].location){
             	under_siege = true;

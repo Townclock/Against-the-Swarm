@@ -2,7 +2,6 @@ var sliding_panel_offset = -49;
 
 function slide_panel(engaged){
     var width = document.getElementById("town_panel").offsetWidth;
-    console.log(sliding_panel_offset, width, engaged);
     if ( (sliding_panel_offset > -width) && ( engaged || under_siege)){
         sliding_panel_offset -= 20;
     }
