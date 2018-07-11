@@ -154,9 +154,8 @@
 }
 
 #towns {
-    width: 90%;
-    border: 3px solid purple;
-    margin: 20px auto 20px auto;
+    z-index: 2;
+    width: 100%;
 }
 .safe_town{
     position: relative;
@@ -176,7 +175,7 @@
 #panel_track {
     overflow:hidden;
     position:absolute;
-    width: width;
+    width: 140%;
     height: auto%;
     left: 0;
 }

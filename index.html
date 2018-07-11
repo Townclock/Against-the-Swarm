@@ -80,16 +80,17 @@
 <div id="vue-div">
 
     <div class="invasion_bar">
-        <div class="invasion" id="invasion" style="width:0px"></div>
+        <div class="invasion" id="invasion" style="width:0px">
+        </div>
+        <div id="towns"> </div>
     </div>
-    <div id="towns"> </div>
 
 
 
 <div id="technology_list"></div>
 <div class="column_1" id="track_container">
 <div id="panel_track" class="column_1">
-    <div class="left" id="town_panel">
+    <div class="left column_3" id="town_panel">
         <div class="column_1">
             <p> FOLLOWERS <span id="follower_resource"></span></p>
             
@@ -126,7 +127,7 @@
             </div>
         </div>
     </div>
-
+    <div>
         <div class="column_3 center"> 
             <div v-for="f in fighters" class="character_container" >
                 <div v-on:click="current_monster = m">{{f.fighter_name}} hp: {{f.hp}}</div>
@@ -147,6 +148,7 @@
                 <div class="monster"></monster>
             </div>
         </div>
+    </div>
     </div>
     </div>
         </div>
