@@ -95,27 +95,17 @@ function multi_fight(fighters, monsters){
         //same for loop for fighters but instead for monsters
         for(m in monsters){
             if(monsters.length == 0 || fighters.length == 0){
-<<<<<<< HEAD
-                
-<<<<<<< HEAD
-                reclaim_mode = false;
-                if (monsters.length == 0){
-                    current_town--;
-                    player.location = world[current_world][current_town].location;
-                    invasion_progress -= 10;
-                }
+                if (reclaim_mode){
+                    reclaim_mode = false;
+                    if (monsters.length == 0){
+                        current_town--;
+                        player.location = world[current_world][current_town].location;
+                        invasion_progress -= 10;
+                    }
+                }    
+                if(engaged && fighters.length < 1) {disengage(fighters, monsters);}
                 break;
             }
-=======
-                if(engaged && fighters.length < 1) {disengage(fighters, monsters);}
-                break;
-                }
->>>>>>> 0e4b2cf907ae31eeea59ca7fd77d34956968ab82
-=======
-                if(engaged && fighters.length < 1) {disengage(fighters, monsters);}
-                break;
-                }
->>>>>>> 0e4b2cf907ae31eeea59ca7fd77d34956968ab82
 
             var temp = Math.floor(Math.random() * fighters.length);     
 
