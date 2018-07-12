@@ -63,10 +63,10 @@
         
         }
         //code that spawns new enemy every interval
-        time_left++;
-        if(time_left == spawn_time && ! reclaim_mode){
+        time_elapsed++;
+        if(time_elapsed >= spawn_time && ! reclaim_mode){
             monsters.push(new Monster("test", 50,10));
-            time_left = 0;
+            time_elapsed = 0;
         }
     }
         , 1000);

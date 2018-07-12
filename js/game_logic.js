@@ -18,7 +18,7 @@ var  invasion_rate = 1;
 var current_monster = null;
 var current_fighter = null;
 
-var time_left  = 0;
+var time_elapsed  = 0;
 var spawn_time = 1;
 
 var towns = [
