@@ -3,13 +3,11 @@ function Player_Inventory(){
     this.meat= 0;
     this.scales= 0;
     this.claws= 0;
-    this.ore = 100;
 
     //processed items
     this.fiber= 0;
     this.metal= 0;
     this.gelatin= 0;
-    this.crystals = 0;
 
 }
 Player_Inventory.prototype.increment = function(item, amount){
