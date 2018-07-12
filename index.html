@@ -28,7 +28,7 @@
 
     var player = new Player();
     var monster = new Monster("zerg",5,20);
-    var monsters = [monster,
+     monsters = [monster,
                     //new Monster("protoss",5,40),
                     //new Monster("tassadar",5,60),
                     //new Monster("terran",5,80)
@@ -41,29 +41,30 @@
     var player_inventory = new Player_Inventory;
 
     var followers = new Followers(player);
+
+
     function click_fight_button(){  multi_fight(fighters, monsters);}
     function click_rest_button(){          rest(fighters, monsters);}
     function click_engage_button(){      engage(fighters, monsters)};
     function click_disengage_button(){disengage(fighters, monsters)};
+    function click_reclaim_button(){reclaim(fighters, monsters)};
     
     var timer = setInterval(function(){
         update_ui(player, monster);
 
-        if (! under_siege) {
+        if (!under_siege && !reclaim_mode) {
             invasion_progress += invasion_rate;
             increment_follower_resource(current_town);
             followers.followers_act();
-
+            change_invasion_rate(monsters);
             if (invasion_progress > towns[current_town].location){
             	under_siege = true;
-	        //change_town(player);
-		//alert('you did not save this town. We must retreat!');
             }
-
+        
         }
         //code that spawns new enemy every interval
         time_left++;
-        if(time_left == spawn_time){
+        if(time_left == spawn_time && ! reclaim_mode){
             monsters.push(new Monster("test", 50,10));
             time_left = 0;
         }
@@ -118,11 +119,13 @@
                     <p>Meat: <span id="meat">0</span></p>
                     <p>Scales: <span id="scales">0</span></p>
                     <p>Claws: <span id="claws">0</span></p>
+                    <p>Ore: <span id="ore">0</span></p>
                  </div>
                 <div class="column_2">
                     <p>Fiber: <span id="fiber">0</span></p>
                     <p>Metal: <span id="metal">0</span></p>
                     <p>Gelatin: <span id="gelatin">0</span></p>
+                    <p>Crystals: <span id="crystals">0</span></p>
                 </div>
             </div>
         </div>
@@ -154,6 +157,7 @@
         </div>
 
         <div class="column_1">
+         <button class="button reclaim_button" onclick="click_reclaim_button()"> "RECLAIM!" </button>
           <button class="button combat_button" onclick="click_disengage_button()"> "DISENGAGE!" </button>
           <button class="button combat_button" onclick="click_fight_button()"> "FIGHT!" </button>
         </div>
