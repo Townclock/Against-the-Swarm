@@ -33,9 +33,11 @@ var world = [towns];
 var technology_list_html = "";
 
 var technology = [
-   new Technology("Researched", true, true),
-   new Technology("Unresearched", true, false),
-   new Technology("Unresearchable", false, false)
+   new Technology("Can Hire Meat", true, 0, 0, 0, [], function(){followers["can_hire_meat_processors"]= true;}),
+   new Technology("Can Hire Claws", true, 0, 0, 0, [], function(){followers["can_hire_claws_processors"]= true;}),
+   new Technology("Can Hire Scales", false, 10, 0, 10, [], function(){followers["can_hire_scales_processors"]= true;}),
+   new Technology("Can Hire Miners", false, 20, 50, 20, ["Can Hire Scales"], function(){followers["can_hire_scales_processors"]= true;}),
+   new Technology("Can Hire Crysal", false, 10, 0, 10, ["Can Hire Miners"], function(){followers["can_hire_scales_processors"]= true;}),
 ]
    for (i in technology){
        if (technology[i].has_been_researched){
