@@ -115,6 +115,17 @@ function multi_fight(fighters, monsters){
             }
         }
     }
+            if(monsters.length == 0 || fighters.length == 0){
+                if (reclaim_mode){
+                    reclaim_mode = false;
+                    if (monsters.length == 0){
+                        current_town--;
+                        player.location = world[current_world][current_town].location;
+                        invasion_progress -= 10;
+                    }
+                }
+                if(engaged && fighters.length < 1) {disengage(fighters, monsters);}
+            }
 }
 function rest(fighters, monsters){
     number_of_clicks++;
@@ -189,11 +200,8 @@ function reclaim(fighters, monsters){
     if (current_town > 0 && reclaim_mode == false) {
         if (invasion_progress < towns[current_town - 1].location) {
             reclaim_mode = true;
-            monsters = [
-            new Monster("protoss",5,40) 
-            //new Monster("tassadar",5,60),
-            //new Monster("terran",5,80)
-            ];
+            while (monsters.length > 0) {monsters.pop();}
+            monsters.push( new Monster("protoss",5,40) );
             engaged = true;
         }
     }
