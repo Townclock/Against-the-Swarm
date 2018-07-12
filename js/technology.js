@@ -14,7 +14,7 @@ function Technology(description,
 	
     this.prerequisites = prerequisites;
 
-    this.operation = operation
+    this.operation = operation;
 
 
 
