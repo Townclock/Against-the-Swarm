@@ -95,6 +95,7 @@ function multi_fight(fighters, monsters){
         //same for loop for fighters but instead for monsters
         for(m in monsters){
             if(monsters.length == 0 || fighters.length == 0){
+<<<<<<< HEAD
                 
 <<<<<<< HEAD
                 reclaim_mode = false;
@@ -105,6 +106,11 @@ function multi_fight(fighters, monsters){
                 }
                 break;
             }
+=======
+                if(engaged && fighters.length < 1) {disengage(fighters, monsters);}
+                break;
+                }
+>>>>>>> 0e4b2cf907ae31eeea59ca7fd77d34956968ab82
 =======
                 if(engaged && fighters.length < 1) {disengage(fighters, monsters);}
                 break;
