@@ -53,7 +53,7 @@
             invasion_progress += invasion_rate;
             increment_follower_resource(current_town);
             followers.followers_act();
-
+            change_invasion_rate(monsters);
             if (invasion_progress > towns[current_town].location){
             	under_siege = true;
 	        //change_town(player);
@@ -118,11 +118,13 @@
                     <p>Meat: <span id="meat">0</span></p>
                     <p>Scales: <span id="scales">0</span></p>
                     <p>Claws: <span id="claws">0</span></p>
+                    <p>Ore: <span id="ore">0</span></p>
                  </div>
                 <div class="column_2">
                     <p>Fiber: <span id="fiber">0</span></p>
                     <p>Metal: <span id="metal">0</span></p>
                     <p>Gelatin: <span id="gelatin">0</span></p>
+                    <p>Crystals: <span id="crystals">0</span></p>
                 </div>
             </div>
         </div>

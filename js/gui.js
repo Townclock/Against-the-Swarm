@@ -30,7 +30,7 @@ function update_ui(player, monster){
 
     update_value_by_id("number_of_processors", player.processors);
 
-    var resources = ["meat", "scales", "claws", "fiber", "metal", "gelatin"];
+    var resources = ["meat", "scales", "claws", "ore", "fiber", "metal", "gelatin", "crystals"];
     for (i in resources){
         update_value_by_id(resources[i], player_inventory[resources[i]]);
     }

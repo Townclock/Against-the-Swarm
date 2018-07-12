@@ -17,7 +17,7 @@ var current_monster = null;
 var current_fighter = null;
 
 var time_left  = 0;
-var spawn_time = 7;
+var spawn_time = 1;
 
 var towns = [
     new Town("Safety", 20, false),
@@ -56,7 +56,9 @@ function change_town(player){
 		current_world++;
 		current_town = 0;
 		invasion_progress = 0;
-	}
+	    while(monsters.length > 0) monsters.pop();
+        towns = world[current_world];
+    }
 	else{
 		current_town++;
 	}
@@ -65,6 +67,11 @@ function change_town(player){
 }
 
 function multi_fight(fighters, monsters){
+    if (monsters.length == 0){ invasion_progress-= .1};
+    if(under_siege){
+        followers.act;
+        increment_follower_resource(1);
+    }
     if(fighters.length != 0 && monsters.length != 0){
         for(f in fighters){
 
@@ -78,15 +85,17 @@ function multi_fight(fighters, monsters){
             monsters[temp].hp -= fighters[f].atk;
 
             if(monsters[temp].hp <= 0){
-                monsters[temp].die();                
+                monsters[temp].die();
                 monsters.splice(temp,1);
                 }
         }
 
         //same for loop for fighters but instead for monsters
         for(m in monsters){
-            if(monsters.length == 0 || fighters.length == 0)
+            if(monsters.length == 0 || fighters.length == 0){
+                if(engaged && fighters.length < 1) {disengage(fighters, monsters);}
                 break;
+                }
 
             var temp = Math.floor(Math.random() * fighters.length);     
 
@@ -155,7 +164,7 @@ function replace_monster(monster, challenge_level){
     console.log(monsters[0]);
 }
 
-function change_rate(monsters){
+function change_invasion_rate(monsters){
     invasion_rate = monsters.length/5;
 }
 
