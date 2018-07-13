@@ -1,12 +1,11 @@
-function Technology(description,
-                    can_be_researched,
+function Technology(technology_name,
                     has_been_researched,
                     fiber_cost,
                     metal_cost,
                     gelatin_cost,
                     prerequisites,
                     operation) {
-	this.description = description;
+	this.technology_name = technology_name;
 	this.can_be_researched = true;
 	this.has_been_researched = has_been_researched;
 	this.items = [];
@@ -25,21 +24,32 @@ function Technology(description,
 };
 
 Technology.prototype.unlock = function(technology){
-	technology.researched = true;
-   }
+	technology.has_been_researched = true;
+}
 
+Technology.prototype.visible = function(tech_list){
+  var visible = 'visible';
+  this.prerequisites.forEach(function(tech_name) {
+    var found = false;
+    tech_list.forEach(function(tech) {
+      if(tech_name == tech.technology_name)
+      {
+        found = tech.has_been_researched;
+      }
+      
+    })
+    if(!found) {
+       visible = 'hidden';
+    }
+    
+  })
 
-function create_technology_html(technology, technology_list_html){
-   for (i in technology){
-       if (technology[i].has_been_researched){
-           technology_list_html += ("<p>" + technology[i].description + "</p>");
-       }
-   }
-   technology_list_html += "<hr>";
-   for (i in technology){
-       if (!technology[i].has_been_researched && technology[i].can_be_researched){
-           technology_list_html += ("<p>" + technology[i].description + "</p>");
-       }
-   }
-   return technology_list_html;
+  return visible;
+}
+
+Technology.prototype.is_researched_color = function(){
+  if (this.has_been_researched) {
+      return 'red';
+  }else
+      return 'blue';
 }
