@@ -131,17 +131,15 @@
             </div>
         </div>
     </div>
-    <div>
         <div class="column_3 center">
             <div v-for="f in fighters" class="character_container" >
                 <div v-on:click="current_fighter = m">{{f.fighter_name}} hp: {{f.hp}}</div>
                 <div class="health_bar">
                     <div class="health" v-bind:style="{width: f.hp_in_percent()}"></div>
                 </div>
-                <div class="fighter"></monster>
+                <image src="assets/sprites/Knight.png"/>
             </div>
             </div>
-        </div>
         
         <div class="column_3 right">
             <div v-for="m in monsters" class="character_container">
