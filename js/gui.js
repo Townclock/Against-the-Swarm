@@ -25,6 +25,8 @@ function update_ui(player, monster){
 
     slide_panel(engaged);
     
+    update_value_by_id("technology_list", technology_list_html);
+
 
     update_value_by_id("number_of_processors", player.processors);
 
@@ -72,10 +74,10 @@ function update_ui(player, monster){
     var towns_status = ""
     for (x in towns){
     if (! towns[x].destroyed) {
-        towns_status += ('<div class="safe_town" style="left:' + ((85-towns[x].location)/100 * width_scalar+40) + 'px"> <image class="town_image" src="assets/sprites/Town.png"/> </div>');
+        towns_status += ('<div class="safe_town" style="left:' + (95-towns[x].location)/100 * width_scalar + 'px"> <image src="assets/sprites/Town.png"/> </div>');
     } 
         else {
-            towns_status += ('<div class="destroyed_town" style="left:' + ((85 - towns[x].location)/100 * width_scalar + 40)+ 'px"> <image class="town_image" src="assets/sprites/Destroyed_Town.png"/> </div>');
+            towns_status += ('<div class="destroyed_town" style="left:' + (95 - towns[x].location)/100 * width_scalar + 'px"> <image src="assets/sprites/Destroyed_Town.png"/> </div>');
         }
     }
     update_value_by_id("towns", towns_status);

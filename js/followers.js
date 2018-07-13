@@ -27,6 +27,8 @@ function Followers(player){
 
     this.fighters = 0;
 
+    this.mage_cost = [50,0,0,0,0,0];
+
     //Update function for the followers. Use this function for updates when calling from outside. 
     this.followers_act = function (){
         this.processors_act(); //Processes claws, scales, meat...
