@@ -70,19 +70,26 @@ function multi_fight(fighters, monsters){
     if(fighters.length != 0 && monsters.length != 0){
         for(f in fighters){
 
-            if(monsters.length == 0 || fighters.length == 0)
-                break;
+            //checking to see if fighter is a spell caster
+            if(fighters[f].is_magic && fighters[f].charge != 2)
+                fighters[f].charge ++;
 
-            //finds random monster. If random monster is already dead, searches for new one
-            var temp = Math.floor(Math.random() * monsters.length);
+            else{
+                //finds random monster. If random monster is already dead, searches for new one
+                var temp = Math.floor(Math.random() * monsters.length);
             
-            //remove hp from monster and check if monster is dead or not.
-            monsters[temp].hp -= fighters[f].atk;
-
-            if(monsters[temp].hp <= 0){
-                monsters[temp].die();
-                monsters.splice(temp,1);
+                //remove hp from monster and check if monster is dead or not.
+                monsters[temp].hp -= fighters[f].atk;
+                if(fighters[f].is_magic){
+                    monsters[temp].hp -= fighters[f].atk_bonus;
+                    fighters[f].charge = 0;
                 }
+
+                if(monsters[temp].hp <= 0){
+                    monsters[temp].die();
+                    monsters.splice(temp,1);
+                }
+            }
         }
 
         //same for loop for fighters but instead for monsters
@@ -103,6 +110,8 @@ function multi_fight(fighters, monsters){
             var temp = Math.floor(Math.random() * fighters.length);
 
             fighters[temp].hp -= monsters[m].attack_bonus;
+            fighters[temp].charge = 0;
+
             if(fighters[temp].hp <= 0){
                 fighters.splice(temp,1);
             }
@@ -153,6 +162,8 @@ function disengage(fighters, monsters){
         var temp = Math.floor(Math.random() * fighters.length);
 
         fighters[temp].hp -= monsters[m].attack_bonus;
+        fighters[temp].charge = 0;
+
         if(fighters[temp].hp < 0){
             fighters.splice(temp,1);
         }
@@ -199,3 +210,15 @@ function reclaim(fighters, monsters){
         }
     }
 };
+
+function hire_mage(player_inventory, fighters, follower){
+    if(player_inventory.meat > follower.mage_cost[0]){
+        player_inventory.meat-=50;
+        fighters.push(new Fighter(player, "Mage",500,50,true));
+
+    }
+    else{
+        alert('not enough materials');
+    }
+
+}
