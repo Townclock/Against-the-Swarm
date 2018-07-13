@@ -74,10 +74,10 @@ function update_ui(player, monster){
     var towns_status = ""
     for (x in towns){
     if (! towns[x].destroyed) {
-        towns_status += ('<div class="safe_town" style="left:' + (95-towns[x].location)/100 * width_scalar + 'px"></div>');
+        towns_status += ('<div class="safe_town" style="left:' + (95-towns[x].location)/100 * width_scalar + 'px"> <image src="assets/sprites/Town.png"/> </div>');
     } 
         else {
-            towns_status += ('<div class="destroyed_town" style="left:' + (95 - towns[x].location)/100 * width_scalar + 'px"></div>');
+            towns_status += ('<div class="destroyed_town" style="left:' + (95 - towns[x].location)/100 * width_scalar + 'px"> <image src="assets/sprites/Destroyed_Town.png"/> </div>');
         }
     }
     update_value_by_id("towns", towns_status);

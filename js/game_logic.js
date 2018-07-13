@@ -39,17 +39,9 @@ var technology = [
    new Technology("Can Hire Miners", false, 20, 50, 20, ["Can Hire Scales"], function(){followers["can_hire_scales_processors"]= true;}),
    new Technology("Can Hire Crysal", false, 10, 0, 10, ["Can Hire Miners"], function(){followers["can_hire_scales_processors"]= true;}),
 ]
-   for (i in technology){
-       if (technology[i].has_been_researched){
-           technology_list_html += ("<p>" + technology[i].description + "</p>");
-       }
-   }
-   technology_list_html += "<hr>";
-   for (i in technology){
-       if (!technology[i].has_been_researched && technology[i].can_be_researched){
-           technology_list_html += ("<p>" + technology[i].description + "</p>");
-       }
-   }
+
+technology_list_html = create_technology_html(technology, technology_list_html);
+
 function change_town(player){
 	if(current_town == 4){
 		world.push( [new Town("test",  20,  false),

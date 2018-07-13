@@ -148,6 +148,7 @@
     position: relative;
     display: inline-block;
     width: 1%;
+    height:100%;
     padding-top: 5%;
     background-color: green;
 }
