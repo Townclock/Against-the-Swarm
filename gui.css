@@ -23,7 +23,7 @@
 .column_1 {
     width: 98%;
     height: auto;
-    display: block;
+    display: inline-block;
     margin: 4px 1.1% 4px 1.1%;
     border: 1px solid blue;
 }
@@ -50,12 +50,6 @@
     width: 80%;
     margin: 10% auto 10% auto;
 }
-.combat_button {
-    display: inline-block;
-    height: 20%;
-    width: 40%;
-    margin: auto auto auto auto;
-}
 
 .click_counter {
     display: block;
@@ -65,38 +59,40 @@
     text-align: center;
 }
 
-.fighter {
-    width: 10%;
-    padding-top: 100%;
-    margin: auto;
-    background-color: blue;
-}
 .monster {
-    width: 10%;
+    width: 50%;
     padding-top: 100%;
     margin: auto;
     background-color: red;
-}
-
-.character_container{
-    display: inline-block;
-    width: 20%;
-    margin: 30px;
 }
 
 .health_bar {
-    width: 100%;
-    height: 50%;
+    width: auto;
+    height: 10%;
     margin: auto auto 3px auto;
     background-color: red;
-    border: 1px solid black;
+    border: 5px solid black;
 }
 .health {
-    width: auto%;
+    width: 100%;
     height: 100%;
     margin: 0;
-    padding-top:5%;
     background-color: lime;
+    margin-left: 0px;
+}
+
+.experience_bar {
+    width: auto;
+    height: 10%;
+    margin: auto auto 3px auto;
+    background-color: black;
+    border: 5px solid black;
+}
+.experience {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    background-color: blue;
     margin-left: 0px;
 }
 
@@ -141,8 +137,9 @@
 }
 
 #towns {
-    z-index: 2;
-    width: 100%;
+    width: 90%;
+    border: 3px solid purple;
+    margin: 20px auto 20px auto;
 }
 .safe_town{
     position: relative;
@@ -159,10 +156,4 @@
     margin: auto;
     background-color: red;
 }
-#panel_track {
-    overflow:hidden;
-    position:absolute;
-    width: 140%;
-    height: auto%;
-    left: 0;
-}
+
