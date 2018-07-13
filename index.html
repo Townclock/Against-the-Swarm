@@ -14,14 +14,14 @@
 <script src="js/followers.js"></script>
 <script src="js/fighter.js"></script>
 <script src="js/game_logic.js"></script>
-<script> 
+<script>
     //every variable or function that wants to be called from html has to have reference in //Vue function
     window.onload = function(){
         var vm = new Vue({
             el: "#vue-div",
             data: {
                 monsters: monsters,
-
+                technology: technology,
                 fighters: fighters}
         });
     };
@@ -41,6 +41,7 @@
     var player_inventory = new Player_Inventory;
 
     var followers = new Followers(player);
+    
 
 
     function click_fight_button(){  multi_fight(fighters, monsters);}
@@ -94,6 +95,12 @@
 <div id="panel_track" class="column_1">
     <div class="left column_3" id="town_panel">
         <div class="column_1">
+          <div class="column_3 right">
+            <div v-for="t in technology">
+                <div v-bind:style="{color: t.is_researched_color(), visibility: t.visible(technology)}">
+                  {{t.technology_name}}
+               </div>
+        </div>
             <p> FOLLOWERS <span id="follower_resource"></span></p>
             
             <div class="follower_row">
@@ -132,7 +139,7 @@
         </div>
     </div>
     <div>
-        <div class="column_3 center"> 
+        <div class="column_3 center">
             <div v-for="f in fighters" class="character_container" >
                 <div v-on:click="current_fighter = m">{{f.fighter_name}} hp: {{f.hp}}</div>
                 <div class="health_bar">
@@ -162,5 +169,6 @@
           <button class="button combat_button" onclick="click_disengage_button()"> "DISENGAGE!" </button>
           <button class="button combat_button" onclick="click_fight_button()"> "FIGHT!" </button>
         </div>
+        
 </body>
 </html>
