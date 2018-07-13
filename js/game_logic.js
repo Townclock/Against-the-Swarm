@@ -33,14 +33,13 @@ var world = [towns];
 var technology_list_html = "";
 
 var technology = [
-   new Technology("Can Hire Meat", true, 0, 0, 0, [], function(){followers["can_hire_meat_processors"]= true;}),
-   new Technology("Can Hire Claws", true, 0, 0, 0, [], function(){followers["can_hire_claws_processors"]= true;}),
-   new Technology("Can Hire Scales", false, 10, 0, 10, [], function(){followers["can_hire_scales_processors"]= true;}),
-   new Technology("Can Hire Miners", false, 20, 50, 20, ["Can Hire Scales"], function(){followers["can_hire_scales_processors"]= true;}),
-   new Technology("Can Hire Crysal", false, 10, 0, 10, ["Can Hire Miners"], function(){followers["can_hire_scales_processors"]= true;}),
+   new Technology("Can Hire Meat", true, 0, 0, 0, [], console.log("")),
+   new Technology("Can Hire Claws", true, 0, 0, 0, [], console.log("")),
+   new Technology("Can Hire Scales", false, 10, 0, 10, [], console.log("")),
+   new Technology("Can Hire Miners", false, 20, 50, 20, ["Can Hire Scales"], console.log("")),
+   new Technology("Can Hire Crysal", false, 10, 0, 10, ["Can Hire Miners"], console.log("")),
 ]
 
-technology_list_html = create_technology_html(technology, technology_list_html);
 
 function change_town(player){
 	if(current_town == 4){
@@ -77,7 +76,7 @@ function multi_fight(fighters, monsters){
             //finds random monster. If random monster is already dead, searches for new one
             var temp = Math.floor(Math.random() * monsters.length);
             
-            //remove hp from monster and check if monster is dead or not. 
+            //remove hp from monster and check if monster is dead or not.
             monsters[temp].hp -= fighters[f].atk;
 
             if(monsters[temp].hp <= 0){
@@ -96,12 +95,12 @@ function multi_fight(fighters, monsters){
                         player.location = world[current_world][current_town].location;
                         invasion_progress -= 10;
                     }
-                }    
+                }
                 if(engaged && fighters.length < 1) {disengage(fighters, monsters);}
                 break;
             }
 
-            var temp = Math.floor(Math.random() * fighters.length);     
+            var temp = Math.floor(Math.random() * fighters.length);
 
             fighters[temp].hp -= monsters[m].attack_bonus;
             if(fighters[temp].hp <= 0){
@@ -187,7 +186,7 @@ function change_invasion_rate(monsters){
 }
 
 function increment_follower_resource(current_town){
-    follower_resource += (5 - current_town);     
+    follower_resource += (5 - current_town);
 }
 
 function reclaim(fighters, monsters){
