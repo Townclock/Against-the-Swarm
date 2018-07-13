@@ -66,6 +66,7 @@
         //code that spawns new enemy every interval
         time_elapsed++;
         if(time_elapsed >= spawn_time && ! reclaim_mode){
+            if (monsters.length < 18)
             monsters.push(new Monster("test", 50,10));
             time_elapsed = 0;
         }
@@ -89,7 +90,6 @@
 
 
 
-<div id="technology_list"></div>
 <div class="column_1" id="track_container">
 <div id="panel_track" class="column_1">
     <div class="left column_3" id="town_panel">
@@ -99,7 +99,9 @@
                 <div v-bind:style="{color: t.is_researched_color(), visibility: t.visible(technology)}">
                   {{t.technology_name}}
                </div>
-        </div>
+</div>
+</div>
+    
             <p> FOLLOWERS <span id="follower_resource"></span></p>
             
             <div class="follower_row">
@@ -109,14 +111,6 @@
                 </div>
             </div>
 
-            <div>
-                <div class="column_2">
-                    <button class="button town_button" onclick="click_rest_button()"> "REST!" </button>
-            </div>
-                <div class="column_2">
-                    <button class="button town_button" onclick="click_engage_button()"> "ENGAGE!" </button>
-                </div>
-            </div>
         </div>
         <div class="column_1">
             <p> RESOURCES </p>
@@ -139,7 +133,7 @@
     </div>
         <div class="column_3 center">
             <div v-for="f in fighters" class="character_container" >
-                <div v-on:click="current_monster = m">{{f.fighter_name}} hp: {{f.hp}}</div>
+                <div v-on:click="current_fighter = m">{{f.fighter_name}} hp: {{f.hp}}</div>
                 <div class="health_bar">
                     <div class="health" v-bind:style="{width: f.hp_in_percent()}"></div>
                 </div>
@@ -157,7 +151,7 @@
                 <div class="health_bar" id="monster_health_bar">
                     <div class="health" v-bind:style="{width: m.hp_in_percent()}"></div>
                 </div>
-                <div class="monster"></monster>
+                <image src="assets/sprites/Monster_Spider.png"/>
             </div>
         </div>
     </div>
@@ -166,9 +160,11 @@
         </div>
 
         <div class="column_1">
-         <button class="button reclaim_button" onclick="click_reclaim_button()"> "RECLAIM!" </button>
-          <button class="button combat_button" onclick="click_disengage_button()"> "DISENGAGE!" </button>
-          <button class="button combat_button" onclick="click_fight_button()"> "FIGHT!" </button>
+            <button class="button town_button" onclick="click_rest_button()"> "REST!" </button>
+            <button class="button town_button" onclick="click_engage_button()"> "ENGAGE!" </button>
+            <button class="button combat_button" onclick="click_disengage_button()"> "DISENGAGE!" </button>
+            <button class="button combat_button" onclick="click_fight_button()"> "FIGHT!" </button>
+            <button class="button  combat_button" onclick="click_reclaim_button()"> "RECLAIM!" </button>
         </div>
 
 </body>
