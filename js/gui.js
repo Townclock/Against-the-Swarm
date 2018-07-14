@@ -56,16 +56,6 @@ function update_ui(player, monster){
         }
     }
 
-    if (player.processor_queue.length > 0){
-        var unit = player.processor_queue[0];
-
-        update_bar_by_id(processpr_bar, unit.process_time, unit.max_process_time);
-
-    } 
-    else{
-        document.getElementById('processor_bar').style.width = 0;
-    }
-
 
     var width_scalar = document.getElementById("towns").offsetWidth;
     
