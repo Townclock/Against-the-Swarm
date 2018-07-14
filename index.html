@@ -5,7 +5,6 @@
 
 <script src="js/vue.js"></script>
 
-<script src="js/player.js"></script>
 <script src="js/monster.js"></script>
 <script src="js/town.js"></script>
 <script src="js/technology.js"></script>
@@ -26,7 +25,6 @@
         });
     };
 
-    var player = new Player();
     var monster = new Monster("zerg",5,20);
      monsters = [monster,
                     //new Monster("protoss",5,40),
@@ -34,13 +32,13 @@
                     //new Monster("terran",5,80)
                     ];
 
-    var fighters = [new Fighter(player, "hero 1", 169,  30),
-                    new Fighter(player, "hero 2", 269,  63),
-                    new Fighter(player, "hero 3", 1000, 2)];
+    var fighters = [new Fighter( "hero 1", 169,  30),
+                    new Fighter( "hero 2", 269,  63),
+                    new Fighter( "hero 3", 1000, 2)];
 
     var player_inventory = new Player_Inventory;
 
-    var followers = new Followers(player);
+    var followers = new Followers();
 
 
 
@@ -51,7 +49,7 @@
     function click_reclaim_button(){reclaim(fighters, monsters)};
     
     var timer = setInterval(function(){
-        update_ui(player, monster);
+        update_ui(monster);
 
         if (!under_siege && !reclaim_mode) {
             invasion_progress += invasion_rate;
@@ -74,7 +72,7 @@
         , 1000);
 
     var gui_update = setInterval(function(){
-        update_ui(player, monsters[0]);
+        update_ui( monsters[0]);
     }, 17);
 
 </script>

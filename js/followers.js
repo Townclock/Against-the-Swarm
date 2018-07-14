@@ -1,4 +1,4 @@
-function Followers(player){
+function Followers(){
 
     //New variables of different jobs
     this.meat_processors = 50;

@@ -20,13 +20,12 @@ function update_bar_by_id(id, current, max){
     document.getElementById(id).style.width = h_width;
 }
 
-function update_ui(player, monster){
+function update_ui( monster){
     document.getElementById("track_container").style.height  = document.getElementById("panel_track").offsetHeight;
 
     slide_panel(engaged);
     
 
-    update_value_by_id("number_of_processors", player.processors);
 
     var resources = ["meat", "scales", "claws", "ore", "fiber", "metal", "gelatin", "crystals"];
     for (i in resources){

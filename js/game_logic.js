@@ -21,6 +21,7 @@ var current_fighter = null;
 var time_elapsed  = 0;
 var spawn_time = 1;
 
+
 var towns = [
     new Town("Safety", 20, false),
     new Town("Concern", 40, false),
@@ -29,6 +30,8 @@ var towns = [
     new Town("Doom", 95, true)
 ];
 var world = [towns];
+
+var player_location = world[current_world][current_town].location;
 
 var technology_list_html = "";
 
@@ -41,7 +44,7 @@ var technology = [
 ]
 
 
-function change_town(player){
+function change_town(){
 	if(current_town == 4){
 		world.push( [new Town("test",  20,  false),
 			     new Town("test2", 40,  false),
@@ -57,7 +60,7 @@ function change_town(player){
 	else{
 		current_town++;
 	}
-	player.location = world[current_world][current_town].location;
+	player_location = world[current_world][current_town].location;
 
 }
 
@@ -99,7 +102,7 @@ function multi_fight(fighters, monsters){
                     reclaim_mode = false;
                     if (monsters.length == 0){
                         current_town--;
-                        player.location = world[current_world][current_town].location;
+                        player_location = world[current_world][current_town].location;
                         invasion_progress -= 10;
                     }
                 }
@@ -122,7 +125,7 @@ function multi_fight(fighters, monsters){
                     reclaim_mode = false;
                     if (monsters.length == 0){
                         current_town--;
-                        player.location = world[current_world][current_town].location;
+                        player_location = world[current_world][current_town].location;
                         invasion_progress -= 10;
                     }
                 }
@@ -139,7 +142,6 @@ function rest(fighters, monsters){
     {
         monsters[i].heal();
     }
-    //update_ui(player, monsters[0]);
 
 
     invasion_progress += 2;
@@ -147,7 +149,6 @@ function rest(fighters, monsters){
 function engage(fighters, monsters){
     number_of_clicks++;
     engaged = true;
-    //update_ui(player, monsters[0])
 };
 function disengage(fighters, monsters){
 
@@ -179,10 +180,9 @@ function disengage(fighters, monsters){
         towns[current_town].destroyed = true;
         engaged = false;
         under_siege = false;
-	change_town(player);
+	change_town();
     }
 
-    //update_ui(player, monsters[0]);
 
 };
 
@@ -214,7 +214,7 @@ function reclaim(fighters, monsters){
 function hire_mage(player_inventory, fighters, follower){
     if(player_inventory.meat > follower.mage_cost[0]){
         player_inventory.meat-=50;
-        fighters.push(new Fighter(player, "Mage",500,50,true));
+        fighters.push(new Fighter( "Mage",500,50,true));
 
     }
     else{
