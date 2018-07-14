@@ -1,4 +1,4 @@
-var sliding_panel_offset = -49;
+var sliding_panel_offset = 0 ;
 
 function slide_panel(engaged){
     var width = document.getElementById("town_panel").offsetWidth;
@@ -8,6 +8,8 @@ function slide_panel(engaged){
     if ( (sliding_panel_offset < 0) && ! engaged && ! under_siege){
         sliding_panel_offset += 20;
     }
+    if (sliding_panel_offset < 5 && sliding_panel_offset > -5){sliding_panel_offset = 0;}
+
         document.getElementById("panel_track").style.left  = sliding_panel_offset;
 }
 
