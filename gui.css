@@ -23,7 +23,7 @@
 .column_1 {
     width: 98%;
     height: auto;
-    display: inline-block;
+    display: block;
     margin: 4px 1.1% 4px 1.1%;
     border: 1px solid blue;
 }
@@ -51,6 +51,19 @@
     margin: 10% auto 10% auto;
 }
 
+.town_button {
+    display: inline-block;
+    height: 20%;
+    width: 33%;
+    margin: auto auto auto auto;
+}
+.combat_button {
+    display: inline-block;
+    height: 20%;
+    width: 33%;
+    margin: auto auto auto auto;
+}
+
 .click_counter {
     display: block;
     width: 25%;
@@ -59,40 +72,38 @@
     text-align: center;
 }
 
+.fighter {
+    width: 10%;
+    padding-top: 100%;
+    margin: auto;
+    background-color: blue;
+}
 .monster {
-    width: 50%;
+    width: 10%;
     padding-top: 100%;
     margin: auto;
     background-color: red;
 }
 
-.health_bar {
-    width: auto;
-    height: 10%;
-    margin: auto auto 3px auto;
-    background-color: red;
-    border: 5px solid black;
-}
-.health {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    background-color: lime;
-    margin-left: 0px;
+.character_container{
+    display: inline-block;
+    width: 20%;
+
 }
 
-.experience_bar {
-    width: auto;
-    height: 10%;
-    margin: auto auto 3px auto;
-    background-color: black;
-    border: 5px solid black;
-}
-.experience {
+.health_bar {
     width: 100%;
+    height: 50%;
+    margin: auto auto 3px auto;
+    background-color: red;
+    border: 1px solid black;
+}
+.health {
+    width: auto%;
     height: 100%;
     margin: 0;
-    background-color: blue;
+    padding-top:5%;
+    background-color: lime;
     margin-left: 0px;
 }
 
@@ -137,23 +148,36 @@
 }
 
 #towns {
-    width: 90%;
-    border: 3px solid purple;
-    margin: 20px auto 20px auto;
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    top: 3px;
 }
 .safe_town{
     position: relative;
     display: inline-block;
-    width: 1%;
-    padding-top: 5%;
-    background-color: green;
+    height:140%;
+    top: -20%;
+    background-color: white;
+    border: 2px solid black;
 }
+
+.town_image{
+    padding: 3px;
+    height: 80px;
+    width: 80px;
+}
+
 .destroyed_town{
     position: relative;
     display: inline-block;
     width: 1%;
-    padding-top: 5%;
     margin: auto;
-    background-color: red;
 }
-
+#panel_track {
+    overflow:hidden;
+    position:absolute;
+    width: 140%;
+    height: auto%;
+    left: 0;
+}
