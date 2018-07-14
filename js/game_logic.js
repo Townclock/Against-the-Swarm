@@ -23,11 +23,11 @@ var spawn_time = 1;
 
 
 var towns = [
-    new Town("Safety", 20, false),
-    new Town("Concern", 40, false),
-    new Town("Worry", 60, false),
-    new Town("Panic", 85, false),
-    new Town("Doom", 95, true)
+    new Town("Safety", 10, false),
+    new Town("Concern", 35, false),
+    new Town("Worry", 50, false),
+    new Town("Panic", 65, false),
+    new Town("Doom", 80, true)
 ];
 var world = [towns];
 

@@ -86,13 +86,13 @@ body {
 
 .character_container{
     display: inline-block;
-    width: 20%;
-
+    width: auto;
+    height: auto;
 }
 
 .health_bar {
     width: 100%;
-    height: 50%;
+    height: 30px;
     margin: auto auto 3px auto;
     background-color: red;
     border: 1px solid black;
@@ -138,14 +138,6 @@ body {
     width: 100%;
     top: -10px;
 }
-.safe_town{
-    position: relative;
-    display: inline-block;
-    height:140%;
-    top: -20%;
-    background-color: white;
-    border: 2px solid black;
-}
 
 .town_image{
     padding: 3px;
@@ -153,17 +145,28 @@ body {
     width: 80px;
 }
 
+.safe_town{
+    position: absolute;
+    display: inline-block;
+    height:auto;
+    top: -20%;
+    background-color: white;
+    border: 2px solid black;
+}
+
 .destroyed_town{
     position: relative;
     display: inline-block;
-    width: 1%;
-    margin: auto;
+    height:140%;
+    top: -20%;
+    background-color: white;
+    border: 2px solid black;
 }
 #panel_track {
     position:absolute;
     top:0;
     width: 200%;
-    height: auto%;
+    height: 100%;
     margin: 0px;
 }
 #town_panel {
@@ -180,6 +183,7 @@ body {
     background-color: green;
     overflow:hidden;
     margin: 0px;
+    height: 100%;
 }
 #monsters_column {
     position:absolute;
@@ -207,13 +211,21 @@ body {
     max-width: 30%;
     top: 150px;
     }
+#resource_display .resource {
+    background-color: DB8C44;
+    color:black;
+    }
 #resource_names {
     max-width: 15%;
     text-align: right;
+    .resource{background-color: brown;}
 }
-.resource {
+#resource_names .resource {
     background-color: brown;
     color:white;
+    }
+
+.resource {
     margin: 0px 0px 30px 0%;
     border: 2px solid black;
 }
