@@ -8,23 +8,19 @@ function Technology(technology_name,
 	this.technology_name = technology_name;
 	this.can_be_researched = true;
 	this.has_been_researched = has_been_researched;
-	this.items = [];
 	this.cost = {fiber: fiber_cost, metal: metal_cost, gelatin: gelatin_cost};
-
-    this.prerequisites = prerequisites;
-
-    this.operation = operation;
+  this.prerequisites = prerequisites;
+  this.operation = operation;
 
 
-
-	if(this.cost.gelatin_cost === undefined){
+  if(this.cost.gelatin_cost === undefined){
 	  this.cost = {fiber: 0, metal: 0, gelatin: 0};
 	}
 
 };
 
 Technology.prototype.unlock = function(technology){
-	technology.has_been_researched = true;
+  technology.has_been_researched = true;
 }
 
 Technology.prototype.visible = function(tech_list){

@@ -36,13 +36,24 @@ var player_location = world[current_world][current_town].location;
 var technology_list_html = "";
 
 var technology = [
-   new Technology("Can Hire Meat", true, 0, 0, 0, [], console.log("")),
-   new Technology("Can Hire Claws", true, 0, 0, 0, [], console.log("")),
-   new Technology("Can Hire Scales", false, 10, 0, 10, [], console.log("")),
-   new Technology("Can Hire Miners", false, 20, 50, 20, ["Can Hire Scales"], console.log("")),
-   new Technology("Can Hire Crysal", false, 10, 0, 10, ["Can Hire Miners"], console.log("")),
+   new Technology("Can Hire Meat", true, 0, 0, 0, [], console.log("test1")),
+   new Technology("Can Hire Claws", true, 0, 0, 0, [], console.log("test2")),
+   new Technology("Can Hire Scales", false, 10, 0, 10, [], console.log("test3")),
+   new Technology("Can Hire Miners", false, 20, 50, 20, ["Can Hire Scales"], console.log("test4")),
+   new Technology("Can Hire Crysal", false, 10, 0, 10, ["Can Hire Miners"], console.log("test5")),
 ]
 
+function unlock_tech(techs, player_inventory){
+    if(player_inventory.fiber >= techs.fiber_cost && player_inventory.metal >= techs.metal_cost && player_inventory.gelatin >= techs.gelatin_cost){
+        techs.unlock();
+        player_inventory.decrement("fiber", techs.cost.fiber_cost);
+        player_inventory.decrement("metal", techs.cost.metal_cost);
+        player_inventory.decrement("gelatin", techs.cost.gelatin_cost);
+    }else {
+        alert("Prerequisites not met.");
+    }
+   
+}
 
 function change_town(){
 	if(current_town == 4){
@@ -220,5 +231,10 @@ function hire_mage(player_inventory, fighters, follower){
     else{
         alert('not enough materials');
     }
-
 }
+
+
+
+
+
+
