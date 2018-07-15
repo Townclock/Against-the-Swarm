@@ -11,7 +11,6 @@ body {
 .left {
     display: inline-block;
     float: left;
-    width: 25%;
     height: 50%;
     margin: auto auto auto auto;
 }
@@ -98,12 +97,6 @@ body {
     margin-left: 0px;
 }
 
-.follower_row {
-    width: 98%;
-    height: 10%;
-    margin: 4px 1.1% 4px 1.1%;
-}
-
 
 .invasion_bar {
     position: absolute;
@@ -154,8 +147,8 @@ body {
 #panel_track {
     position:absolute;
     top:0;
-    width: 200%;
-    height: auto%;
+    width: 150%;
+    height: 100%;
     margin: 0px;
 }
 #town_panel {
@@ -164,6 +157,8 @@ body {
     overflow:hidden;
     margin: 0px;
     height: 100%;
+    width: 20%;
+    display:inline-block;
 }
 .panel_contents {
     margin-top: 150px;
@@ -172,10 +167,14 @@ body {
     background-color: green;
     overflow:hidden;
     margin: 0px;
+    height: 100%;
+    width:79%;
+    display:inline-block;
 }
 #monsters_column {
     position:absolute;
     overflow:hidden;
+    width: 30%;
 }
 #vue-div {
     width: 100%;
@@ -198,6 +197,7 @@ body {
     left: 0px;
     width: 6%;
     top: 150px;
+    height: 100%;
     }
 #resource_display .resource {
     background-color: DB8C44;
@@ -217,6 +217,7 @@ body {
 }
 .resource span {
     text-align: right;
+    height: 6%;
 }
 #resource_names .resource span {
     text-align: right;

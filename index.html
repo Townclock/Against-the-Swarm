@@ -168,7 +168,7 @@
             </div>
 
 <div id="panel_track" class="column_1">
-    <div class="left column_3" id="town_panel">
+    <div id="town_panel">
         <div class="panel_contents">
             <div id="resource_names">
                     <div class="resource">
@@ -204,9 +204,9 @@
             </div>
         </div>
     </div>
-    <div id="field_panel">
+    <div id="field_panel" >
     <div class="panel_contents">
-        <div class="column_3 center">
+        <div class="column_2 center">
             <div v-for="f in fighters" class="character_container" >
                 <div v-on:click="current_fighter = m">{{f.fighter_name}} hp: {{f.hp}}</div>
                 <div class="health_bar">
@@ -218,7 +218,7 @@
 
 
 
-        <div class="column_3 right" id="monsters_column">
+        <div class="column_2 right" id="monsters_column">
             <div v-for="m in monsters" class="character_container">
                 <div v-on:click="current_monster = m">{{m.monster_name}} hp: {{m.hp}}</div>
                 <div class="health_bar" id="monster_health_bar">
