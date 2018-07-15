@@ -196,7 +196,7 @@ body {
     z-index:2;
     position: absolute;
     left: 0px;
-    width: 4%;
+    width: 6%;
     top: 150px;
     }
 #resource_display .resource {
@@ -206,13 +206,17 @@ body {
     width: 100%;
     }
 #resource_names {
-    max-width: 45%;
+    max-width: 30%;
 }
 .resource {
     background-color: brown;
     color:white;
     margin: 0px 0px 30px 0%;
     border: 2px solid black;
+    height: auto%;
+}
+.resource span {
+    text-align: right;
 }
 #resource_names .resource span {
     text-align: right;
