@@ -11,7 +11,6 @@ body {
 .left {
     display: inline-block;
     float: left;
-    width: 25%;
     height: 50%;
     margin: auto auto auto auto;
 }
@@ -106,12 +105,6 @@ body {
     margin-left: 0px;
 }
 
-.follower_row {
-    width: 98%;
-    height: 10%;
-    margin: 4px 1.1% 4px 1.1%;
-}
-
 
 .invasion_bar {
     position: absolute;
@@ -165,7 +158,7 @@ body {
 #panel_track {
     position:absolute;
     top:0;
-    width: 200%;
+    width: 150%;
     height: 100%;
     margin: 0px;
 }
@@ -175,6 +168,8 @@ body {
     overflow:hidden;
     margin: 0px;
     height: 100%;
+    width: 20%;
+    display:inline-block;
 }
 .panel_contents {
     margin-top: 150px;
@@ -184,10 +179,13 @@ body {
     overflow:hidden;
     margin: 0px;
     height: 100%;
+    width:79%;
+    display:inline-block;
 }
 #monsters_column {
     position:absolute;
     overflow:hidden;
+    width: 30%;
 }
 #vue-div {
     width: 100%;
@@ -210,6 +208,7 @@ body {
     left: 0px;
     max-width: 30%;
     top: 150px;
+    height: 100%;
     }
 #resource_display .resource {
     background-color: DB8C44;
@@ -228,4 +227,5 @@ body {
 .resource {
     margin: 0px 0px 30px 0%;
     border: 2px solid black;
+    height: 6%;
 }
