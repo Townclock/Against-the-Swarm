@@ -146,7 +146,6 @@
                     <div class="resource">Crystals</div>
             </div>
 
-        <div onclick="hire_mage(player_inventory, fighters, followers)">Hire Mage</div>
     </div>
     </div>
     <div id="field_panel" >
@@ -200,6 +199,7 @@
             </div>
             <div class="column_2">
               <div class="column_3 right">
+        <div onclick="hire_mage(player_inventory, fighters, followers)">Hire Mage</div>
                 <div v-for="t in technology">
                     <div v-bind:style="{color: t.is_researched_color(), visibility: t.visible(technology)}">
                       {{t.technology_name}}

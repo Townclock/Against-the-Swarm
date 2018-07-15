@@ -229,4 +229,5 @@ body {
 }
 .resource span {
     text-align: right;
+    float: right;
 }
