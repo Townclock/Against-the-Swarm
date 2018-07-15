@@ -77,7 +77,7 @@ function multi_fight(fighters, monsters){
             if(fighters[f].is_magic && fighters[f].charge != 2)
                 fighters[f].charge ++;
 
-            else if (monsters.length > 0){
+            else{
                 //finds random monster. If random monster is already dead, searches for new one
                 var temp = Math.floor(Math.random() * monsters.length);
             
