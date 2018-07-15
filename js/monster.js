@@ -8,6 +8,11 @@ function Monster (monster_name, health, attack) {
     this.present = true;
 }
 
+Monster.prototype.hp_in_percent = function(){
+    return ((this.hp / this.max_hp) *100) + "%";
+}
+
+
 Monster.prototype.replace = function (challenge_level) {
     this.hp = 5;
     this.max_hp = 5;
@@ -46,7 +51,8 @@ Monster.prototype.die = function(monster){
     player_inventory.increment("meat", this.loot.meat);
     player_inventory.increment("scales", this.loot.scales);
     player_inventory.increment("claws", this.loot.claws);
-    this.present = false;
+    console.log(player_inventory);
+//invasion_progress--;
 }
 Monster.prototype.attack = function(player){
         player.hp -= this.attack_bonus;

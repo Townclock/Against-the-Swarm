@@ -5,161 +5,181 @@
 
 <script src="js/vue.js"></script>
 
-<script src="js/player.js"></script>
 <script src="js/monster.js"></script>
 <script src="js/town.js"></script>
 <script src="js/technology.js"></script>
 <script src="js/player_inventory.js"></script>
 <script src="js/gui.js"></script>
+<script src="js/followers.js"></script>
+<script src="js/fighter.js"></script>
 <script src="js/game_logic.js"></script>
-<script src="js/follower.js"></script>
-<script> 
+<script>
     //every variable or function that wants to be called from html has to have reference in //Vue function
     window.onload = function(){
         var vm = new Vue({
             el: "#vue-div",
             data: {
                 monsters: monsters,
-
-                current_monster: current_monster,
-                current_fighter: current_fighter,
-            }
+                technology: technology,
+                fighters: fighters}
         });
     };
 
-    var player = new Player();
     var monster = new Monster("zerg",5,20);
-    var monsters = [monster,
+     monsters = [monster,
                     //new Monster("protoss",5,40),
                     //new Monster("tassadar",5,60),
                     //new Monster("terran",5,80)
                     ];
 
-    var fighters = [new Fighter(player, "hero 1", 169,  30),
-                    new Fighter(player, "hero 2", 269,  63),
-                    new Fighter(player, "hero 3", 1000, 2)];
+    var fighters = [new Fighter( "hero 1", 169,  30),
+                    new Fighter( "hero 2", 269,  63),
+                    new Fighter( "hero 3", 1000, 2)];
 
     var player_inventory = new Player_Inventory;
 
-    var follower = new Follower(player);
+    var followers = new Followers();
+
+
+
     function click_fight_button(){  multi_fight(fighters, monsters);}
     function click_rest_button(){          rest(fighters, monsters);}
     function click_engage_button(){      engage(fighters, monsters)};
     function click_disengage_button(){disengage(fighters, monsters)};
+    function click_reclaim_button(){reclaim(fighters, monsters)};
     
     var timer = setInterval(function(){
-        update_ui(player, monster);
+        update_ui(monster);
 
-        if (! under_siege) {
+        if (!under_siege && !reclaim_mode) {
             invasion_progress += invasion_rate;
             increment_follower_resource(current_town);
-            follower.followers_act();
-
+            followers.followers_act();
+            change_invasion_rate(monsters);
             if (invasion_progress > towns[current_town].location){
             	under_siege = true;
-	        //change_town(player);
-		//alert('you did not save this town. We must retreat!');
             }
-
+        
         }
         //code that spawns new enemy every interval
-        time_left++;
-        if(time_left == spawn_time){
+        time_elapsed++;
+        if(time_elapsed >= spawn_time && ! reclaim_mode){
+            if (monsters.length < 18)
             monsters.push(new Monster("test", 50,10));
-            time_left = 0;
+            time_elapsed = 0;
         }
     }
         , 1000);
 
     var gui_update = setInterval(function(){
-        update_ui(player, monsters[0]);
+        update_ui( monsters[0]);
     }, 17);
 
 </script>
 
-<body><div id="vue-div">
+<body>
+<div id="vue-div">
 
+<div class="column_1" id="track_container">
     <div class="invasion_bar">
         <div class="invasion" id="invasion" style="width:0px"></div>
-    </div>
-    <div id="towns"> </div>
-
-    <div v-if="current_monster != null">
-        Current Monster has {{current_monster.hp}} hp
-    </div>
-    <div v-for="m in monsters">
-        <div v-on:click="current_monster = m">{{m.monster_name}} hp: {{m.hp}}</div>
+        <div id="towns"> </div>
     </div>
 
+            <div id="resource_display">
+                    <div class="resource"><span id="follower_resource"></span></div>
+                    <div class="resource"><span id="meat">0</span></div>
+                    <div class="resource"><span id="scales">0</span></div>
+                    <div class="resource"><span id="claws">0</span></div>
 
-<div id="technology_list"></div>
-    <div id="panel_track">
-    <div class="left" id="town_panel">
-        <div class="column_1">
-            <p> FOLLOWERS <span id="follower_resource"></span></p>
-            
-            <div class="follower_row">
-                Processors: <span id="number_of_processors"></span>
-                <div class="completion_bar">
-                    <div class="completion" id="processor_bar"></div>
+                    <div class="resource"><span id="fiber">0</span></div>
+                    <div class="resource"><span id="metal">0</span></div>
+                    <div class="resource"><span id="gelatin">0</span></div>
+
+                    <div class="resource"><span id="ore">0</span></div>
+                    <div class="resource"><span id="crystals">0</span></div>
+            </div>
+
+<div id="panel_track" class="column_1">
+    <div id="town_panel">
+        <div class="panel_contents">
+            <div id="resource_names">
+                    <div class="resource">Followers</span></div>
+                    <div class="resource">Meat</div>
+                    <div class="resource">Scales</div>
+                    <div class="resource">Claws</div>
+
+                    <div class="resource">Fiber</div>
+                    <div class="resource">Metal</div>
+                    <div class="resource">Gelatin</div>
+
+                    <div class="resource">Aetherium</div>
+                    <div class="resource">Crystals</div>
+            </div>
+
+        <div onclick="hire_mage(player_inventory, fighters, followers)">Hire Mage</div>
+    </div>
+    </div>
+    <div id="field_panel" >
+    <div class="panel_contents">
+        <div class="column_2 center">
+            <div v-for="f in fighters" class="character_container" >
+                <div v-on:click="current_fighter = m">{{f.fighter_name}} hp: {{f.hp}}</div>
+                <div class="health_bar">
+                    <div class="health" v-bind:style="{width: f.hp_in_percent()}"></div>
+                </div>
+                <image src="assets/sprites/Knight.png"/>
+            </div>
+            </div>
+
+
+
+        <div class="column_2 right" id="monsters_column">
+            <div v-for="m in monsters" class="character_container">
+                <div v-on:click="current_monster = m">{{m.monster_name}} hp: {{m.hp}}</div>
+                <div class="health_bar" id="monster_health_bar">
+                    <div class="health" v-bind:style="{width: m.hp_in_percent()}"></div>
+                </div>
+                <image class="town_image" src="assets/sprites/Monster_Spider.png"/>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+        <div id="control_panel">
+            <div class="column_2">
+                <div class="column_1">
+                    <button class="button town_button" onclick="click_rest_button()">
+                        "REST!"
+                    </button>
+                    <button class="button town_button" onclick="click_engage_button()">
+                        "ENGAGE!"
+                    </button>
+                </div>
+                <div class="column_1">
+                    <button class="button combat_button" onclick="click_disengage_button()">
+                        "DISENGAGE!"
+                    </button>
+                    <button class="button combat_button" onclick="click_fight_button()">
+                        "FIGHT!"
+                    </button>
+                    <button class="button  combat_button" onclick="click_reclaim_button()">
+                        "RECLAIM!"
+                    </button>
                 </div>
             </div>
-
-            <div>
-                <div class="column_2">
-                    <button class="button town_button" onclick="click_rest_button()"> "REST!" </button>
-            </div>
-                <div class="column_2">
-                    <button class="button town_button" onclick="click_engage_button()"> "ENGAGE!" </button>
+            <div class="column_2">
+              <div class="column_3 right">
+                <div v-for="t in technology">
+                    <div v-bind:style="{color: t.is_researched_color(), visibility: t.visible(technology)}">
+                      {{t.technology_name}}
+                   </div>
                 </div>
             </div>
-        </div>
-        <div class="column_1">
-            <p> RESOURCES </p>
-
-            <div>
-                <div class="column_2">
-                    <p>Meat: <span id="meat">0</span></p>
-                    <p>Scales: <span id="scales">0</span></p>
-                    <p>Claws: <span id="claws">0</span></p>
-                 </div>
-                <div class="column_2">
-                    <p>Fiber: <span id="fiber">0</span></p>
-                    <p>Metal: <span id="metal">0</span></p>
-                    <p>Gelatin: <span id="gelatin">0</span></p>
-                </div>
             </div>
         </div>
     </div>
-    <div class="center">
-
-        <div class="column_3 left">
-		  
-            <p>Level: <span id="player_level">1</span>
-                (<span id="exp_counter"> 0 </span>
-                / <span id="exp_until_level">1</span>)
-            </p>
-            <div class="experience_bar" id="player_experience_bar">
-                <div class="experience" id="player_experience" style="width:0px"></div>
-
-
-            </div>
-            <div class="health_bar" id="player_health_bar">
-                <div class="health" id="player_health"></div>
-            </div>
-            <button class="button combat_button" onclick="click_fight_button()"> "FIGHT!" </button>
-            <button class="button combat_button" onclick="click_disengage_button()"> "DISENGAGE!" </button>
-        </div>
-        <div class="column_3"> </div>
-        <div class="column_3 right">
-            <div class="health_bar" id="monster_health_bar">
-                <div class="health" id="monster_health"></div>
-            </div>
-            <div class="monster"></monster>
-        </div>
-    </div>
-    </div>
-<div class="right">
-    </div>
-</div></body>
+</div>
+</body>
 </html>
