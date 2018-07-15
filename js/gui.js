@@ -58,52 +58,17 @@ function update_ui( monster){
     }
 
 
-    var width_scalar = document.getElementById("towns").offsetWidth;
+    //var width_scalar = document.getElementById("towns").offsetWidth;
     
-    var towns_status = ""
+    /*var towns_status = ""
     for (x in towns){
     if (! towns[x].destroyed) {
-        towns_status = towns_status
-            + '<div class="safe_town" style="left:'
-            + (( (1-(towns[x].location  / 100)) * width_scalar )-20) + 'px">'
-            + '<image class="town_image" src="assets/sprites/Town.png"/> </div>';
+        towns_status += ('<div class="destroyed_town" style="left:' + ((85-towns[x].location)/100 * width_scalar+40) + 'px"> <image class="town_image" src="assets/sprites/Town.png"/> </div>');
     } 
         else {
-        towns_status = towns_status
-            + '<div class="safe_town" style="left:'
-            + (((1-(towns[x].location  / 100)) * width_scalar )-20) + 'px">'
-            + '<image class="town_image" src="assets/sprites/Destroyed_Town.png"/> </div>';
+            towns_status += ('<div class="destroyed_town" style="left:' + ((85 - towns[x].location)/100 * width_scalar + 40)+ 'px"> <image class="town_image" src="assets/sprites/Destroyed_Town.png"/> </div>');
         }
     }
-    update_value_by_id("towns", towns_status);
+    update_value_by_id("towns", towns_status);*/
 
-}
-
-
-// Get the modal
-var modal = document.getElementById('myModal');
-
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-click_modal_button = function(){
-    // When the user clicks on the button, open the modal 
-    btn.onclick = function() {
-        modal.style.display = "block";
-    }
-
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
 }

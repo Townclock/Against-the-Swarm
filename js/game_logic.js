@@ -13,7 +13,7 @@ follower_resource = 0;
 var current_town  = 0;
 var current_world = 0;
 
-var  invasion_rate = 1;
+var  invasion_rate = 0;
 
 var current_monster = null;
 var current_fighter = null;
@@ -23,11 +23,11 @@ var spawn_time = 1;
 
 
 var towns = [
-    new Town("Safety", 10, false),
-    new Town("Concern", 35, false),
-    new Town("Worry", 50, false),
-    new Town("Panic", 65, false),
-    new Town("Doom", 80, true)
+    new Town("Safety", 20, false),
+    new Town("Concern", 40, false),
+    new Town("Worry", 60, false),
+    new Town("Panic", 85, false),
+    new Town("Doom", 100, true)
 ];
 var world = [towns];
 
