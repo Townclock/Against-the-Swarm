@@ -215,9 +215,7 @@ body {
     color:black;
     }
 #resource_names {
-    max-width: 15%;
-    text-align: right;
-    .resource{background-color: brown;}
+    max-width: 30%;
 }
 #resource_names .resource {
     background-color: brown;
@@ -227,5 +225,8 @@ body {
 .resource {
     margin: 0px 0px 30px 0%;
     border: 2px solid black;
-    height: 6%;
+    height: auto%;
+}
+.resource span {
+    text-align: right;
 }
