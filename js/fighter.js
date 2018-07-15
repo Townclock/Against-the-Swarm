@@ -1,4 +1,4 @@
-function Fighter(player, fname, health, attack){
+function Fighter( fname, health, attack){
     this.fighter_name = fname;
     this.hp     =       health;
     this.max_hp =       health;

@@ -1,4 +1,4 @@
-function Followers(player){
+function Followers(){
 
     //New variables of different jobs
     this.meat_processors = 50;
@@ -26,6 +26,8 @@ function Followers(player){
     this.ore_complete = 100;
 
     this.fighters = 0;
+
+    this.mage_cost = [50,0,0,0,0,0];
 
     //Update function for the followers. Use this function for updates when calling from outside. 
     this.followers_act = function (){
