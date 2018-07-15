@@ -172,7 +172,7 @@
             <div class="column_2">
               <div class="column_3 right">
                 <div v-for="t in technology">
-                    <div v-bind:style="{color: t.is_researched_color(), visibility: t.visible(technology)}">
+                    <div v-bind:style="{color: t.is_researched_color(), visibility: t.visible(technology)}" onclick="unlock_tech(technology, player_inventory)">
                       {{t.technology_name}}
                    </div>
                 </div>
