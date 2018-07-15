@@ -101,7 +101,7 @@
             </div>
 
 <div id="panel_track" class="column_1">
-    <div id="town_panel">
+    <div class="left column_3" id="town_panel">
         <div class="panel_contents">
             <div id="resource_names">
                     <div class="resource">Followers</span></div>
@@ -120,9 +120,9 @@
         <div onclick="hire_mage(player_inventory, fighters, followers)">Hire Mage</div>
     </div>
     </div>
-    <div id="field_panel" >
+    <div id="field_panel">
     <div class="panel_contents">
-        <div class="column_2 center">
+        <div class="column_3 center">
             <div v-for="f in fighters" class="character_container" >
                 <div v-on:click="current_fighter = m">{{f.fighter_name}} hp: {{f.hp}}</div>
                 <div class="health_bar">
@@ -134,7 +134,7 @@
 
 
 
-        <div class="column_2 right" id="monsters_column">
+        <div class="column_3 right" id="monsters_column">
             <div v-for="m in monsters" class="character_container">
                 <div v-on:click="current_monster = m">{{m.monster_name}} hp: {{m.hp}}</div>
                 <div class="health_bar" id="monster_health_bar">
@@ -179,6 +179,22 @@
             </div>
             </div>
         </div>
+    </div>
+
+    <!-- Trigger/Open The Modal -->
+    <!-- <button id="myBtn">Open Modal</button> -->
+    <button class="myBtn" onclick="click_modal_button()">modal
+                    </button>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Some text in the Modal..</p>
+        </div>
+
     </div>
 </div>
 </body>
