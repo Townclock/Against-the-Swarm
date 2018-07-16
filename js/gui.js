@@ -78,3 +78,15 @@ function update_ui( monster){
     update_value_by_id("towns", towns_status);
 
 }
+var current_frame = 1;
+function update_animation(){
+    var current_sprite = "-";
+    var scale = 350;
+    if (current_frame >= 26) {
+        current_frame = 1;
+    }
+    else {
+        current_frame += 1;
+    }
+    document.getElementById("knight_sprite").style.backgroundPosition = current_sprite + scale * current_frame + 'px 0px';
+}

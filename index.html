@@ -75,6 +75,10 @@
         update_ui( monsters[0]);
     }, 17);
 
+    var animation_update = setInterval(function(){
+        update_animation();
+    }, 42);
+
 </script>
 
 <body>
@@ -128,7 +132,7 @@
                 <div class="health_bar">
                     <div class="health" v-bind:style="{width: f.hp_in_percent()}"></div>
                 </div>
-                <image src="assets/sprites/Knight.png"/>
+                <div id="knight_sprite"></div>
             </div>
             </div>
 
