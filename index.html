@@ -63,9 +63,9 @@
                     //new Monster("terran",5,80)
                     ];
 
-    var fighters = [new Fighter( "hero 1", 169,  30),
-                    new Fighter( "hero 2", 269,  63),
-                    new Fighter( "hero 3", 1000, 2)];
+    var fighters = [new Fighter( "hero 1", 169,  30, false),
+                    new Fighter( "hero 2", 269,  63, false),
+                    new Fighter( "hero 3", 1000, 2, false)];
 
     var player_inventory = new Player_Inventory;
 
@@ -77,6 +77,7 @@
     function click_rest_button(){          rest(fighters, monsters);}
     function click_engage_button(){      engage(fighters, monsters)};
     function click_disengage_button(){disengage(fighters, monsters)};
+    function click_guard_button(){guard(fighters, monsters)};
     function click_reclaim_button(){reclaim(fighters, monsters)};
     
     var timer = setInterval(function(){
@@ -224,6 +225,9 @@
                     </button>
                     <button class="button combat_button" onclick="click_fight_button()">
                         "FIGHT!"
+                    </button>
+                    <button class="button  combat_button" onclick="click_guard_button()">
+                        "GUARD!"
                     </button>
                     <button class="button  combat_button" onclick="click_reclaim_button()">
                         "RECLAIM!"
