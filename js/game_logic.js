@@ -36,16 +36,16 @@ var player_location = world[current_world][current_town].location;
 var technology_list_html = "";
 
 var technology = [
-   new Technology("Can Hire Meat", true, 0, 0, 0, [], console.log("test1")),
-   new Technology("Can Hire Claws", true, 0, 0, 0, [], console.log("test2")),
-   new Technology("Can Hire Scales", false, 10, 0, 10, [], console.log("test3")),
-   new Technology("Can Hire Miners", false, 20, 50, 20, ["Can Hire Scales"], console.log("test4")),
-   new Technology("Can Hire Crysal", false, 10, 0, 10, ["Can Hire Miners"], console.log("test5")),
-]
+   new Technology("Can Hire Meat", true, 0, 0, 0, [], function(){console.log("test1")}),
+   new Technology("Can Hire Claws", true, 0, 0, 0, [], function(){console.log("test2")}),
+   new Technology("Can Hire Scales", false, 10, 0, 10, [], function(){console.log("test3")}),
+   new Technology("Can Hire Miners", false, 20, 50, 20, ["Can Hire Scales"], function(){console.log("test4")}),
+   new Technology("Can Hire Crysal", false, 10, 0, 10, ["Can Hire Miners"], function(){console.log("test5")}),
+];
 
-function unlock_tech(techs, player_inventory){
+/*function unlock_tech(techs, player_inventory){
     if(player_inventory.fiber >= techs.fiber_cost && player_inventory.metal >= techs.metal_cost && player_inventory.gelatin >= techs.gelatin_cost){
-        techs.unlock();
+        technology.unlock(techs);
         player_inventory.decrement("fiber", techs.cost.fiber_cost);
         player_inventory.decrement("metal", techs.cost.metal_cost);
         player_inventory.decrement("gelatin", techs.cost.gelatin_cost);
@@ -53,7 +53,7 @@ function unlock_tech(techs, player_inventory){
         alert("Prerequisites not met.");
     }
    
-}
+}*/
 
 function change_town(){
 	if(current_town == 4){
@@ -78,7 +78,7 @@ function change_town(){
 function multi_fight(fighters, monsters){
     if (monsters.length == 0){ invasion_progress-= .1};
     if(under_siege){
-        followers.act;
+        followers.  act;
         increment_follower_resource(1);
     }
     if(fighters.length != 0 && monsters.length != 0){
