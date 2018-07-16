@@ -15,7 +15,6 @@ function Technology(technology_name,
 
   if(this.cost.gelatin === undefined){
 	  this.cost = {fiber: 0, metal: 0, gelatin: 0};
-	  console.log("tech cost default");
 	}
 
 }
@@ -26,9 +25,8 @@ Technology.prototype.unlock_tech = function(techs, player_inventory){
         player_inventory.decrement("metal", this.cost.metal);
         player_inventory.decrement("gelatin", this.cost.gelatin);
         this.unlock();
-        console.log(this.cost.gelatin);
     }else {
-        alert(this.cost.fiber + " fibers prerequisites not met.");
+        alert("Cost: " + this.cost.fiber + " fiber / " + this.cost.metal + " metal / " + this.cost.gelatin + " gelatin");
     }
    
 }
