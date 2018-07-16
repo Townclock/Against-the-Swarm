@@ -43,18 +43,6 @@ var technology = [
    new Technology("Can Hire Crysal", false, 10, 0, 10, ["Can Hire Miners"], function(){console.log("test5")}),
 ];
 
-/*function unlock_tech(techs, player_inventory){
-    if(player_inventory.fiber >= techs.fiber_cost && player_inventory.metal >= techs.metal_cost && player_inventory.gelatin >= techs.gelatin_cost){
-        technology.unlock(techs);
-        player_inventory.decrement("fiber", techs.cost.fiber_cost);
-        player_inventory.decrement("metal", techs.cost.metal_cost);
-        player_inventory.decrement("gelatin", techs.cost.gelatin_cost);
-    }else {
-        alert("Prerequisites not met.");
-    }
-   
-}*/
-
 function change_town(){
 	if(current_town == 4){
 		world.push( [new Town("test",  20,  false),
@@ -232,9 +220,3 @@ function hire_mage(player_inventory, fighters, follower){
         alert('not enough materials');
     }
 }
-
-
-
-
-
-
