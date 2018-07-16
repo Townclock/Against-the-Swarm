@@ -30,9 +30,9 @@ function Followers(){
     this.mage_cost = [50,0,0,0,0,0];
 
     //Update function for the followers. Use this function for updates when calling from outside. 
-    this.followers_act = function (){
-        this.processors_act(); //Processes claws, scales, meat...
-        this.miners_act();
+    this.followers_act = function (game){
+        this.processors_act(game); //Processes claws, scales, meat...
+        this.miners_act(game);
     }
 
     //A function to Hire Followers into different jobs. Use this function for hiring.
@@ -51,15 +51,15 @@ function Followers(){
         }
     }
 
-    this.processors_act = function(){
+    this.processors_act = function(game){
         var raw_goods = ["meat", "scales", "claws", "ore"];
         var fin_goods = ["fiber", "metal", "gelatin", "crystals"];
         for (g in raw_goods){
-            if (this[raw_goods[g] + "_processors"] > 0 && player_inventory[raw_goods[g]] > 0){
+            if (this[raw_goods[g] + "_processors"] > 0 && game.player_inventory[raw_goods[g]] > 0){
                 this[raw_goods[g] +"_progress"] = this[raw_goods[g]+"_processors"] + this[raw_goods[g]+"_progress"];
                 if (this[raw_goods[g]+"_progress"] >= this[raw_goods[g]+"_complete"]){
-                    player_inventory.increment([fin_goods[g]],1);
-                    player_inventory.decrement([raw_goods[g]],1);
+                    game.player_inventory.increment([fin_goods[g]],1);
+                    game.player_inventory.decrement([raw_goods[g]],1);
                     this[raw_goods[g]+"_progress"]=0;
                 }
             }

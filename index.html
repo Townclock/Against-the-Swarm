@@ -1,7 +1,6 @@
 <html>
 <head><title> Against The Swarm </title>
 <link rel="stylesheet" type="text/css" href="gui.css">
-<link rel="stylesheet" type="text/css" href="modal.css">
 </head>
 
 <script src="js/vue.js"></script>
@@ -14,97 +13,71 @@
 <script src="js/followers.js"></script>
 <script src="js/fighter.js"></script>
 <script src="js/game_logic.js"></script>
-
-</div>
-<!-- <script src="js/modal.js"></script> -->
 <script>
     //every variable or function that wants to be called from html has to have reference in //Vue function
+    var game;
+    var vm;
     window.onload = function(){
-        var vm = new Vue({
+        game = new gamer();
+            console.log(game);
+        vm = new Vue({
             el: "#vue-div",
             data: {
-                monsters: monsters,
-                technology: technology,
-                fighters: fighters}
-        });
+                monsters: game.monsters,
+                technology: game.technology,
+                fighters: game.fighters,
 
-        // Get the modal
-        var modal = document.getElementById('myModal');
+                towns: game.towns,
 
-        // Get the button that opens the modal
-        var btn = document.getElementById("myBtn");
+                width: window.innerWidth,
+                i: game.invasion_progress,
+            },
+            methods: {
+                update: function(){
+                    vm.i = game.invasion_rate;
+                    vm.towns = game.towns;
+                    vm.width = window.innerWidth;
+                }
 
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-
-        // When the user clicks on the button, open the modal 
-        btn.onclick = function() {
-            console.log('hi');
-            modal.style.display = "block";
-        }
-
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
             }
-        }
+        })
     };
-
-    var monster = new Monster("zerg",5,20);
-     monsters = [monster,
-                    //new Monster("protoss",5,40),
-                    //new Monster("tassadar",5,60),
-                    //new Monster("terran",5,80)
-                    ];
-
-    var fighters = [new Fighter( "hero 1", 169,  30, false),
-                    new Fighter( "hero 2", 269,  63, false),
-                    new Fighter( "hero 3", 1000, 2, false)];
-
-    var player_inventory = new Player_Inventory;
-
-    var followers = new Followers();
-
-
-
-    function click_fight_button(){  multi_fight(fighters, monsters);}
-    function click_rest_button(){          rest(fighters, monsters);}
-    function click_engage_button(){      engage(fighters, monsters)};
-    function click_disengage_button(){disengage(fighters, monsters)};
-    function click_guard_button(){guard(fighters, monsters)};
-    function click_reclaim_button(){reclaim(fighters, monsters)};
-    
+    function click_fight_button(){     game.multi_fight();}
+    function click_rest_button(){      game.rest();}
+    function click_engage_button(){    game.engage()};
+    function click_disengage_button(){ game.disengage()};
+    function click_reclaim_button(){   game.reclaim()};
+    console.log(game);
     var timer = setInterval(function(){
-        update_ui(monster);
+        update_ui(game.monster);
 
-        if (!under_siege && !reclaim_mode) {
-            invasion_progress += invasion_rate;
-            increment_follower_resource(current_town);
-            followers.followers_act();
-            change_invasion_rate(monsters);
-            if (invasion_progress > towns[current_town].location){
-            	under_siege = true;
-            }
+        if (!game.under_siege && !game.reclaim_mode) {
+            game.increment_follower_resource();
+            game.followers.followers_act(game);
+            game.change_invasion_rate();
         
         }
         //code that spawns new enemy every interval
-        time_elapsed++;
-        if(time_elapsed >= spawn_time && ! reclaim_mode){
-            if (monsters.length < 18)
-            monsters.push(new Monster("test", 50,10));
-            time_elapsed = 0;
+        if(!game.reclaim_mode){
+            game.time_elapsed++;
+            if(game.time_elapsed >= game.spawn_time && ! game.reclaim_mode){
+                if (game.monsters.length < 18)
+                game.monsters.push(new Monster("test", 50,10));
+                game.time_elapsed = 0;
+            }
         }
+        console.log(game.current_town);
     }
         , 1000);
 
     var gui_update = setInterval(function(){
-        update_ui( monsters[0]);
+        if(!game.under_siege && !game.reclaim_mode)
+            game.invasion_progress += game.invasion_rate/60;
+        if (!game.reclaim_mode && game.invasion_progress > game.towns[game.current_town].location){
+                game.under_siege = true;
+        }
+        update_ui( game.monsters[0]);
+        vm.update();
     }, 17);
 
 </script>
@@ -114,41 +87,34 @@
 
 <div class="column_1" id="track_container">
     <div class="invasion_bar">
+
+
+        <span style = "position:fixed" v-for="t in towns.length">
+
+            <div v-if="!towns[towns.length-t].destroyed" class="destroyed_town" 
+                 v-bind:style="{left: ((100-towns[towns.length-t].location)/100)*width*.9 - width * .02 + 'px', top:-20+'px'}"> 
+                <image class="town_image" src="assets/sprites/Town.png"/> 
+            </div>
+
+            <div v-else class="destroyed_town" 
+                 v-bind:style="{left: ((100-towns[towns.length-t].location)/100)*width*.9 - width * .02 + 'px', top:-20+'px'}"> 
+                <image class="town_image" src="assets/sprites/Destroyed_Town.png"/> 
+            </div>
+        </span>
         <div class="invasion" id="invasion" style="width:0px"></div>
-        <div id="towns"> </div>
     </div>
 
             <div id="resource_display">
-                    <div class="resource">
-                    <image src="assets/icons/Follower_Icon.png">
-                    <span id="follower_resource"></span></div>
-                    <div class="resource">
-                    <image src="assets/icons/Meat_Icon.png">
-                    <span id="meat">0</span></div>
-                    <div class="resource">
-                    <image src="assets/icons/Scale_Icon.png">
-                    <span id="scales">0</span></div>
-                    <div class="resource">
-                    <image src="assets/icons/Claw_Icon.png">
-                    <span id="claws">0</span></div>
+                    <div class="resource"><span id="follower_resource"></span></div>
+                    <div class="resource"><span id="meat">0</span></div>
+                    <div class="resource"><span id="scales">0</span></div>
+                    <div class="resource"><span id="claws">0</span></div>
 
-                    <div class="resource">
-                    <image src="assets/icons/Fiber_Icon.png">
-                    <span id="fiber">0</span></div>
-                    <div class="resource">
-                    <image src="assets/icons/Metal_Icon.png">
-                    <span id="metal">0</span></div>
-                    <div class="resource">
-                    <image src="assets/icons/Gelatin_Icon.png">
-                    <span id="gelatin">0</span></div>
+                    <div class="resource"><span id="fiber">0</span></div>
+                    <div class="resource"><span id="metal">0</span></div>
+                    <div class="resource"><span id="gelatin">0</span></div>
 
-                    <div class="resource">
-                    <image src="assets/icons/Aetherium_Icon.png">
-                    <span id="ore">0</span></div>
-                    <div class="resource">
-                    <image src="assets/icons/Telecrystal_Icon.png">
-                    <span id="crystals">0</span></div>
-
+                    <div class="resource"><span id="ore">0</span></div>
                     <div class="resource"><span id="crystals">0</span></div>
             </div>
 
@@ -156,19 +122,10 @@
     <div class="left column_3" id="town_panel">
         <div class="panel_contents">
             <div id="resource_names">
-                    <div class="resource">
-                    <image src="assets/icons/Follower_Icon.png">
-                    <span>Followers</span></div>
-                    <div class="resource">
-                    <image src="assets/icons/Follower_Icon.png">
-                    <span>Meat</span></div>
-                    <div class="resource">
-                    <image src="assets/icons/Follower_Icon.png">
-                    <span>Scales</span></div>
-                    <div class="resource">
-                    <image src="assets/icons/Follower_Icon.png">
-                    <span>Claws</span></div>
                     <div class="resource">Followers</span></div>
+                    <div class="resource">Meat</div>
+                    <div class="resource">Scales</div>
+                    <div class="resource">Claws</div>
 
                     <div class="resource">Fiber</div>
                     <div class="resource">Metal</div>
@@ -177,8 +134,7 @@
                     <div class="resource">Aetherium</div>
                     <div class="resource">Crystals</div>
             </div>
-
-    </div>
+        </div>
     </div>
     <div id="field_panel">
     <div class="panel_contents">
@@ -206,6 +162,7 @@
     </div>
     </div>
     </div>
+    </div>
 
         <div id="control_panel">
             <div class="column_2">
@@ -216,8 +173,9 @@
                     <button class="button town_button" onclick="click_engage_button()">
                         "ENGAGE!"
                     </button>
-
-                    <button id="myBtn">Open Modal</button>
+                    <button onclick="game.hire_mage()">
+                        Hire Mage
+                    </button>
                 </div>
                 <div class="column_1">
                     <button class="button combat_button" onclick="click_disengage_button()">
@@ -226,9 +184,6 @@
                     <button class="button combat_button" onclick="click_fight_button()">
                         "FIGHT!"
                     </button>
-                    <button class="button  combat_button" onclick="click_guard_button()">
-                        "GUARD!"
-                    </button>
                     <button class="button  combat_button" onclick="click_reclaim_button()">
                         "RECLAIM!"
                     </button>
@@ -236,7 +191,6 @@
             </div>
             <div class="column_2">
               <div class="column_3 right">
-        <div onclick="hire_mage(player_inventory, fighters, followers)">Hire Mage</div>
                 <div v-for="t in technology">
                     <div v-bind:style="{color: t.is_researched_color(), visibility: t.visible(technology)}">
                       {{t.technology_name}}
@@ -246,17 +200,6 @@
             </div>
         </div>
     </div>
-    
-    <!-- The Modal -->
-    <div id="myModal" class="modal">
-
-        <!-- Modal content -->
-        <div class="modal-content">
-               <span class="close">&times;</span>
-            <p>Some text in the Modal..</p>
-        </div>
-
-    </div>
-
+</div>
 </body>
 </html>
