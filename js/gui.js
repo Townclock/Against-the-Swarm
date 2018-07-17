@@ -82,11 +82,11 @@ var current_frame = 1;
 function update_animation(){
     var current_sprite = "-";
     var scale = 350;
-    if (current_frame >= 26) {
+    if (current_frame >= 19) {
         current_frame = 1;
     }
     else {
         current_frame += 1;
     }
-    document.getElementById("knight_sprite").style.backgroundPosition = current_sprite + scale * current_frame + 'px 0px';
+    document.getElementById("knight_sprite").style.backgroundPosition = current_sprite + scale * current_frame + 'px 0%';
 }
