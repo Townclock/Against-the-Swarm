@@ -8,12 +8,14 @@ var under_siege = false;
 
 var reclaim_mode = false;
 
+var modal_open = false;
+
 follower_resource = 0;
 
 var current_town  = 0;
 var current_world = 0;
 
-var  invasion_rate = 1;
+var  invasion_rate = 0;
 
 var current_monster = null;
 var current_fighter = null;
@@ -23,11 +25,11 @@ var spawn_time = 1;
 
 
 var towns = [
-    new Town("Safety", 10, false),
-    new Town("Concern", 35, false),
-    new Town("Worry", 50, false),
-    new Town("Panic", 65, false),
-    new Town("Doom", 80, true)
+    new Town("Safety", 20, false),
+    new Town("Concern", 40, false),
+    new Town("Worry", 60, false),
+    new Town("Panic", 85, false),
+    new Town("Doom", 100, true)
 ];
 var world = [towns];
 
@@ -36,13 +38,12 @@ var player_location = world[current_world][current_town].location;
 var technology_list_html = "";
 
 var technology = [
-   new Technology("Can Hire Meat", true, 0, 0, 0, [], console.log("")),
-   new Technology("Can Hire Claws", true, 0, 0, 0, [], console.log("")),
-   new Technology("Can Hire Scales", false, 10, 0, 10, [], console.log("")),
-   new Technology("Can Hire Miners", false, 20, 50, 20, ["Can Hire Scales"], console.log("")),
-   new Technology("Can Hire Crysal", false, 10, 0, 10, ["Can Hire Miners"], console.log("")),
-]
-
+   new Technology("Can Hire Meat", true, 0, 0, 0, [], function(){console.log("test1")}),
+   new Technology("Can Hire Claws", true, 0, 0, 0, [], function(){console.log("test2")}),
+   new Technology("Can Hire Scales", false, 10, 0, 10, [], function(){console.log("test3")}),
+   new Technology("Can Hire Miners", false, 20, 50, 20, ["Can Hire Scales"], function(){console.log("test4")}),
+   new Technology("Can Hire Crysal", false, 10, 0, 10, ["Can Hire Miners"], function(){console.log("test5")}),
+];
 
 function change_town(){
 	if(current_town == 4){
@@ -67,7 +68,7 @@ function change_town(){
 function multi_fight(fighters, monsters){
     if (monsters.length == 0){ invasion_progress-= .1};
     if(under_siege){
-        followers.act;
+        followers.  act;
         increment_follower_resource(1);
     }
     if(fighters.length != 0 && monsters.length != 0){
@@ -221,4 +222,56 @@ function hire_mage(player_inventory, fighters, follower){
         alert('not enough materials');
     }
 
+}
+
+function guard(fighters, monsters){
+    if (monsters.length == 0){ 
+        invasion_progress-= .1;
+    }
+    if(under_siege){
+        followers.act;
+        increment_follower_resource(1);
+    }
+    if(fighters.length != 0 && monsters.length != 0){
+        for(f in fighters){
+            //checking to see if fighter is a spell caster
+            if(fighters[f].is_magic){
+                if (fighters[f].charge != 2){
+                    fighters[f].charge ++;
+                }
+                else{
+                    //finds random monster. If random monster is already dead, searches for new one
+                    var temp = Math.floor(Math.random() * monsters.length);
+                    //remove hp from monster and check if monster is dead or not.
+                    monsters[temp].hp -= fighters[f].atk;
+                    fighters[f].charge = 0;
+                    if(monsters[temp].hp <= 0){
+                        monsters[temp].die();
+                        monsters.splice(temp,1);
+                    }
+                }
+            }
+        }
+        //same for loop for fighters but instead for monsters
+        for(m in monsters){
+            var temp = Math.floor(Math.random() * fighters.length);
+            if(!fighters[temp].is_magic){
+                fighters[temp].hp -= monsters[m].attack_bonus;
+                if(fighters[temp].hp <= 0){
+                    fighters.splice(temp,1);
+                }
+            }
+        }
+    }
+    if(monsters.length == 0 || fighters.length == 0){
+        if (reclaim_mode){
+            reclaim_mode = false;
+            if (monsters.length == 0){
+                current_town--;
+                player_location = world[current_world][current_town].location;
+                invasion_progress -= 10;
+            }
+        }
+        if(engaged && fighters.length < 1) {disengage(fighters, monsters);}
+    }
 }

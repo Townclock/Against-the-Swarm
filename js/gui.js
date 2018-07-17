@@ -58,24 +58,18 @@ function update_ui( monster){
     }
 
 
-    var width_scalar = document.getElementById("towns").offsetWidth;
+    //var width_scalar = document.getElementById("towns").offsetWidth;
     
-    var towns_status = ""
+    /*var towns_status = ""
     for (x in towns){
     if (! towns[x].destroyed) {
-        towns_status = towns_status
-            + '<div class="safe_town" style="left:'
-            + (( (1-(towns[x].location  / 100)) * width_scalar )-20) + 'px">'
-            + '<image class="town_image" src="assets/sprites/Town.png"/> </div>';
+        towns_status += ('<div class="destroyed_town" style="left:' + ((85-towns[x].location)/100 * width_scalar+40) + 'px"> <image class="town_image" src="assets/sprites/Town.png"/> </div>');
     } 
         else {
-        towns_status = towns_status
-            + '<div class="safe_town" style="left:'
-            + (((1-(towns[x].location  / 100)) * width_scalar )-20) + 'px">'
-            + '<image class="town_image" src="assets/sprites/Destroyed_Town.png"/> </div>';
+            towns_status += ('<div class="destroyed_town" style="left:' + ((85 - towns[x].location)/100 * width_scalar + 40)+ 'px"> <image class="town_image" src="assets/sprites/Destroyed_Town.png"/> </div>');
         }
     }
-    update_value_by_id("towns", towns_status);
+    update_value_by_id("towns", towns_status);*/
 
 }
 var current_frame = 1;
