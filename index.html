@@ -28,7 +28,7 @@
                 fighters: fighters}
         });
 
-        // Get the modal
+                // Get the modal
         var modal = document.getElementById('myModal');
 
         // Get the button that opens the modal
@@ -39,18 +39,20 @@
 
         // When the user clicks on the button, open the modal 
         btn.onclick = function() {
-            console.log('hi');
+            modal_open = true;
             modal.style.display = "block";
         }
 
         // When the user clicks on <span> (x), close the modal
         span.onclick = function() {
+            modal_open = false;
             modal.style.display = "none";
         }
 
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
             if (event.target == modal) {
+                modal_open = false;
                 modal.style.display = "none";
             }
         }
@@ -83,7 +85,7 @@
     var timer = setInterval(function(){
         update_ui(monster);
 
-        if (!under_siege && !reclaim_mode) {
+        if (!under_siege && !reclaim_mode && !modal_open) {
             invasion_progress += invasion_rate;
             increment_follower_resource(current_town);
             followers.followers_act();
