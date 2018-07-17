@@ -1,4 +1,4 @@
-function Followers(player){
+function Followers(){
 
     //New variables of different jobs
     this.meat_processors = 50;
@@ -27,16 +27,14 @@ function Followers(player){
 
     this.fighters = 0;
 
+    this.mage_cost = [50,0,0,0,0,0];
+
     //Update function for the followers. Use this function for updates when calling from outside. 
     this.followers_act = function (){
         this.processors_act(); //Processes claws, scales, meat...
         this.miners_act();
     }
 
-    //A function to Hire Followers into different jobs. Use this function for hiring.
-    this.pay_followers = function(){
-        this.owner.money -= this.processors;
-    }
 
     //A function to Hire Followers into different jobs. Use this function for hiring. 
     this.hire = function(job, number_to_hire){
@@ -47,7 +45,9 @@ function Followers(player){
         else {
             console.log("Not enough followers");
         }
+    console.log("hire was called")
     }
+
 
     this.processors_act = function(){
         var raw_goods = ["meat", "scales", "claws", "ore"];
