@@ -206,7 +206,9 @@ body {
     width: 100%;
     }
 #resource_names {
-    max-width: 30%;
+    display: inline-block;
+    width: 30%;
+    margin-right:0px;
 }
 .resource {
     background-color: brown;
@@ -222,4 +224,37 @@ body {
 #resource_names .resource span {
     text-align: right;
     margin-left: 35%;
-    }
+}
+#followers_container {
+    width:50%;
+}
+.follower{
+    background-color: brown;
+    color:white;
+    margin: 0px 0px 30px 0%;
+    border: 2px solid black;
+    height: auto%;
+    display: inline-block;
+    width: 90%;
+    margin-right:0px;
+}
+.follower_count {
+    display: inline-block;
+    background-color: DB8C44;
+    color:black;
+    font-size: 13pt;
+    height: auto;
+    width: 25%
+}
+
+#control_panel {
+    background-color: gray;
+}
+#action_buttons {
+    background-color: black;
+    padding: 5px;
+}
+#technology_menu {
+    background-color: black;
+    padding: 5px;
+}

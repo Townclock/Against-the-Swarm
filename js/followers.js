@@ -35,10 +35,6 @@ function Followers(){
         this.miners_act();
     }
 
-    //A function to Hire Followers into different jobs. Use this function for hiring.
-    this.pay_followers = function(){
-        this.owner.money -= this.processors;
-    }
 
     //A function to Hire Followers into different jobs. Use this function for hiring. 
     this.hire = function(job, number_to_hire){
@@ -49,7 +45,9 @@ function Followers(){
         else {
             console.log("Not enough followers");
         }
+    console.log("hire was called")
     }
+
 
     this.processors_act = function(){
         var raw_goods = ["meat", "scales", "claws", "ore"];

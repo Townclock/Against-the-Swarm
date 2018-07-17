@@ -31,6 +31,7 @@
                 towns: towns,
                 width: window.innerWidth,
                 i: invasion_progress,
+                followers: followers
             },
             methods: {
                 update: function(){
@@ -97,7 +98,6 @@
         update_ui(monster);
 
         if (!under_siege && !reclaim_mode && !modal_open) {
-            invasion_progress += invasion_rate;
             increment_follower_resource(current_town);
             followers.followers_act();
             change_invasion_rate(monsters);
@@ -120,7 +120,7 @@
                 under_siege = true;
         }
         update_ui( monsters[0]);
-        vm.update();
+        //vm.update();
     }, 17);
 
 </script>
@@ -214,7 +214,38 @@
                     <div class="resource">
                     <image src="assets/icons/Telecrystal_Icon.png">
                     <span>Crystals</span></div>
-            
+            </div>
+            <div id="followers_container" class="right" >
+                    <div class="follower">
+                        <span class="follower_count">
+                        <image src="assets/icons/Meat_Pounder_Icon.png"> {{followers.meat_processors}}</span>
+                        <span>Meat Cutter</span> 
+                        <button onclick="followers.hire('meat_processors', 1)"> + </button>
+                        </div>
+                    
+                    <div class="follower">
+                        <span class="follower_count">
+                        <image src="assets/icons/Scale_Forger_Icon.png">{{followers.scales_processors}}</span>
+                        <span> Scale Forger</span>
+                        <button onclick="followers.hire('scales_processors', 1)"> + </button>
+                        </div>
+                    <div class="follower">
+                        <span class="follower_count">
+                        <image src="assets/icons/Claw_Grinder_Icon.png">{{followers.claws_processors}}</span>
+                        <span>Claw Grinder</span>
+                        <button onclick="followers.hire('claws_processors', 1)"> + </button>
+                        </div>
+                    <div class="follower">
+                        <span class="follower_count">
+                        <image src="assets/icons/Aether_Miner_Icon.png">{{followers.miners}}</span>
+                        <span>Aether Miner</span>
+                        <button onclick="followers.hire('miners', 1)"> + </button>
+                        </div>
+                    <div class="follower">
+                        <span class="follower_count">
+                        <image src="assets/icons/Enchanter_Icon.png"> {{followers.ore_processors}}</span>
+                        <span>Enchanter</span>
+                        <button onclick="followers.hire('ore_processors', 1)"> + </button></div>
             </div>
         </div>
     </div>
@@ -247,7 +278,7 @@
     </div>
 
         <div id="control_panel">
-            <div class="column_2">
+            <div class="column_2" id="action_buttons">
                 <div class="column_1">
                     <button class="button town_button" onclick="click_rest_button()">
                         "REST!"
@@ -274,7 +305,7 @@
                 </div>
             </div>
             <div class="column_2">
-              <div class="column_3 right">
+              <div class="column_3 right" id="technology_menu">
                 <div v-for="t in technology">
                   <div v-if="t.has_been_researched">
                      <div v-bind:style="{color: t.is_researched_color(), visibility: t.visible(technology)}">{{t.technology_name}}
