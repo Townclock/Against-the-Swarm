@@ -8,6 +8,8 @@ var under_siege = false;
 
 var reclaim_mode = false;
 
+var modal_open = false;
+
 follower_resource = 0;
 
 var current_town  = 0;
