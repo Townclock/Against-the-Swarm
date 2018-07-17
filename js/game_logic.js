@@ -8,6 +8,8 @@ var under_siege = false;
 
 var reclaim_mode = false;
 
+var modal_open = false;
+
 follower_resource = 0;
 
 var current_town  = 0;
@@ -221,4 +223,56 @@ function hire_mage(player_inventory, fighters, follower){
         alert('not enough materials');
     }
 
+}
+
+function guard(fighters, monsters){
+    if (monsters.length == 0){ 
+        invasion_progress-= .1;
+    }
+    if(under_siege){
+        followers.act;
+        increment_follower_resource(1);
+    }
+    if(fighters.length != 0 && monsters.length != 0){
+        for(f in fighters){
+            //checking to see if fighter is a spell caster
+            if(fighters[f].is_magic){
+                if (fighters[f].charge != 2){
+                    fighters[f].charge ++;
+                }
+                else{
+                    //finds random monster. If random monster is already dead, searches for new one
+                    var temp = Math.floor(Math.random() * monsters.length);
+                    //remove hp from monster and check if monster is dead or not.
+                    monsters[temp].hp -= fighters[f].atk;
+                    fighters[f].charge = 0;
+                    if(monsters[temp].hp <= 0){
+                        monsters[temp].die();
+                        monsters.splice(temp,1);
+                    }
+                }
+            }
+        }
+        //same for loop for fighters but instead for monsters
+        for(m in monsters){
+            var temp = Math.floor(Math.random() * fighters.length);
+            if(!fighters[temp].is_magic){
+                fighters[temp].hp -= monsters[m].attack_bonus;
+                if(fighters[temp].hp <= 0){
+                    fighters.splice(temp,1);
+                }
+            }
+        }
+    }
+    if(monsters.length == 0 || fighters.length == 0){
+        if (reclaim_mode){
+            reclaim_mode = false;
+            if (monsters.length == 0){
+                current_town--;
+                player_location = world[current_world][current_town].location;
+                invasion_progress -= 10;
+            }
+        }
+        if(engaged && fighters.length < 1) {disengage(fighters, monsters);}
+    }
 }

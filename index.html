@@ -23,9 +23,7 @@
                 monsters: monsters,
                 technology: technology,
                 fighters: fighters,
-
                 towns: towns,
-
                 width: window.innerWidth,
                 i: invasion_progress,
             },
@@ -35,9 +33,27 @@
                     vm.towns = towns;
                     vm.width = window.innerWidth;
                 }
-
             }
-        })
+        });
+        // When the user clicks on the button, open the modal 
+        btn.onclick = function() {
+            modal_open = true;
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal_open = false;
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal_open = false;
+                modal.style.display = "none";
+            }
+        }
     };
     var monster = new Monster("zerg",5,20);
      monsters = [monster,
@@ -46,9 +62,9 @@
                     //new Monster("terran",5,80)
                     ];
 
-    var fighters = [new Fighter( "hero 1", 1100, 50),
-                    new Fighter( "hero 2", 1200, 50),
-                    new Fighter( "hero 3", 1000, 50)];
+    var fighters = [new Fighter( "hero 1", 169,  30, false),
+                    new Fighter( "hero 2", 269,  63, false),
+                    new Fighter( "hero 3", 1000, 2, false)];
 
     var player_inventory = new Player_Inventory;
 
@@ -60,12 +76,14 @@
     function click_rest_button(){          rest(fighters, monsters);}
     function click_engage_button(){      engage(fighters, monsters)};
     function click_disengage_button(){disengage(fighters, monsters)};
+    function click_guard_button(){guard(fighters, monsters)};
     function click_reclaim_button(){reclaim(fighters, monsters)};
     
     var timer = setInterval(function(){
         update_ui(monster);
 
-        if (!under_siege && !reclaim_mode) {
+        if (!under_siege && !reclaim_mode && !modal_open) {
+            invasion_progress += invasion_rate;
             increment_follower_resource(current_town);
             followers.followers_act();
             change_invasion_rate(monsters);
@@ -134,17 +152,36 @@
     <div class="left column_3" id="town_panel">
         <div class="panel_contents">
             <div id="resource_names">
-                    <div class="resource">Followers</span></div>
-                    <div class="resource">Meat</div>
-                    <div class="resource">Scales</div>
-                    <div class="resource">Claws</div>
+                    <div class="resource">
+                    <image src="assets/icons/Follower_Icon.png">
+                    <span>Followers</span></div>
+                    <div class="resource">
+                    <image src="assets/icons/Follower_Icon.png">
+                    <span>Meat</span></div>
+                    <div class="resource">
+                    <image src="assets/icons/Follower_Icon.png">
+                    <span>Scales</span></div>
+                    <div class="resource">
+                    <image src="assets/icons/Follower_Icon.png">
+                    <span>Claws</span></div>
 
-                    <div class="resource">Fiber</div>
-                    <div class="resource">Metal</div>
-                    <div class="resource">Gelatin</div>
+                    <div class="resource">
+                    <image src="assets/icons/Fiber_Icon.png">
+                    <span>Fiber</span></div>
+                    <div class="resource">
+                    <image src="assets/icons/Metal_Icon.png">
+                    <span>Metal</span></div>
+                    <div class="resource">
+                    <image src="assets/icons/Gelatin_Icon.png">
+                    <span>Gelatin</span></div>
 
-                    <div class="resource">Aetherium</div>
-                    <div class="resource">Crystals</div>
+                    <div class="resource">
+                    <image src="assets/icons/Aetherium_Icon.png">
+                    <span>Aetherium</span></div>
+                    <div class="resource">
+                    <image src="assets/icons/Telecrystal_Icon.png">
+                    <span>Crystals</span></div>
+            
             </div>
         </div>
     </div>
@@ -195,6 +232,9 @@
                     </button>
                     <button class="button combat_button" onclick="click_fight_button()">
                         "FIGHT!"
+                    </button>
+                    <button class="button  combat_button" onclick="click_guard_button()">
+                        "GUARD!"
                     </button>
                     <button class="button  combat_button" onclick="click_reclaim_button()">
                         "RECLAIM!"

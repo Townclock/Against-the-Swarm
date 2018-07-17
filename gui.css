@@ -63,14 +63,6 @@ body {
     margin: auto auto auto auto;
 }
 
-.click_counter {
-    display: block;
-    width: 25%;
-    height: 5%;
-    margin: 5% auto 15% auto;
-    text-align: center;
-}
-
 .fighter {
     width: 10%;
     padding-top: 100%;
@@ -204,12 +196,17 @@ body {
     z-index:2;
     position: absolute;
     left: 0px;
-    max-width: 30%;
+    width: 4%;
     top: 150px;
     }
+#resource_display .resource {
+    background-color: DB8C44;
+    color:black;
+    font-size: 13pt;
+    width: 100%;
+    }
 #resource_names {
-    max-width: 15%;
-    text-align: right;
+    max-width: 45%;
 }
 .resource {
     background-color: brown;
@@ -217,3 +214,7 @@ body {
     margin: 0px 0px 30px 0%;
     border: 2px solid black;
 }
+#resource_names .resource span {
+    text-align: right;
+    margin-left: 35%;
+    }
