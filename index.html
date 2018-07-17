@@ -26,6 +26,7 @@
             data: {
                 monsters: monsters,
                 technology: technology,
+                player_inventory: player_inventory,
                 fighters: fighters,
                 towns: towns,
                 width: window.innerWidth,
@@ -275,9 +276,15 @@
             <div class="column_2">
               <div class="column_3 right">
                 <div v-for="t in technology">
-                    <div v-bind:style="{color: t.is_researched_color(), visibility: t.visible(technology)}">
+                  <div v-if="t.has_been_researched">
+                     <div v-bind:style="{color: t.is_researched_color(), visibility: t.visible(technology)}">{{t.technology_name}}
+                     </div>
+                  </div>
+                  <div v-else>
+                    <div v-bind:style="{color: t.is_researched_color(), visibility: t.visible(technology)}" v-on:click="t.unlock_tech(technology, player_inventory)">
                       {{t.technology_name}}
-                   </div>
+                    </div>
+                  </div>
                 </div>
             </div>
             </div>
