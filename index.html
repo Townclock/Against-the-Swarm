@@ -1,7 +1,6 @@
 <html>
 <head><title> Against The Swarm </title>
 <link rel="stylesheet" type="text/css" href="gui.css">
-<link rel="stylesheet" type="text/css" href="modal.css">
 </head>
 
 <script src="js/vue.js"></script>
@@ -14,33 +13,34 @@
 <script src="js/followers.js"></script>
 <script src="js/fighter.js"></script>
 <script src="js/game_logic.js"></script>
-
-</div>
-<!-- <script src="js/modal.js"></script> -->
 <script>
     //every variable or function that wants to be called from html has to have reference in //Vue function
+
+    var game;
     var vm;
+    var modal_open = false;
     window.onload = function(){
+        game = new Game();
+            console.log(game);
         vm = new Vue({
             el: "#vue-div",
             data: {
-                monsters: monsters,
-                technology: technology,
-                player_inventory: player_inventory,
-                fighters: fighters,
-                towns: towns,
+                monsters: game.monsters,
+                technology: game.technology,
+                fighters: game.fighters,
+
+                towns: game.towns,
+
                 width: window.innerWidth,
-                i: invasion_progress,
-                followers: followers
+                i: game.invasion_progress,
             },
             methods: {
                 update: function(){
-                    vm.i = invasion_rate;
-                    vm.towns = towns;
+                    vm.i = game.invasion_rate;
+                    vm.towns = game.towns;
                     vm.width = window.innerWidth;
                 }
-            }
-        });
+
 
         // Get the modal
         var modal = document.getElementById('myModal');
@@ -67,60 +67,53 @@
         window.onclick = function(event) {
             if (event.target == modal) {
                 modal.style.display = "none";
+
             }
-        }
+        })
     };
-    var monster = new Monster("zerg",5,20);
-     monsters = [monster,
-                    //new Monster("protoss",5,40),
-                    //new Monster("tassadar",5,60),
-                    //new Monster("terran",5,80)
-                    ];
 
-    var fighters = [new Fighter( "hero 1", 169,  30, false),
-                    new Fighter( "hero 2", 269,  63, false),
-                    new Fighter( "hero 3", 1000, 2, false)];
+    function click_fight_button(){     game.multi_fight();}
+    function click_rest_button(){      game.rest();}
+    function click_engage_button(){    game.engage()};
+    function click_disengage_button(){ game.disengage()};
+    function click_reclaim_button(){   game.reclaim()};
+   
+    function click_guard_button(){   game.guard()};
+    console.log(game);
 
-    var player_inventory = new Player_Inventory;
-
-    var followers = new Followers();
-
-
-
-    function click_fight_button(){  multi_fight(fighters, monsters);}
-    function click_rest_button(){          rest(fighters, monsters);}
-    function click_engage_button(){      engage(fighters, monsters)};
-    function click_disengage_button(){disengage(fighters, monsters)};
-    function click_guard_button(){guard(fighters, monsters)};
-    function click_reclaim_button(){reclaim(fighters, monsters)};
-    
     var timer = setInterval(function(){
-        update_ui(monster);
+        update_ui(game.monster);
 
-        if (!under_siege && !reclaim_mode && !modal_open) {
-            increment_follower_resource(current_town);
-            followers.followers_act();
-            change_invasion_rate(monsters);
+
+        if (!game.under_siege && !game.reclaim_mode) {
+            game.increment_follower_resource();
+            game.followers.followers_act(game);
+            game.change_invasion_rate();
+
         
         }
         //code that spawns new enemy every interval
-        time_elapsed++;
-        if(time_elapsed >= spawn_time && ! reclaim_mode){
-            if (monsters.length < 18)
-            monsters.push(new Monster("test", 50,10));
-            time_elapsed = 0;
+        if(!game.reclaim_mode){
+            game.time_elapsed++;
+            if(game.time_elapsed >= game.spawn_time && ! game.reclaim_mode){
+                if (game.monsters.length < 18)
+                game.monsters.push(new Monster("test", 50,10));
+                game.time_elapsed = 0;
+            }
         }
+        console.log(game.current_town);
     }
         , 1000);
 
     var gui_update = setInterval(function(){
-        if(!under_siege && !reclaim_mode)
-            invasion_progress += invasion_rate/60;
-        if (invasion_progress > towns[current_town].location){
-                under_siege = true;
+        if(!game.under_siege && !game.reclaim_mode)
+            game.invasion_progress += game.invasion_rate/60;
+        if (!game.reclaim_mode && game.invasion_progress > game.towns[game.current_town].location){
+                game.under_siege = true;
         }
-        update_ui( monsters[0]);
-        //vm.update();
+        update_ui( game.monsters[0]);
+        vm.update();
+
     }, 17);
 
     var animation_update = setInterval(function(){
@@ -153,7 +146,7 @@
     </div>
 
             <div id="resource_display">
-                    <div class="resource">
+                          <div class="resource">
                     <image src="assets/icons/Follower_Icon.png">
                     <span id="follower_resource"></span></div>
                     <div class="resource">
@@ -182,13 +175,13 @@
                     <div class="resource">
                     <image src="assets/icons/Telecrystal_Icon.png">
                     <span id="crystals">0</span></div>
-
             </div>
 
 <div id="panel_track" class="column_1">
     <div id="town_panel">
         <div class="panel_contents">
             <div id="resource_names">
+
                     <div class="resource">
                     <image src="assets/icons/Follower_Icon.png">
                     <span>Followers</span></div>
@@ -219,6 +212,7 @@
                     <image src="assets/icons/Telecrystal_Icon.png">
                     <span>Crystals</span></div>
             </div>
+
             <div id="followers_container" class="right" >
                     <div class="follower">
                         <span class="follower_count">
@@ -287,6 +281,14 @@
                     <button class="button town_button" onclick="click_rest_button()">
                         "REST!"
                     </button>
+                    
+                    <button class="button town_button" onclick="click_engage_button()">
+                        "ENGAGE!"
+                    </button>
+                    
+                </div>
+                <div class="column_1">
+
                     <button class="button combat_button" onclick="click_disengage_button()">
                         "DISENGAGE!"
                     </button>
@@ -295,6 +297,7 @@
                     <button class="button town_button" onclick="click_engage_button()">
                         "ENGAGE!"
                     </button>
+
                     <button class="button  combat_button" onclick="click_guard_button()">
                         "GUARD!"
                     </button>
@@ -303,19 +306,25 @@
                     <button class="button combat_button" onclick="click_fight_button()">
                         "FIGHT!"
                     </button>
+
                     <button class="button  combat_button" onclick="click_reclaim_button()">
                         "RECLAIM!"
                     </button>
                 </div>
 
                     <button id="myBtn">Open Modal</button>
+                <button onclick="game.hire_mage()">
+                        Hire Mage
+                    </button>
                 <div class="column_1">
                 </div>
             </div>
 
 
             <div class="column_2">
+
               <div class="column_3 right" id="technology_menu">
+
                 <div v-for="t in technology">
                   <div v-if="t.has_been_researched">
                      <div v-bind:style="{color: t.is_researched_color(), visibility: t.visible(technology)}">{{t.technology_name}}
@@ -331,17 +340,6 @@
             </div>
         </div>
     </div>
-    
-    <!-- The Modal -->
-    <div id="myModal" class="modal">
-
-        <!-- Modal content -->
-        <div class="modal-content">
-               <span class="close">&times;</span>
-            <p>Some text in the Modal..</p>
-        </div>
-
-    </div>
-
+</div>
 </body>
 </html>

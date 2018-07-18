@@ -2,10 +2,10 @@ var sliding_panel_offset = 0 ;
 
 function slide_panel(engaged){
     var width = document.getElementById("town_panel").offsetWidth;
-    if ( (sliding_panel_offset > -width) && ( engaged || under_siege)){
+    if ( (sliding_panel_offset > -width) && ( game.engaged || game.under_siege)){
         sliding_panel_offset -= 20;
     }
-    if ( (sliding_panel_offset < 0) && ! engaged && ! under_siege){
+    if ( (sliding_panel_offset < 0) && ! game.engaged && ! game.under_siege){
         sliding_panel_offset += 20;
     }
     if (sliding_panel_offset < 5 && sliding_panel_offset > -5){sliding_panel_offset = 0;}
@@ -25,27 +25,27 @@ function update_bar_by_id(id, current, max){
 function update_ui( monster){
     document.getElementById("track_container").style.height  = document.getElementById("panel_track").offsetHeight;
 
-    slide_panel(engaged);
+    slide_panel(game.engaged);
     
 
 
     var resources = ["meat", "scales", "claws", "ore", "fiber", "metal", "gelatin", "crystals"];
     for (i in resources){
-        update_value_by_id(resources[i], player_inventory[resources[i]]);
+        update_value_by_id(resources[i], game.player_inventory[resources[i]]);
     }
 
-    update_value_by_id("follower_resource", follower_resource);
+    update_value_by_id("follower_resource", game.follower_resource);
 
 
-    update_bar_by_id("invasion", invasion_progress, 100);
+    update_bar_by_id("invasion", game.invasion_progress, 100);
 
     
-    if (! under_siege){
+    if (! game.under_siege){
         for (i in document.getElementsByClassName('combat_button')) {
-            document.getElementsByClassName('combat_button')[i].disabled = !engaged;
+            document.getElementsByClassName('combat_button')[i].disabled = !game.engaged;
         }
         for (i in document.getElementsByClassName('town_button')) {
-            document.getElementsByClassName('town_button')[i].disabled = engaged;
+            document.getElementsByClassName('town_button')[i].disabled = game.engaged;
         }
     }
     else {
