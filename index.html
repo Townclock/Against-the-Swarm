@@ -12,6 +12,7 @@
 <script src="js/player_inventory.js"></script>
 <script src="js/gui.js"></script>
 <script src="js/followers.js"></script>
+<script src="js/party.js"></script>
 <script src="js/fighter.js"></script>
 <script src="js/game_logic.js"></script>
 
@@ -27,7 +28,9 @@
                 technology: technology,
                 fighters: fighters,
                 follower_resource: follower_resource,
-                followers: followers
+                followers: followers,
+                player_inventory: player_inventory,
+                party: party
             }
         });
 
@@ -75,6 +78,10 @@
     var player_inventory = new Player_Inventory;
 
     var followers = new Followers();
+
+    var party = new Party();
+
+    var follower_resource = follower_resource;
 
     function click_fight_button(){  multi_fight(fighters, monsters);}
     function click_rest_button(){          rest(fighters, monsters);}
@@ -257,13 +264,50 @@
         <!-- Modal content -->
         <div class="modal-content">
                 <span class="close">&times;</span>
-                <p>Followers: {{follower_resource}}</p>
-                <p>Meat Processors: {{followers.meat_processors}}</p>
-                <p>Claw Processors: {{followers.claws_processors}}</p>
-                <p>Scale Processors: {{followers.scales_processors}}</p>
-                <p>Ore Processors: {{followers.ore_processors}}</p>
-                <p>Miners: {{followers.miners}}</p>
-                <p>Fighters:  {{fighters.length}}</p>
+                <p>Crystals: {{player_inventory.crystals}}</p>
+                <p>Party: </p>
+                <p>Followers: {{follower_resource}}
+                    <button id = "sub_follower">-
+                    </button>
+                    <button id = "add_follower">+
+                    </button>
+                </p>
+                <p>Meat Processors: {{followers.meat_processors}}
+                    <button id = "sub_meat_processor">-
+                    </button>
+                    <button id = "add_meat_processor">+
+                    </button>
+                </p>
+                <p>Claw Processors: {{followers.claws_processors}}
+                    <button id = "sub_claw_processor">-
+                    </button>
+                    <button id = "add_claw_processor">+
+                    </button>
+                </p>
+                <p>Scale Processors: {{followers.scales_processors}}
+                    <button id = "sub_scale_processor">-
+                    </button>
+                    <button id = "add_scale_processor">+
+                    </button>
+                </p>
+                <p>Ore Processors: {{followers.ore_processors}}
+                    <button id = "sub_ore_processor">-
+                    </button>
+                    <button id = "add_ore_processor">+
+                    </button>
+                </p>
+                <p>Miners: {{followers.miners}}
+                    <button id = "sub_miner" onclick = "party.sub_miners(followers)">-
+                    </button>
+                    {{party.miner_count}}
+                    <button id = "add_miner" onclick = "party.add_miners(followers)">+
+                    </button>
+                </p>
+                <p>Fighters:  {{fighters.length}}
+                </p>
+                <p><button id = "Teleporter">Teleport
+                    </button>
+                </p>
 
         </div>
 
