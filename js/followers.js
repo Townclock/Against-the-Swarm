@@ -73,3 +73,4 @@ function Followers(){
         //Write what researcher does
     }
 }
+}

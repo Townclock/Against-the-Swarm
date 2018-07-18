@@ -30,7 +30,7 @@
                 fighters: game.fighters,
 
                 towns: game.towns,
-
+                followers: game.followers,
                 width: window.innerWidth,
                 i: game.invasion_progress,
             },
@@ -41,7 +41,8 @@
                     vm.width = window.innerWidth;
                 }
 
-
+            }
+       });
         // Get the modal
         var modal = document.getElementById('myModal');
 
@@ -69,8 +70,7 @@
                 modal.style.display = "none";
 
             }
-        })
-    };
+        };
 
     function click_fight_button(){     game.multi_fight();}
     function click_rest_button(){      game.rest();}
@@ -119,7 +119,7 @@
     var animation_update = setInterval(function(){
         update_animation();
     }, 42);
-
+}
 </script>
 
 <body>

@@ -176,7 +176,7 @@ Game.prototype.multi_fight = function(){
     }
 }
 
-gamer.prototype.rest = function(){
+Game.prototype.rest = function(){
     this.number_of_clicks++;
 
     for(f in this.fighters){
@@ -190,11 +190,11 @@ gamer.prototype.rest = function(){
 
     this.invasion_progress += 2;
 }
-gamer.prototype.engage = function(){
+Game.prototype.engage = function(){
     this.number_of_clicks++;
     this.engaged = true;
 };
-gamer.prototype.disengage = function(){
+Game.prototype.disengage = function(){
 
     this.number_of_clicks++;
     if(this.reclaim_mode){
