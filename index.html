@@ -283,31 +283,37 @@
 
         <div id="control_panel">
             <div class="column_2" id="action_buttons">
-                <div class="column_1">
+                <div class="column_3">
                     <button class="button town_button" onclick="click_rest_button()">
                         "REST!"
                     </button>
-                    <button class="button town_button" onclick="click_engage_button()">
-                        "ENGAGE!"
-                    </button>
-
-                    <button id="myBtn">Open Modal</button>
-                </div>
-                <div class="column_1">
                     <button class="button combat_button" onclick="click_disengage_button()">
                         "DISENGAGE!"
                     </button>
-                    <button class="button combat_button" onclick="click_fight_button()">
-                        "FIGHT!"
+                </div>
+                <div class="column_3">
+                    <button class="button town_button" onclick="click_engage_button()">
+                        "ENGAGE!"
                     </button>
                     <button class="button  combat_button" onclick="click_guard_button()">
                         "GUARD!"
+                    </button>
+                </div>
+                <div class="column_3">
+                    <button class="button combat_button" onclick="click_fight_button()">
+                        "FIGHT!"
                     </button>
                     <button class="button  combat_button" onclick="click_reclaim_button()">
                         "RECLAIM!"
                     </button>
                 </div>
+
+                    <button id="myBtn">Open Modal</button>
+                <div class="column_1">
+                </div>
             </div>
+
+
             <div class="column_2">
               <div class="column_3 right" id="technology_menu">
                 <div v-for="t in technology">
