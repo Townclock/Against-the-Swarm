@@ -242,13 +242,24 @@
                         <span class="follower_count">
                         <image src="assets/icons/Aether_Miner_Icon.png">{{followers.miners}}</span>
                         <span>Aether Miner</span>
-                        <button onclick="game.followers.hire('miners', 1)"> + </button>
-                        </div>
+                        <button onclick="game.followers.hire('miners', 1)"> + </button> </div>
                     <div class="follower">
                         <span class="follower_count">
                         <image src="assets/icons/Enchanter_Icon.png"> {{followers.ore_processors}}</span>
                         <span>Enchanter</span>
                         <button onclick="game.followers.hire('ore_processors', 1)"> + </button></div>
+
+
+                    <div class="follower">
+                        <span class="follower_count">
+                        <image src="assets/icons/Knight_Icon.png">{{followers.fighters}}</span>
+                        <span>Fighter</span>
+                        <button onclick="game.followers.hire_fighter(1, game)"> + </button> </div>
+                    <div class="follower">
+                        <span class="follower_count">
+                        <image src="assets/icons/Wizard_Icon.png"> {{followers.magic_users}}</span>
+                        <span>Magic User</span>
+                        <button onclick="game.followers.hire_magic_user(1, game)"> + </button></div>
             </div>
         </div>
     </div>

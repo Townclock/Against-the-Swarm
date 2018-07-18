@@ -28,6 +28,7 @@ function Followers(){
     this.ore_complete = 100;
 
     this.fighters = 0;
+    this.magic_users = 0;
 
     this.mage_cost = [50,0,0,0,0,0];
 
@@ -48,6 +49,27 @@ function Followers(){
             console.log("Not enough followers");
         }
     console.log("hire was called")
+    }
+
+    this.hire_fighter = function(number_to_hire, game){
+        if (number_to_hire <= this.follower_resource) {
+            this.follower_resource -= number_to_hire;
+            this.fighters += number_to_hire;
+            game.fighters.push(new Fighter( "Knight", 500,10, false));
+            }
+        else {
+            console.log("Not enough followers");
+        }
+    }
+    this.hire_magic_user = function(number_to_hire, game){
+        if (number_to_hire <= this.follower_resource) {
+            this.follower_resource -= number_to_hire;
+            this.magic_users += number_to_hire;
+            game.fighters.push(new Fighter( "Mage",500,100,true));
+            }
+        else {
+            console.log("Not enough followers");
+        }
     }
 
     this.processors_act = function(game){
@@ -71,8 +93,5 @@ function Followers(){
         this[ore] += 2;
     }
 
-    this.researchers_act = function() {
-        //Write what researcher does
-    }
 }
 }

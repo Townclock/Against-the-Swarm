@@ -113,7 +113,7 @@ Game.prototype.multi_fight = function(){
 
 
                 //checking to see if fighter is a spell caster
-                if(this.fighters[f].is_magic && this.fighters[f].charge != 2)
+                if(this.fighters[f].is_magic && this.fighters[f].charge <= 2)
                     this.fighters[f].charge ++;
 
                 else{
@@ -259,17 +259,7 @@ Game.prototype.reclaim = function(){
     }
 };
 
-Game.prototype.hire_mage = function(follower){
-    if(this.player_inventory.meat > this.followers.mage_cost[0]){
-        this.player_inventory.meat-=50;
-        this.fighters.push(new Fighter( "Mage",500,50,true));
 
-    }
-    else{
-        alert('not enough materials');
-    }
-
-}
 
 Game.prototype.guard = function(){
     fighters = this.fighters;
@@ -278,15 +268,15 @@ Game.prototype.guard = function(){
     if (monsters.length == 0){ 
         invasion_progress-= .1;
     }
-    if(under_siege){
-        followers.act;
+    if(this.under_siege){
+        this.followers.act;
         increment_follower_resource(1);
     }
     if(fighters.length != 0 && monsters.length != 0){
         for(f in fighters){
             //checking to see if fighter is a spell caster
             if(fighters[f].is_magic){
-                if (fighters[f].charge != 2){
+                if (fighters[f].charge < 3){
                     fighters[f].charge ++;
                 }
                 else{

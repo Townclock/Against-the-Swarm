@@ -47,7 +47,7 @@ Monster.prototype.respawn = function(monster){
         monster.hp = 5;
         monster.present = true;
 }
-Monster.prototype.die = function(game){
+Monster.prototype.die = function(){
     game.player_inventory.increment("meat", this.loot.meat);
     game.player_inventory.increment("scales", this.loot.scales);
     game.player_inventory.increment("claws", this.loot.claws);
