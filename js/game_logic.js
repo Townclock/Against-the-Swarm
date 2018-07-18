@@ -1,4 +1,4 @@
-function gamer(){
+function Game(){
     this.number_of_clicks = 0;
 
     this.engaged = false;
@@ -9,12 +9,11 @@ function gamer(){
 
     this.reclaim_mode = false;
 
-    this.follower_resource = 0;
-
     this.current_town  = 0;
     this.current_world = 0;
 
     this.invasion_rate = 0;
+
 
     this.current_monster = null;
     this.current_fighter = null;
@@ -28,6 +27,7 @@ function gamer(){
     this.fighters = [new Fighter( "hero 1", 1100, 50),
                         new Fighter( "hero 2", 1200, 50),
                         new Fighter( "hero 3", 1000, 50)];
+
 
     this.player_inventory = new Player_Inventory;
 
@@ -55,8 +55,9 @@ function gamer(){
 
 
 
+
 }
-gamer.prototype.change_town = function(){
+Game.prototype.change_town = function(){
 	if(this.current_town == 4){
 		this.world.push( [new Town("test",  20,  false),
 			     new Town("test2", 40,  false),
@@ -77,7 +78,7 @@ gamer.prototype.change_town = function(){
 
 }
 
-gamer.prototype.multi_fight = function(){
+Game.prototype.multi_fight = function(){
     if (this.monsters.length == 0 && !this.under_siege){ 
         this.invasion_progress-= 1;
 
@@ -100,7 +101,6 @@ gamer.prototype.multi_fight = function(){
             this.engaged = true;
             this.reclaim_mode = true;
             this.monsters.push(new Monster("boss",1000,10));
-
         }
     }
     else {
@@ -110,6 +110,7 @@ gamer.prototype.multi_fight = function(){
         }
         if(this.fighters.length != 0 && this.monsters.length != 0){
             for(f in this.fighters){
+
 
                 //checking to see if fighter is a spell caster
                 if(this.fighters[f].is_magic && this.fighters[f].charge != 2)
@@ -239,15 +240,15 @@ function replace_monster(monster, challenge_level){
     console.log(monsters[0]);
 }
 
-gamer.prototype.change_invasion_rate = function(){
+Game.prototype.change_invasion_rate = function(){
     this.invasion_rate = this.monsters.length/5;
 }
 
-gamer.prototype.increment_follower_resource = function(){
+Game.prototype.increment_follower_resource = function(){
     this.follower_resource += (5 - this.current_town);
 }
 
-gamer.prototype.reclaim = function(){
+Game.prototype.reclaim = function(){
     if (this.current_town > 0 && this.reclaim_mode == false) {
         if (this.invasion_progress < this.towns[this.current_town - 1].location) {
             this.reclaim_mode = true;
@@ -258,7 +259,7 @@ gamer.prototype.reclaim = function(){
     }
 };
 
-gamer.prototype.hire_mage = function(follower){
+Game.prototype.hire_mage = function(follower){
     if(this.player_inventory.meat > this.followers.mage_cost[0]){
         this.player_inventory.meat-=50;
         this.fighters.push(new Fighter( "Mage",500,50,true));
@@ -268,4 +269,59 @@ gamer.prototype.hire_mage = function(follower){
         alert('not enough materials');
     }
 
+}
+
+Game.prototype.guard = function(){
+    fighters = this.fighters;
+    monsters = this.monsters;
+    
+    if (monsters.length == 0){ 
+        invasion_progress-= .1;
+    }
+    if(under_siege){
+        followers.act;
+        increment_follower_resource(1);
+    }
+    if(fighters.length != 0 && monsters.length != 0){
+        for(f in fighters){
+            //checking to see if fighter is a spell caster
+            if(fighters[f].is_magic){
+                if (fighters[f].charge != 2){
+                    fighters[f].charge ++;
+                }
+                else{
+                    //finds random monster. If random monster is already dead, searches for new one
+                    var temp = Math.floor(Math.random() * monsters.length);
+                    //remove hp from monster and check if monster is dead or not.
+                    monsters[temp].hp -= fighters[f].atk;
+                    fighters[f].charge = 0;
+                    if(monsters[temp].hp <= 0){
+                        monsters[temp].die();
+                        monsters.splice(temp,1);
+                    }
+                }
+            }
+        }
+        //same for loop for fighters but instead for monsters
+        for(m in monsters){
+            var temp = Math.floor(Math.random() * fighters.length);
+            if(!fighters[temp].is_magic){
+                fighters[temp].hp -= monsters[m].attack_bonus;
+                if(fighters[temp].hp <= 0){
+                    fighters.splice(temp,1);
+                }
+            }
+        }
+    }
+    if(monsters.length == 0 || fighters.length == 0){
+        if (reclaim_mode){
+            reclaim_mode = false;
+            if (monsters.length == 0){
+                current_town--;
+                player_location = world[current_world][current_town].location;
+                invasion_progress -= 10;
+            }
+        }
+        if(engaged && fighters.length < 1) {disengage(fighters, monsters);}
+    }
 }
