@@ -1,5 +1,7 @@
 function Followers(){
 
+
+    this.follower_resource = 0;
     //New variables of different jobs
     this.meat_processors = 50;
     this.claws_processors = 0;
@@ -38,8 +40,8 @@ function Followers(){
 
     //A function to Hire Followers into different jobs. Use this function for hiring. 
     this.hire = function(job, number_to_hire){
-        if (number_to_hire <= follower_resource) {
-            follower_resource -= number_to_hire;
+        if (number_to_hire <= this.follower_resource) {
+            this.follower_resource -= number_to_hire;
             this[job] += number_to_hire;
             }
         else {

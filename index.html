@@ -32,10 +32,12 @@
                 monsters: game.monsters,
                 technology: game.technology,
                 fighters: game.fighters,
+                inventory: game.player_inventory,
 
                 towns: game.towns,
                 followers: game.followers,
                 width: window.innerWidth,
+
                 i: game.invasion_progress,
             },
             methods: {
@@ -75,13 +77,13 @@
 
             }
         };
+    }
 
     function click_fight_button(){     game.multi_fight();}
     function click_rest_button(){      game.rest();}
     function click_engage_button(){    game.engage()};
     function click_disengage_button(){ game.disengage()};
     function click_reclaim_button(){   game.reclaim()};
-   
     function click_guard_button(){   game.guard()};
     console.log(game);
 
@@ -123,7 +125,6 @@
     var animation_update = setInterval(function(){
         update_animation();
     }, 42);
-}
 </script>
 
 <body>
@@ -152,33 +153,33 @@
             <div id="resource_display">
                           <div class="resource">
                     <image src="assets/icons/Follower_Icon.png">
-                    <span id="follower_resource"></span></div>
+                    <span id="follower_resource">{{followers.follower_resource}}</span></div>
                     <div class="resource">
                     <image src="assets/icons/Meat_Icon.png">
-                    <span id="meat">0</span></div>
+                    <span id="meat">{{inventory.meat}}</span></div>
                     <div class="resource">
                     <image src="assets/icons/Scale_Icon.png">
-                    <span id="scales">0</span></div>
+                    <span id="scales">{{inventory.scales}}</span></div>
                     <div class="resource">
                     <image src="assets/icons/Claw_Icon.png">
-                    <span id="claws">0</span></div>
+                    <span id="claws">{{inventory.claws}}</span></div>
 
                     <div class="resource">
                     <image src="assets/icons/Fiber_Icon.png">
-                    <span id="fiber">0</span></div>
+                    <span id="fiber">{{inventory.fiber}}</span></div>
                     <div class="resource">
                     <image src="assets/icons/Metal_Icon.png">
-                    <span id="metal">0</span></div>
+                    <span id="metal">{{inventory.metal}}</span></div>
                     <div class="resource">
                     <image src="assets/icons/Gelatin_Icon.png">
-                    <span id="gelatin">0</span></div>
+                    <span id="gelatin">{{inventory.gelatin}}</span></div>
 
                     <div class="resource">
                     <image src="assets/icons/Aetherium_Icon.png">
-                    <span id="ore">0</span></div>
+                    <span id="ore">{{inventory.ore}}</span></div>
                     <div class="resource">
                     <image src="assets/icons/Telecrystal_Icon.png">
-                    <span id="crystals">0</span></div>
+                    <span id="crystals">{{inventory.crystals}}</span></div>
             </div>
 
 <div id="panel_track" class="column_1">
@@ -222,32 +223,32 @@
                         <span class="follower_count">
                         <image src="assets/icons/Meat_Pounder_Icon.png"> {{followers.meat_processors}}</span>
                         <span>Meat Cutter</span> 
-                        <button onclick="followers.hire('meat_processors', 1)"> + </button>
+                        <button onclick="game.followers.hire('meat_processors', 1)"> + </button>
                         </div>
                     
                     <div class="follower">
                         <span class="follower_count">
                         <image src="assets/icons/Scale_Forger_Icon.png">{{followers.scales_processors}}</span>
                         <span> Scale Forger</span>
-                        <button onclick="followers.hire('scales_processors', 1)"> + </button>
+                        <button onclick="game.followers.hire('scales_processors', 1)"> + </button>
                         </div>
                     <div class="follower">
                         <span class="follower_count">
                         <image src="assets/icons/Claw_Grinder_Icon.png">{{followers.claws_processors}}</span>
                         <span>Claw Grinder</span>
-                        <button onclick="followers.hire('claws_processors', 1)"> + </button>
+                        <button onclick="game.followers.hire('claws_processors', 1)"> + </button>
                         </div>
                     <div class="follower">
                         <span class="follower_count">
                         <image src="assets/icons/Aether_Miner_Icon.png">{{followers.miners}}</span>
                         <span>Aether Miner</span>
-                        <button onclick="followers.hire('miners', 1)"> + </button>
+                        <button onclick="game.followers.hire('miners', 1)"> + </button>
                         </div>
                     <div class="follower">
                         <span class="follower_count">
                         <image src="assets/icons/Enchanter_Icon.png"> {{followers.ore_processors}}</span>
                         <span>Enchanter</span>
-                        <button onclick="followers.hire('ore_processors', 1)"> + </button></div>
+                        <button onclick="game.followers.hire('ore_processors', 1)"> + </button></div>
             </div>
         </div>
     </div>
@@ -282,26 +283,17 @@
         <div id="control_panel">
             <div class="column_2" id="action_buttons">
                 <div class="column_3">
-                    <button class="button town_button" onclick="click_rest_button()">
-                        "REST!"
-                    </button>
-                    
                     <button class="button town_button" onclick="click_engage_button()">
                         "ENGAGE!"
                     </button>
-
-                </div>
-                <div class="column_1">
-
                     <button class="button combat_button" onclick="click_disengage_button()">
                         "DISENGAGE!"
                     </button>
                 </div>
                 <div class="column_3">
-                    <button class="button town_button" onclick="click_engage_button()">
-                        "ENGAGE!"
+                    <button class="button town_button" onclick="click_rest_button()">
+                        "REST!"
                     </button>
-
                     <button class="button  combat_button" onclick="click_guard_button()">
                         "GUARD!"
                     </button>

@@ -245,7 +245,7 @@ Game.prototype.change_invasion_rate = function(){
 }
 
 Game.prototype.increment_follower_resource = function(){
-    this.follower_resource += (5 - this.current_town);
+    this.followers.follower_resource += (5 - this.current_town);
 }
 
 Game.prototype.reclaim = function(){

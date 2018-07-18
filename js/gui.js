@@ -28,15 +28,6 @@ function update_ui( monster){
     slide_panel(game.engaged);
     
 
-
-    var resources = ["meat", "scales", "claws", "ore", "fiber", "metal", "gelatin", "crystals"];
-    for (i in resources){
-        update_value_by_id(resources[i], game.player_inventory[resources[i]]);
-    }
-
-    update_value_by_id("follower_resource", game.follower_resource);
-
-
     update_bar_by_id("invasion", game.invasion_progress, 100);
 
     
@@ -82,6 +73,6 @@ function update_animation(){
     else {
         current_frame += 1;
     }
-    for (i in fighters)
+    for (i in game.fighters)
         document.getElementsByClassName("knight_sprite")[i].style.backgroundPosition = current_sprite + scale * current_frame + 'px 0%';
 }
