@@ -82,5 +82,6 @@ function update_animation(){
     else {
         current_frame += 1;
     }
-    document.getElementById("knight_sprite").style.backgroundPosition = current_sprite + scale * current_frame + 'px 0%';
+    for (i in fighters)
+        document.getElementsByClassName("knight_sprite")[i].style.backgroundPosition = current_sprite + scale * current_frame + 'px 0%';
 }
