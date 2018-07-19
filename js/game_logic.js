@@ -21,12 +21,11 @@ function Game(){
     this.time_elapsed  = 0;
     this.spawn_time = 1;
 
-    //this.monster = new Monster("zerg",5,20);
-    this.monsters = [new Monster("zerg", 50, 10)];
+    this.monsters = [];
 
-    this.fighters = [new Fighter( "hero 1", 1100, 50),
-                        new Fighter( "hero 2", 1200, 50),
-                        new Fighter( "hero 3", 1000, 50)];
+    this.fighters = [new Fighter("Knight", 1100, 50),
+                     new Fighter("Knight", 1200, 50),
+                     new Fighter("Knight", 1000, 50)];
 
 
     this.player_inventory = new Player_Inventory;
@@ -52,6 +51,7 @@ function Game(){
     this.towns = temp;
     this.world = [temp];
     this.player_location = 20;
+    this.tracker = new Tracker();
 
 
 
@@ -126,8 +126,12 @@ Game.prototype.multi_fight = function(){
                         this.monsters[temp].hp -= this.fighters[f].atk_bonus;
                         this.fighters[f].charge = 0;
                     }
+
+                    //if monster dead
                     if(this.monsters[temp].hp <= 0){
                         this.monsters[temp].die(this);
+                        this.tracker.update(this.monsters[temp].monster_name);
+
                         this.monsters.splice(temp,1);
                         if(this.monsters.length == 0)
                             break;
@@ -156,6 +160,7 @@ Game.prototype.multi_fight = function(){
                 this.fighters[temp].charge = 0;
 
                 if(this.fighters[temp].hp <= 0){
+                    this.tracker.update(this.fighters[temp].fighter_name);
                     this.fighters.splice(temp,1);
                 }
             }

@@ -270,3 +270,53 @@ body {
     padding: 5px;
 }
 
+
+/*used for the stat page on the bottom right corner */
+.stat_page {
+    display: inline-block;
+    position:relative;
+    bottom: 0px;
+    height: 100%;
+    width: 18.2%;
+    background-color: #000000;
+}
+
+.indivdual_page {
+    margin: 2% 2% 1% 2%;
+    display: inline-block;
+    position: absolute;
+    height: 90%;
+    width: 80%;
+    background-color: #445c82;
+}
+
+.list_of_buttons{
+    display: inline-block;
+    position: absolute;
+    margin: 2% 0% 1% 0%;
+    left: 83%;
+    height: 90%;
+    width: 14%;
+    background-color: #4c4a49;
+
+}
+
+.stat_button{
+    position: absolute;
+    outline:#682311 solid 4px;
+    outline-offset: -4px;
+    height: 25%;
+    width: 100%;
+    background-color: #4c4a49;
+
+}
+
+.stat_button_overlay{
+    position: absolute;
+    opacity: 0.5;
+    z-index: 10;
+    height: 25%;
+    width: 100%;
+    background-color: #000000;
+
+}
