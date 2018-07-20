@@ -14,6 +14,7 @@
 <script src="js/followers.js"></script>
 <script src="js/fighter.js"></script>
 <script src="js/game_logic.js"></script>
+<script src="js/Tracker.js"></script>
 
 </div>
 <!-- <script src="js/modal.js"></script> -->
@@ -25,20 +26,13 @@
     var modal_open = false;
     window.onload = function(){
         game = new Game();
-            console.log(game);
         vm = new Vue({
             el: "#vue-div",
             data: {
-                monsters: game.monsters,
-                technology: game.technology,
-                fighters: game.fighters,
-                inventory: game.player_inventory,
-
-                towns: game.towns,
-                followers: game.followers,
                 width: window.innerWidth,
+                game: game,
 
-                i: game.invasion_progress,
+                stat_page: 1,
             },
             methods: {
                 update: function(){
@@ -85,31 +79,33 @@
     function click_disengage_button(){ game.disengage()};
     function click_reclaim_button(){   game.reclaim()};
     function click_guard_button(){   game.guard()};
-    console.log(game);
+
 
     var timer = setInterval(function(){
-        update_ui(game.monster);
+            update_ui(game.monster);
+            console.log(game.tracker.tank_kills);
 
-
-        if (!game.under_siege && !game.reclaim_mode) {
-            game.increment_follower_resource();
-            game.followers.followers_act(game);
-            game.change_invasion_rate();
+            //if user is not fighting in town, get more material and update swarm speed
+            if (!game.under_siege && !game.reclaim_mode) {
+                game.increment_follower_resource();
+                game.followers.followers_act(game);
+                game.change_invasion_rate();
 
         
-        }
-        //code that spawns new enemy every interval
-        if(!game.reclaim_mode){
-            game.time_elapsed++;
-            if(game.time_elapsed >= game.spawn_time && ! game.reclaim_mode){
-                if (game.monsters.length < 18)
-                game.monsters.push(new Monster("test", 50,1, 4));
-                game.time_elapsed = 0;
+            }
+            //code that spawns new enemy every interval
+            if(!game.reclaim_mode){
+
+                //variable that keeps track of how long until net spawn
+                game.time_elapsed++;
+                if(game.time_elapsed >= game.spawn_time && game.monsters.length < 18){
+                    if (game.monsters.length < 18)
+                    game.tracker.spawn(game);
+                    game.time_elapsed = 0;
+                }
             }
         }
-        console.log(game.current_town);
-    }
-        , 1000);
+    , 1000);
 
     var gui_update = setInterval(function(){
         if(!game.under_siege && !game.reclaim_mode)
@@ -136,15 +132,15 @@
     <div class="invasion_bar">
 
 
-        <span style = "position:fixed" v-for="t in towns.length">
+        <span style = "position:fixed" v-for="t in game.towns.length">
 
-            <div v-if="!towns[towns.length-t].destroyed" class="destroyed_town" 
-                 v-bind:style="{left: ((100-towns[towns.length-t].location)/100)*width*.9 - width * .02 + 'px', top:-20+'px'}"> 
+            <div v-if="!game.towns[game.towns.length-t].destroyed" class="destroyed_town" 
+                 v-bind:style="{left: ((100-game.towns[game.towns.length-t].location)/100)*width*.9 - width * .02 + 'px', top:-20+'px'}"> 
                 <image class="town_image" src="assets/sprites/Town.png"/> 
             </div>
 
             <div v-else class="destroyed_town" 
-                 v-bind:style="{left: ((100-towns[towns.length-t].location)/100)*width*.9 - width * .02 + 'px', top:-20+'px'}"> 
+                 v-bind:style="{left: ((100-game.towns[game.towns.length-t].location)/100)*width*.9 - width * .02 + 'px', top:-20+'px'}"> 
                 <image class="town_image" src="assets/sprites/Destroyed_Town.png"/> 
             </div>
         </span>
@@ -154,33 +150,33 @@
             <div id="resource_display">
                           <div class="resource">
                     <image src="assets/icons/Follower_Icon.png">
-                    <span id="follower_resource">{{followers.follower_resource}}</span></div>
+                    <span id="follower_resource">{{game.followers.follower_resource}}</span></div>
                     <div class="resource">
                     <image src="assets/icons/Meat_Icon.png">
-                    <span id="meat">{{inventory.meat}}</span></div>
+                    <span id="meat">{{game.player_inventory.meat}}</span></div>
                     <div class="resource">
                     <image src="assets/icons/Scale_Icon.png">
-                    <span id="scales">{{inventory.scales}}</span></div>
+                    <span id="scales">{{game.player_inventory.scales}}</span></div>
                     <div class="resource">
                     <image src="assets/icons/Claw_Icon.png">
-                    <span id="claws">{{inventory.claws}}</span></div>
+                    <span id="claws">{{game.player_inventory.claws}}</span></div>
 
                     <div class="resource">
                     <image src="assets/icons/Fiber_Icon.png">
-                    <span id="fiber">{{inventory.fiber}}</span></div>
+                    <span id="fiber">{{game.player_inventory.fiber}}</span></div>
                     <div class="resource">
                     <image src="assets/icons/Metal_Icon.png">
-                    <span id="metal">{{inventory.metal}}</span></div>
+                    <span id="metal">{{game.player_inventory.metal}}</span></div>
                     <div class="resource">
                     <image src="assets/icons/Gelatin_Icon.png">
-                    <span id="gelatin">{{inventory.gelatin}}</span></div>
+                    <span id="gelatin">{{game.player_inventory.gelatin}}</span></div>
 
                     <div class="resource">
                     <image src="assets/icons/Aetherium_Icon.png">
-                    <span id="ore">{{inventory.ore}}</span></div>
+                    <span id="ore">{{game.player_inventory.ore}}</span></div>
                     <div class="resource">
                     <image src="assets/icons/Telecrystal_Icon.png">
-                    <span id="crystals">{{inventory.crystals}}</span></div>
+                    <span id="crystals">{{game.player_inventory.crystals}}</span></div>
             </div>
 
 <div id="panel_track" class="column_1">
@@ -222,58 +218,58 @@
             <div id="followers_container" class="right" >
                     <div class="follower">
                         <span class="follower_count">
-                        <image src="assets/icons/Meat_Pounder_Icon.png"> {{followers.meat_processors}}</span>
+                        <image src="assets/icons/Meat_Pounder_Icon.png"> {{game.followers.meat_processors}}</span>
                         <span>Meat Cutter</span> 
                         <button
-                        v-bind:disabled="!followers.can_hire_meat_processors"
+                        v-bind:disabled="!game.followers.can_hire_meat_processors"
                         onclick="game.followers.hire('meat_processors', 1)"> + </button>
                         </div>
                     
                     <div class="follower">
                         <span class="follower_count">
-                        <image src="assets/icons/Scale_Forger_Icon.png">{{followers.scales_processors}}</span>
+                        <image src="assets/icons/Scale_Forger_Icon.png">{{game.followers.scales_processors}}</span>
                         <span> Scale Forger</span>
                         <button
-                        v-bind:disabled="!followers.can_hire_scales_processors"
+                        v-bind:disabled="!game.followers.can_hire_scales_processors"
                         onclick="game.followers.hire('scales_processors', 1)"> + </button>
                         </div>
                     <div class="follower">
                         <span class="follower_count">
-                        <image src="assets/icons/Claw_Grinder_Icon.png">{{followers.claws_processors}}</span>
+                        <image src="assets/icons/Claw_Grinder_Icon.png">{{game.followers.claws_processors}}</span>
                         <span>Claw Grinder</span>
                         <button
-                        v-bind:disabled="!followers.can_hire_claws_processors"
+                        v-bind:disabled="!game.followers.can_hire_claws_processors"
                         onclick="game.followers.hire('claws_processors', 1)"> + </button>
                         </div>
                     <div class="follower">
                         <span class="follower_count">
-                        <image src="assets/icons/Aether_Miner_Icon.png">{{followers.miners}}</span>
+                        <image src="assets/icons/Aether_Miner_Icon.png">{{game.followers.miners}}</span>
                         <span>Aether Miner</span>
                         <button
-                        v-bind:disabled="!followers.can_miners"
+                        v-bind:disabled="!game.followers.can_miners"
                         onclick="game.followers.hire('miners', 1)"> + </button> </div>
                     <div class="follower">
                         <span class="follower_count">
-                        <image src="assets/icons/Enchanter_Icon.png"> {{followers.ore_processors}}</span>
+                        <image src="assets/icons/Enchanter_Icon.png"> {{game.followers.ore_processors}}</span>
                         <span>Enchanter</span>
                         <button
-                        v-bind:disabled="!followers.can_hire_ore_processors"
+                        v-bind:disabled="!game.followers.can_hire_ore_processors"
                         onclick="game.followers.hire('ore_processors', 1)"> + </button></div>
 
 
                     <div class="follower">
                         <span class="follower_count">
-                        <image src="assets/icons/Knight_Icon.png">{{followers.fighters}}</span>
+                        <image src="assets/icons/Knight_Icon.png">{{game.followers.fighters}}</span>
                         <span>Fighter</span>
                         <button
-                        v-bind:disabled="!followers.can_hire_fighters"
+                        v-bind:disabled="!game.followers.can_hire_fighters"
                         onclick="game.followers.hire_fighter(1, game)"> + </button> </div>
                     <div class="follower">
                         <span class="follower_count">
-                        <image src="assets/icons/Wizard_Icon.png"> {{followers.magic_users}}</span>
+                        <image src="assets/icons/Wizard_Icon.png"> {{game.followers.magic_users}}</span>
                         <span>Magic User</span>
                         <button
-                        v-bind:disabled="!followers.can_hire_magic_users"
+                        v-bind:disabled="!game.followers.can_hire_magic_users"
                         onclick="game.followers.hire_magic_user(1, game)"> + </button></div>
             </div>
         </div>
@@ -281,24 +277,38 @@
     <div id="field_panel" >
     <div class="panel_contents">
         <div class="column_2 center">
-            <div v-for="f in fighters" class="character_container" >
+            <div v-for="f in game.fighters" class="character_container" >
                 <div v-on:click="current_fighter = m">{{f.fighter_name}} hp: {{f.hp}}</div>
                 <div class="health_bar">
                     <div class="health" v-bind:style="{width: f.hp_in_percent()}"></div>
                 </div>
                 <div class="knight_sprite"></div>
             </div>
-            </div>
+        </div>
 
 
 
         <div class="column_2 right" id="monsters_column">
-            <div v-for="m in monsters" class="character_container">
+            <div v-for="m in game.monsters" class="character_container">
                 <div v-on:click="current_monster = m">{{m.monster_name}} hp: {{m.hp}}</div>
                 <div class="health_bar" id="monster_health_bar">
                     <div class="health" v-bind:style="{width: m.hp_in_percent()}"></div>
                 </div>
-                <image class="town_image" src="assets/sprites/Monster_Spider.png"/>
+
+                <!-- figures out which monster it is and what picture to display-->
+                <div v-if="m.monster_name == 'tank'">
+                    <image class="town_image" src="assets/sprites/Monster_Spider.png"/>
+                </div>
+                <div v-if="m.monster_name == 'drone'">
+                    <image class="town_image" src="assets/sprites/Monster_Scalisk.png"/>
+                </div>
+                <div v-if="m.monster_name == 'warrior'">
+                    <image class="town_image" src="assets/sprites/Monster_Crab.png"/>
+                </div>
+                <div v-if="m.monster_name == 'boss'">
+                    <image class="town_image" src="assets/sprites/Boss_Monster.png" style="width:300px;height:300px;"/>
+                </div>
+
             </div>
         </div>
     </div>
@@ -332,6 +342,7 @@
                     <button class="button  combat_button" onclick="click_reclaim_button()">
                         "RECLAIM!"
                     </button>
+
                 </div>
 
                     <button id="myBtn">Open Modal</button>
@@ -340,26 +351,66 @@
             </div>
 
 
-            <div class="column_2">
+            <div class="column_3">
 
-              <div class="column_3 right" id="technology_menu">
+              <div class="column_2 left" id="technology_menu">
 
-                <div v-for="t in technology">
+                <div v-for="t in game.technology">
                   <div v-if="t.has_been_researched">
-                     <div v-bind:style="{color: t.is_researched_color(), visibility: t.visible(technology)}">{{t.technology_name}}
+                     <div v-bind:style="{color: t.is_researched_color(), visibility: t.visible(game.technology)}">{{t.technology_name}}
                      </div>
                   </div>
                   <div v-else>
-                    <div v-bind:style="{color: t.is_researched_color(), visibility: t.visible(technology)}" v-on:click="t.unlock_tech(technology, player_inventory)">
+                    <div v-bind:style="{color: t.is_researched_color(), visibility: t.visible(game.technology)}" v-on:click="t.unlock_tech(game.technology, game.player_inventory)">
                       {{t.technology_name}}
                     </div>
                   </div>
                 </div>
             </div>
+        </div>
+        <!-- shows user stats -->
+        <div class="stat_page">
+            <div class="indivdual_page left">
+                You are on page {{stat_page}}<br>
+
+                <!-- track monster death stats -->
+                <div v-if="stat_page == 1">
+                    Warriors killed: {{game.tracker.warrior_kills}}<br>
+                    Drones killed: {{game.tracker.drone_kills}}<br>
+                    Tanks Killed: {{game.tracker.tank_kills}}<br>
+                </div>
+
+                <!-- track fighters that have died -->
+                <div v-if="stat_page == 2">
+                    Fighter deaths: {{game.tracker.fighter_deaths}}<br>
+                    Mage deaths: {{game.tracker.mage_deaths}}<br>
+                </div>
+
+                <!-- fill for 3rd tab -->
+                <div v-if="stat_page == 3"> 
+                    Fill 3
+                </div>
+
+                <!-- fill for 4th tab -->
+                <div v-if="stat_page == 4">
+                    Fill 4
+                </div>
+            </div>
+
+            <!-- buttons that allow you to change to see other stats -->
+            <div class="list_of_buttons right">
+
+                <!-- button overlay that tells you which tab you are currently on -->
+                <div class="stat_button_overlay" v-bind:style="{top: (stat_page*25-25) + '%'}"></div>
+
+                <!-- buttons -->
+                <div class="stat_button" style="top:0%"  v-on:click="stat_page = 1">  1</div>
+                <div class="stat_button" style="top:25%" v-on:click="stat_page = 2">  2</div>
+                <div class="stat_button" style="top:50%" v-on:click="stat_page = 3">  3</div>
+                <div class="stat_button" style="top:75%" v-on:click="stat_page = 4">  4</div>
             </div>
         </div>
     </div>
-    
     <!-- The Modal -->
     <div id="myModal" class="modal">
 
