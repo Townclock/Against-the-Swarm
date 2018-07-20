@@ -232,6 +232,16 @@ body {
     height: 300px;
     background-image: url("assets/sprites/Knight_Idle.png");
 }
+
+.fire_sprite {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    display: inline-block;
+    margin: auto;
+    background-image: url("assets/sprites/Fire.png");
+}
+
 #resource_names .resource span {
     text-align: right;
     margin-left: 35%;

@@ -118,9 +118,13 @@
 
     }, 17);
 
-    var animation_update = setInterval(function(){
-        update_animation();
+    var knight_animation_update = setInterval(function(){
+        update_knight_animation();
     }, 42);
+    
+    var fire_animation_update = setInterval(function(){
+        update_fire_animation();
+    }, 140);
 
 </script>
 
@@ -144,6 +148,15 @@
                 <image class="town_image" src="assets/sprites/Destroyed_Town.png"/> 
             </div>
         </span>
+
+        <span v-for="t in game.towns.length">
+                <div v-if= "game.towns.length-t === game.current_town - 1">
+                     <div class="fire_sprite"
+                         v-bind:style="{left: ((100-game.towns[game.towns.length-t].location)/100)*width*.9 - width * .02 + 'px', top:-20+'px'}"> 
+                    </div>  
+                </div>
+        </span>
+
         <div class="invasion" id="invasion" style="width:0px"></div>
     </div>
 

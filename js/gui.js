@@ -63,16 +63,32 @@ function update_ui( monster){
     update_value_by_id("towns", towns_status);*/
 
 }
-var current_frame = 1;
-function update_animation(){
-    var current_sprite = "-";
-    var scale = 350;
-    if (current_frame >= 19) {
-        current_frame = 1;
+
+var current_knight_frame = 1;
+function update_knight_animation(){
+    var current_knight_sprite = "-";
+    var knight_scale = 350;
+    if (current_knight_frame >= 19) {
+        current_knight_frame = 1;
     }
     else {
-        current_frame += 1;
+        current_knight_frame += 1;
     }
     for (i in game.fighters)
-        document.getElementsByClassName("knight_sprite")[i].style.backgroundPosition = current_sprite + scale * current_frame + 'px 0%';
+        document.getElementsByClassName("knight_sprite")[i].style.backgroundPosition = current_knight_sprite + knight_scale * current_knight_frame + 'px 0%';
+}
+
+var current_fire_frame = 1;
+function update_fire_animation(){
+    var current_fire_sprite = "-";
+    var fire_scale = 200;
+    if (current_fire_frame >= 2) {
+        current_fire_frame = 1;
+    }
+    else {
+        current_fire_frame += 1;
+    }
+   for (i in game.towns){
+        document.getElementsByClassName("fire_sprite")[i].style.backgroundPosition = current_fire_sprite + fire_scale * current_fire_frame + 'px 0%';
+   }
 }
