@@ -103,7 +103,7 @@
             game.time_elapsed++;
             if(game.time_elapsed >= game.spawn_time && ! game.reclaim_mode){
                 if (game.monsters.length < 18)
-                game.monsters.push(new Monster("test", 50,10));
+                game.monsters.push(new Monster("test", 50,1, 4));
                 game.time_elapsed = 0;
             }
         }
@@ -125,6 +125,7 @@
     var animation_update = setInterval(function(){
         update_animation();
     }, 42);
+
 </script>
 
 <body>
@@ -223,43 +224,57 @@
                         <span class="follower_count">
                         <image src="assets/icons/Meat_Pounder_Icon.png"> {{followers.meat_processors}}</span>
                         <span>Meat Cutter</span> 
-                        <button onclick="game.followers.hire('meat_processors', 1)"> + </button>
+                        <button
+                        v-bind:disabled="!followers.can_hire_meat_processors"
+                        onclick="game.followers.hire('meat_processors', 1)"> + </button>
                         </div>
                     
                     <div class="follower">
                         <span class="follower_count">
                         <image src="assets/icons/Scale_Forger_Icon.png">{{followers.scales_processors}}</span>
                         <span> Scale Forger</span>
-                        <button onclick="game.followers.hire('scales_processors', 1)"> + </button>
+                        <button
+                        v-bind:disabled="!followers.can_hire_scales_processors"
+                        onclick="game.followers.hire('scales_processors', 1)"> + </button>
                         </div>
                     <div class="follower">
                         <span class="follower_count">
                         <image src="assets/icons/Claw_Grinder_Icon.png">{{followers.claws_processors}}</span>
                         <span>Claw Grinder</span>
-                        <button onclick="game.followers.hire('claws_processors', 1)"> + </button>
+                        <button
+                        v-bind:disabled="!followers.can_hire_claws_processors"
+                        onclick="game.followers.hire('claws_processors', 1)"> + </button>
                         </div>
                     <div class="follower">
                         <span class="follower_count">
                         <image src="assets/icons/Aether_Miner_Icon.png">{{followers.miners}}</span>
                         <span>Aether Miner</span>
-                        <button onclick="game.followers.hire('miners', 1)"> + </button> </div>
+                        <button
+                        v-bind:disabled="!followers.can_miners"
+                        onclick="game.followers.hire('miners', 1)"> + </button> </div>
                     <div class="follower">
                         <span class="follower_count">
                         <image src="assets/icons/Enchanter_Icon.png"> {{followers.ore_processors}}</span>
                         <span>Enchanter</span>
-                        <button onclick="game.followers.hire('ore_processors', 1)"> + </button></div>
+                        <button
+                        v-bind:disabled="!followers.can_hire_ore_processors"
+                        onclick="game.followers.hire('ore_processors', 1)"> + </button></div>
 
 
                     <div class="follower">
                         <span class="follower_count">
                         <image src="assets/icons/Knight_Icon.png">{{followers.fighters}}</span>
                         <span>Fighter</span>
-                        <button onclick="game.followers.hire_fighter(1, game)"> + </button> </div>
+                        <button
+                        v-bind:disabled="!followers.can_hire_fighters"
+                        onclick="game.followers.hire_fighter(1, game)"> + </button> </div>
                     <div class="follower">
                         <span class="follower_count">
                         <image src="assets/icons/Wizard_Icon.png"> {{followers.magic_users}}</span>
                         <span>Magic User</span>
-                        <button onclick="game.followers.hire_magic_user(1, game)"> + </button></div>
+                        <button
+                        v-bind:disabled="!followers.can_hire_magic_users"
+                        onclick="game.followers.hire_magic_user(1, game)"> + </button></div>
             </div>
         </div>
     </div>

@@ -1,32 +1,22 @@
 function Game(){
     this.number_of_clicks = 0;
-
     this.engaged = false;
-
     this.invasion_progress = 0;
-
     this.under_siege = false;
-
     this.reclaim_mode = false;
-
     this.current_town  = 0;
     this.current_world = 0;
-
     this.invasion_rate = 0;
-
-
     this.current_monster = null;
     this.current_fighter = null;
-
     this.time_elapsed  = 0;
-    this.spawn_time = 1;
-
-    //this.monster = new Monster("zerg",5,20);
-    this.monsters = [new Monster("zerg", 50, 10)];
-
-    this.fighters = [new Fighter( "hero 1", 1100, 50),
-                        new Fighter( "hero 2", 1200, 50),
-                        new Fighter( "hero 3", 1000, 50)];
+    this.spawn_time = 2;
+    this.monsters = [new Monster("Beetle", 500, 1, 19)];
+    this.fighters = [
+        new Fighter( "hero 1", 100, 20),
+        new Fighter( "hero 1", 100, 20),
+        new Fighter( "hero 1", 100, 20),
+        ];
 
 
     this.player_inventory = new Player_Inventory;
@@ -35,11 +25,31 @@ function Game(){
     this.technology_list_html = "";
 
     this.technology = [
-       new Technology("Can Hire Meat", true, 0, 0, 0, [], console.log("")),
-       new Technology("Can Hire Claws", true, 0, 0, 0, [], console.log("")),
-       new Technology("Can Hire Scales", false, 10, 0, 10, [], console.log("")),
-       new Technology("Can Hire Miners", false, 20, 50, 20, ["Can Hire Scales"], console.log("")),
-       new Technology("Can Hire Crysal", false, 10, 0, 10, ["Can Hire Miners"], console.log("")),
+        new Technology("Meat Cutters", false, 0, 0, 0, [], function(){
+            game.followers.can_hire_meat_processors = true;
+            alert("You can now hire Meat Cutters in the Town Panel.")
+        }),
+        new Technology("Scale Forgers", false, 10, 0, 0, ["Meat Cutters"], function(){
+            game.followers.can_hire_scales_processors = true;
+            alert("You can now hire Scale Forgers in the Town Panel.")
+        }),
+        new Technology("Claw Grinders", false, 20, 10, 0, ["Meat Cutters", "Scale Forgers"], function(){
+            game.followers.can_hire_claws_processors = true;
+            alert("You can now hire Claw Grinders in the Town Panel.")
+        }),
+        new Technology("Fighters", false, 10, 20, 5, ["Meat Cutters", "Scale Forgers", "Claw Grinders"], function(){
+            game.followers.can_hire_fighters = true;
+            alert("You can now hire Fighter in the Town Panel.")
+        }),
+        new Technology("Miners", false, 10, 40, 15, ["Meat Cutters", "Scale Forgers", "Claw Grinders"], function(){
+            game.followers.can_hire_miners = true;
+            alert("You can now hire Miners in the Town Panel.")
+        }),
+
+       new Technology("Can Hire Crysal", false, 40, 20, 80, ["Can Hire Miners"], function(){
+            game.followers.can_hire_ore_processors = true;
+            alert("You can now hire Enchanters in the Town Panel.")
+       }),
     ]
 
     temp = [
@@ -52,10 +62,6 @@ function Game(){
     this.towns = temp;
     this.world = [temp];
     this.player_location = 20;
-
-
-
-
 }
 Game.prototype.change_town = function(){
 	if(this.current_town == 4){
@@ -80,7 +86,7 @@ Game.prototype.change_town = function(){
 
 Game.prototype.multi_fight = function(){
     if (this.monsters.length == 0 && !this.under_siege){ 
-        this.invasion_progress-= 1;
+        this.invasion_progress-= .1;
 
         //if you fought back the swarm to the previous town, reclaim mode is set to true and boss is placed.
         //NO MORE RANDOM SPAWNS
@@ -121,9 +127,9 @@ Game.prototype.multi_fight = function(){
                     var temp = Math.floor(Math.random() * this.monsters.length);
                 
                     //remove hp from monster and check if monster is dead or not.
-                    this.monsters[temp].hp -= this.fighters[f].atk;
+                    this.monsters[temp].hp -= (this.fighters[f].atk-this.monsters[temp].armor);
                     if(this.fighters[f].is_magic){
-                        this.monsters[temp].hp -= this.fighters[f].atk_bonus;
+                        this.monsters[temp].hp -= (this.fighters[f].atk_bonus);
                         this.fighters[f].charge = 0;
                     }
                     if(this.monsters[temp].hp <= 0){
@@ -245,7 +251,7 @@ Game.prototype.change_invasion_rate = function(){
 }
 
 Game.prototype.increment_follower_resource = function(){
-    this.followers.follower_resource += (5 - this.current_town);
+    this.followers.follower_resource += (5 - this.current_town)/10;
 }
 
 Game.prototype.reclaim = function(){
@@ -270,7 +276,7 @@ Game.prototype.guard = function(){
     }
     if(this.under_siege){
         this.followers.act;
-        increment_follower_resource(1);
+        increment_follower_resource(1/10);
     }
     if(fighters.length != 0 && monsters.length != 0){
         for(f in fighters){
