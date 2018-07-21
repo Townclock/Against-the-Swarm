@@ -43,23 +43,9 @@ body {
     margin: 4px 1.1% 4px 1.1%;
 }
 
-.button {
-    display: block;
-    height: 10%;
-    width: 80%;
-}
-
-.town_button {
-    display: block;
-    height: 20%;
-    width: 100%;
-    margin: auto auto auto auto;
-}
-.combat_button {
-    display: block;
-    height: 20%;
-    width: 100%;
-    margin: auto auto auto auto;
+#button {
+    height: 50px;
+    width: 100px;
 }
 
 .fighter {

@@ -30,25 +30,6 @@ function update_ui( monster){
 
     update_bar_by_id("invasion", game.invasion_progress, 100);
 
-    
-    if (! game.under_siege){
-        for (i in document.getElementsByClassName('combat_button')) {
-            document.getElementsByClassName('combat_button')[i].disabled = !game.engaged;
-        }
-        for (i in document.getElementsByClassName('town_button')) {
-            document.getElementsByClassName('town_button')[i].disabled = game.engaged;
-        }
-    }
-    else {
-        for (i in document.getElementsByClassName('combat_button')) {
-            document.getElementsByClassName('combat_button')[i].disabled = false;
-        }
-        for (i in document.getElementsByClassName('town_button')) {
-            document.getElementsByClassName('town_button')[i].disabled = true;
-        }
-    }
-
-
     //var width_scalar = document.getElementById("towns").offsetWidth;
     
     /*var towns_status = ""

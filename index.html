@@ -332,30 +332,40 @@
         <div id="control_panel">
             <div class="column_2" id="action_buttons">
                 <div class="column_3">
-                    <button class="button town_button" onclick="click_engage_button()">
-                        "ENGAGE!"
-                    </button>
-                    <button class="button combat_button" onclick="click_disengage_button()">
-                        "DISENGAGE!"
-                    </button>
+                    <div v-if="!game.under_siege && !game.engaged">
+                        <img id = "button" src = "assets/buttons/Engage_Button.png" onclick = "click_engage_button()">
+                    </div>
+                    <div v-else>
+                        <img id = "button" src = "assets/buttons/Engage_Button_Disabled.png">
+                    </div>
+                    <div v-if= "(!game.under_siege && game.engaged) || game.under_siege">
+                        <img id = "button" src = "assets/buttons/Disengage_Button.png" onclick = "click_disengage_button()">
+                    </div>
+                    <div v-else>
+                        <img id = "button" src = "assets/buttons/Disengage_Button_Disabled.png">
+                    </div>
                 </div>
                 <div class="column_3">
-                    <button class="button town_button" onclick="click_rest_button()">
-                        "REST!"
-                    </button>
-                    <button class="button  combat_button" onclick="click_guard_button()">
-                        "GUARD!"
-                    </button>
+                    <div v-if="!game.under_siege && !game.engaged">
+                        <img id = "button" src = "assets/buttons/Rest_Button.png" onclick = "click_rest_button()">
+                    </div>
+                    <div v-else>
+                        <img id = "button" src = "assets/buttons/Rest_Button_Disabled.png">
+                    </div>
+                    <div v-if= "(!game.under_siege && game.engaged) || game.under_siege">
+                        <img id = "button" src ="assets/buttons/Fight_Button.png" onclick = "click_fight_button()">
+                    </div>
+                    <div v-else>
+                        <img id = "button" src ="assets/buttons/Fight_Button_Disabled.png">
+                    </div>
                 </div>
                 <div class="column_3">
-                    <button class="button combat_button" onclick="click_fight_button()">
-                        "FIGHT!"
-                    </button>
-
-                    <button class="button  combat_button" onclick="click_reclaim_button()">
-                        "RECLAIM!"
-                    </button>
-
+                    <div v-if= "(!game.under_siege && game.engaged) || game.under_siege">
+                        <img id = "button" src ="assets/buttons/Guard_Button.png" onclick = "click_guard_button()">
+                    </div>
+                    <div v-else>
+                        <img id = "button" src ="assets/buttons/Guard_Button_Disabled.png">
+                    </div>
                 </div>
 
                     <button id="myBtn">Open Modal</button>
