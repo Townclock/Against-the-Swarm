@@ -56,7 +56,8 @@ function update_fire_animation(){
         current_fire_frame += 1;
     }
    for (i in game.towns){
-        document.getElementsByClassName("fire_sprite")[i].style.backgroundPosition = current_fire_sprite + fire_scale * current_fire_frame + 'px 0%';
+        if (document.getElementsByClassName("fire_sprite")[i] !== undefined)
+            document.getElementsByClassName("fire_sprite")[i].style.backgroundPosition = current_fire_sprite + fire_scale * current_fire_frame + 'px 0%';
    }
 }
 
