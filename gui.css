@@ -227,11 +227,6 @@ body {
     margin: auto;
     background-image: url("assets/sprites/Fire.png");
 }
-.spider_sprite {
-    width: 350px;
-    height: 300px;
-    background-image: url("assets/sprites/Monster_Spider_Idle.png");
-}
 
 #resource_names .resource span {
     text-align: right;
@@ -268,8 +263,32 @@ body {
 }
 #technology_menu {
     background-color: black;
+    width: 93%;
+    height: auto%;
     padding: 5px;
 }
+
+.technology {
+    background-color: white;
+    color:white;
+    text-align: center;
+    margin: 0px 0px 5px 0%;
+    border: 2px solid black;
+    height: auto%;
+    display: inline-block;
+    width: 30%;
+    margin-right:0px;
+    float: right;
+}
+
+.tooltip{
+    z-index: 10;
+    position: absolute;
+    width: 220px;
+    height 200px;
+    background-color: #ffffff;
+}
+
 
 
 /*used for the stat page on the bottom right corner */
