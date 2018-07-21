@@ -22,11 +22,10 @@
     //every variable or function that wants to be called from html has to have reference in //Vue function
 
     var game;
-    game = new Game();
     var vm;
     var modal_open = false;
     window.onload = function(){
-        
+        game = new Game();
         vm = new Vue({
             el: "#vue-div",
             data: {
@@ -34,14 +33,22 @@
                 game: game,
 
                 stat_page: 1,
+                
+                i: game.invasion_progress,
+                holder: -1,
+                holder2: -1,
+                
+                current_technology: game.technology[0],
+                mouseX: 100,
+                mouseY: 100,
             },
             methods: {
                 update: function(){
                     vm.i = game.invasion_rate;
                     vm.towns = game.towns;
                     vm.width = window.innerWidth;
-                }
-
+                },
+              
             }
        });
         // Get the modal
@@ -53,7 +60,7 @@
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
 
-        // When the user clicks on the button, open the modal 
+        // When the user clicks on the button, open the modal
         btn.onclick = function() {
             console.log('hi');
             modal.style.display = "block";
@@ -126,6 +133,18 @@
     var fire_animation_update = setInterval(function(){
         update_fire_animation();
     }, 140);
+    
+    
+function handler(e) {
+    e = e || window.event;
+
+    vm.mouseX = e.pageX;
+    vm.mouseY = e.pageY;
+
+
+    console.log(vm.mouseX, vm.mouseY);
+}
+ document.addEventListener('mousemove', handler);
 
 </script>
 
@@ -139,22 +158,22 @@
 
         <span style = "position:fixed" v-for="t in game.towns.length">
 
-            <div v-if="!game.towns[game.towns.length-t].destroyed" class="destroyed_town" 
-                 v-bind:style="{left: ((100-game.towns[game.towns.length-t].location)/100)*width*.9 - width * .02 + 'px', top:-20+'px'}"> 
-                <image class="town_image" src="assets/sprites/Town.png"/> 
+            <div v-if="!game.towns[game.towns.length-t].destroyed" class="destroyed_town"
+                 v-bind:style="{left: ((100-game.towns[game.towns.length-t].location)/100)*width*.9 - width * .02 + 'px', top:-20+'px'}">
+                <image class="town_image" src="assets/sprites/Town.png"/>
             </div>
 
-            <div v-else class="destroyed_town" 
-                 v-bind:style="{left: ((100-game.towns[game.towns.length-t].location)/100)*width*.9 - width * .02 + 'px', top:-20+'px'}"> 
-                <image class="town_image" src="assets/sprites/Destroyed_Town.png"/> 
+            <div v-else class="destroyed_town"
+                 v-bind:style="{left: ((100-game.towns[game.towns.length-t].location)/100)*width*.9 - width * .02 + 'px', top:-20+'px'}">
+                <image class="town_image" src="assets/sprites/Destroyed_Town.png"/>
             </div>
         </span>
 
         <span v-for="t in game.towns.length">
                 <div v-if= "game.towns.length-t === game.current_town - 1">
                      <div class="fire_sprite"
-                         v-bind:style="{left: ((100-game.towns[game.towns.length-t].location)/100)*width*.9 - width * .02 + 'px', top:-20+'px'}"> 
-                    </div>  
+                         v-bind:style="{left: ((100-game.towns[game.towns.length-t].location)/100)*width*.9 - width * .02 + 'px', top:-20+'px'}">
+                    </div>
                 </div>
         </span>
 
@@ -233,7 +252,7 @@
                     <div class="follower">
                         <span class="follower_count">
                         <image src="assets/icons/Meat_Pounder_Icon.png"> {{game.followers.meat_processors}}</span>
-                        <span>Meat Cutter</span> 
+                        <span>Meat Cutter</span>
                         <button
                         v-bind:disabled="!game.followers.can_hire_meat_processors"
                         onclick="game.followers.hire('meat_processors', 1)"> + </button>
@@ -298,7 +317,6 @@
                 </div>
                 <div class="knight_sprite"></div>
             </div>
-            </div>
         </div>
 
 
@@ -326,6 +344,7 @@
 
             </div>
         </div>
+    </div>
     </div>
     </div>
     </div>
@@ -375,23 +394,8 @@
             </div>
 
 
-            <div class="column_3">
-
-              <div class="column_2 left" id="technology_menu">
-
-                <div v-for="t in game.technology">
-                  <div v-if="t.has_been_researched">
-                     <div v-bind:style="{color: t.is_researched_color(), visibility: t.visible(game.technology)}">{{t.technology_name}}
-                     </div>
-                  </div>
-                  <div v-else>
-                    <div v-bind:style="{color: t.is_researched_color(), visibility: t.visible(game.technology)}" v-on:click="t.unlock_tech(game.technology, game.player_inventory)">
-                      {{t.technology_name}}
-                    </div>
-                  </div>
-                </div>
-            </div>
-        </div>
+              
+      
         <!-- shows user stats -->
         <div class="stat_page">
             <div class="indivdual_page left">
@@ -411,8 +415,30 @@
                 </div>
 
                 <!-- fill for 3rd tab -->
-                <div v-if="stat_page == 3"> 
-                    Fill 3
+                <div v-if="stat_page == 3">
+                    <div class="column_2 left" id="technology_menu">
+
+                      <div v-for="t in game.technology.length">
+                        <div v-if="game.technology[t-1].has_been_researched">
+                
+                          <div class="technology" @mouseover="holder = t; holder2 = t; current_technology = game.technology[t-1];" @mouseleave="holder = -1" v-bind:style="{'background-color': game.technology[t-1].is_researched_color(), visibility: game.technology[t-1].visible(game.technology)}">{{game.technology[t-1].technology_name}}
+                          </div>
+                
+                        </div>
+
+                        <div v-else>
+               
+                          <div class="technology" @mouseover="holder = t; holder2 = t; current_technology = game.technology[t-1];"@mouseleave="holder = -1" v-bind:style="{'background-color': game.technology[t-1].is_researched_color(), visibility: game.technology[t-1].visible(game.technology)}" v-on:click="game.technology[t-1].unlock_tech(game.technology, game.inventory)">
+                            {{game.technology[t-1].technology_name}}
+                          </div>
+                
+                        </div>
+                      </div>
+                
+                    <div v-if="holder !=-1" class = "tooltip" v-bind:style="{top: mouseY - 600, left: mouseX - 850}" @mouseover="holder = holder2"> {{current_technology.technology_name}} <br>Cost: {{current_technology.cost.fiber}}&nbspfiber {{current_technology.cost.metal}}&nbspmetal {{current_technology.cost.gelatin}}&nbspgelatin <br> {{current_technology.description}}
+                    </div>
+                
+                    </div>
                 </div>
 
                 <!-- fill for 4th tab -->
