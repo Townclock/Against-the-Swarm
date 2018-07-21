@@ -39,26 +39,7 @@ function update_ui( monster){
 
     update_bar_by_id("invasion", invasion_progress, 100);
 
-    
-    if (! under_siege){
-        for (i in document.getElementsByClassName('combat_button')) {
-            document.getElementsByClassName('combat_button')[i].disabled = !engaged;
-        }
-        for (i in document.getElementsByClassName('town_button')) {
-            document.getElementsByClassName('town_button')[i].disabled = engaged;
-        }
-    }
-    else {
-        for (i in document.getElementsByClassName('combat_button')) {
-            document.getElementsByClassName('combat_button')[i].disabled = false;
-        }
-        for (i in document.getElementsByClassName('town_button')) {
-            document.getElementsByClassName('town_button')[i].disabled = true;
-        }
-    }
-
-
-    var width_scalar = document.getElementById("towns").offsetWidth;
+    //var width_scalar = document.getElementById("towns").offsetWidth;
     
     var towns_status = ""
     for (x in towns){
@@ -79,31 +60,53 @@ function update_ui( monster){
 
 }
 
-
-// Get the modal
-var modal = document.getElementById('myModal');
-
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-click_modal_button = function(){
-    // When the user clicks on the button, open the modal 
-    btn.onclick = function() {
-        modal.style.display = "block";
+var current_fire_frame = 1;
+function update_fire_animation(){
+    var current_fire_sprite = "-";
+    var fire_scale = 200;
+    if (current_fire_frame >= 2) {
+        current_fire_frame = 1;
     }
-
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-        modal.style.display = "none";
+    else {
+        current_fire_frame += 1;
     }
+   for (i in game.towns){
+        if (document.getElementsByClassName("fire_sprite")[i] !== undefined)
+            document.getElementsByClassName("fire_sprite")[i].style.backgroundPosition = current_fire_sprite + fire_scale * current_fire_frame + 'px 0%';
+   }
+}
 
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
+var knight_current_frame = 1;
+var spider_current_frame = 1;
+function update_animation(){
+    update_knight_animation();
+    update_spider_animation();
+}
+
+function update_knight_animation(){
+    var current_sprite = "-";
+    var scale = 350;
+    if (knight_current_frame >= 19) {
+        knight_current_frame = 1;
+    }
+    else {
+        knight_current_frame += 1;
+    }
+    for (i = 0; i < document.getElementsByClassName("knight_sprite").length; i++) {
+        document.getElementsByClassName("knight_sprite")[i].style.backgroundPosition = current_sprite + scale * knight_current_frame + 'px 0%';
+    }
+}
+
+function update_spider_animation(){
+    var current_sprite = "-";
+    var scale = 350;
+    if (spider_current_frame >= 24) {
+        spider_current_frame = 1;
+    }
+    else {
+        spider_current_frame += 1;
+    }
+    for (i = 0; i < document.getElementsByClassName("spider_sprite").length; i++) {
+        document.getElementsByClassName("spider_sprite")[i].style.backgroundPosition = current_sprite + scale * spider_current_frame + 'px 0%';
     }
 }
