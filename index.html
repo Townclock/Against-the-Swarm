@@ -119,8 +119,8 @@
 
     }, 17);
 
-    var knight_animation_update = setInterval(function(){
-        update_knight_animation();
+    var animation_update = setInterval(function(){
+        update_animation();
     }, 42);
     
     var fire_animation_update = setInterval(function(){
@@ -296,7 +296,13 @@
                 <div class="health_bar">
                     <div class="health" v-bind:style="{width: f.hp_in_percent()}"></div>
                 </div>
-                <div class="knight_sprite"></div>
+                <!-- figures out which type of figher it is and what picture to display-->
+                <div v-if="!f.is_magic">
+                    <div class="knight_sprite"></div>
+                </div>
+                <div v-if="f.is_magic">
+                    <div class="magic_user"></div>
+                </div>
             </div>
             </div>
         </div>

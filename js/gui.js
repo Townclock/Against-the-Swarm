@@ -62,15 +62,17 @@ function update_fire_animation(){
 }
 
 var knight_current_frame = 1;
+var wizard_current_frame = 1;
 var spider_current_frame = 1;
 function update_animation(){
     update_knight_animation();
+    update_wizard_animation();
     update_spider_animation();
 }
 
 function update_knight_animation(){
     var current_sprite = "-";
-    var scale = 350;
+    var scale = 350 / 3;
     if (knight_current_frame >= 19) {
         knight_current_frame = 1;
     }
@@ -82,9 +84,23 @@ function update_knight_animation(){
     }
 }
 
+function update_wizard_animation(){
+    var current_sprite = "-";
+    var scale = 350 / 3;
+    if (wizard_current_frame >= 24) {
+        wizard_current_frame = 1;
+    }
+    else {
+        wizard_current_frame += 1;
+    }
+    for (i = 0; i < document.getElementsByClassName("magic_user").length; i++) {
+        document.getElementsByClassName("magic_user")[i].style.backgroundPosition = current_sprite + scale * wizard_current_frame + 'px 0%';
+    }
+}
+
 function update_spider_animation(){
     var current_sprite = "-";
-    var scale = 350;
+    var scale = 350 / 3;
     if (spider_current_frame >= 24) {
         spider_current_frame = 1;
     }
