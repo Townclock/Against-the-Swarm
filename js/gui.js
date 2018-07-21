@@ -45,6 +45,7 @@ function update_ui( monster){
 
 }
 
+
 var current_fire_frame = 1;
 function update_fire_animation(){
     var current_fire_sprite = "-";
