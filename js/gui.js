@@ -72,15 +72,37 @@ function update_ui( monster){
     update_value_by_id("towns", towns_status);*/
 
 }
-var current_frame = 1;
+var knight_current_frame = 1;
+var spider_current_frame = 1;
 function update_animation(){
+    update_knight_animation();
+    update_spider_animation();
+}
+
+function update_knight_animation(){
     var current_sprite = "-";
     var scale = 350;
-    if (current_frame >= 19) {
-        current_frame = 1;
+    if (knight_current_frame >= 19) {
+        knight_current_frame = 1;
     }
     else {
-        current_frame += 1;
+        knight_current_frame += 1;
     }
-    document.getElementById("knight_sprite").style.backgroundPosition = current_sprite + scale * current_frame + 'px 0%';
+    for (i = 0; i < document.getElementsByClassName("knight_sprite").length; i++) {
+        document.getElementsByClassName("knight_sprite")[i].style.backgroundPosition = current_sprite + scale * knight_current_frame + 'px 0%';
+    }
+}
+
+function update_spider_animation(){
+    var current_sprite = "-";
+    var scale = 350;
+    if (spider_current_frame >= 24) {
+        spider_current_frame = 1;
+    }
+    else {
+        spider_current_frame += 1;
+    }
+    for (i = 0; i < document.getElementsByClassName("spider_sprite").length; i++) {
+        document.getElementsByClassName("spider_sprite")[i].style.backgroundPosition = current_sprite + scale * spider_current_frame + 'px 0%';
+    }
 }
