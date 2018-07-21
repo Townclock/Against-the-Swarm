@@ -45,31 +45,7 @@ function update_ui( monster){
 
 }
 
-<<<<<<< HEAD
-var knight_current_frame = 1;
-var spider_current_frame = 1;
-function update_animation(){
-    update_knight_animation();
-    update_spider_animation();
-}
 
-function update_knight_animation(){
-    var current_sprite = "-";
-    var scale = 350;
-    if (knight_current_frame >= 19) {
-        knight_current_frame = 1;
-    }
-    else {
-        knight_current_frame += 1;
-    }
-    for (i = 0; i < document.getElementsByClassName("knight_sprite").length; i++) {
-        document.getElementsByClassName("knight_sprite")[i].style.backgroundPosition = current_sprite + scale * knight_current_frame + 'px 0%';
-    }
-}
-
-
-=======
->>>>>>> dev
 var current_fire_frame = 1;
 function update_fire_animation(){
     var current_fire_sprite = "-";
