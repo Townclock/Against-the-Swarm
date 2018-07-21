@@ -22,10 +22,11 @@
     //every variable or function that wants to be called from html has to have reference in //Vue function
 
     var game;
+    game = new Game();
     var vm;
     var modal_open = false;
     window.onload = function(){
-        game = new Game();
+        
         vm = new Vue({
             el: "#vue-div",
             data: {
