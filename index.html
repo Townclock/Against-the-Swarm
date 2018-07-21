@@ -30,6 +30,7 @@
             el: "#vue-div",
             data: {
                 width: window.innerWidth,
+                height: window.innerHeight,
                 game: game,
 
                 stat_page: 1,
@@ -123,6 +124,10 @@
         }
         update_ui( game.monsters[0]);
         vm.update();
+        if (vm.holder1 !=0) {
+            vm,holder1 = -1;
+            vm.holder2 = -1;
+        }
 
     }, 17);
 
@@ -456,8 +461,6 @@ function handler(e) {
                         </div>
                       </div>
                 
-                    <div v-if="holder !=-1" class = "tooltip" v-bind:style="{top: mouseY - 600, left: mouseX - 850}" @mouseover="holder = holder2"> {{current_technology.technology_name}} <br>Cost: {{current_technology.cost.fiber}}&nbspfiber {{current_technology.cost.metal}}&nbspmetal {{current_technology.cost.gelatin}}&nbspgelatin <br> {{current_technology.description}}
-                    </div>
                 
                     </div>
                 </div>
@@ -482,6 +485,8 @@ function handler(e) {
             </div>
         </div>
     </div>
+                    <div v-if="holder !=-1" class = "tooltip" v-bind:style="{bottom: height-mouseY, right: width-mouseX}" @mouseover="holder = holder2"> {{current_technology.technology_name}} <br>Cost: {{current_technology.cost.fiber}}&nbspfiber {{current_technology.cost.metal}}&nbspmetal {{current_technology.cost.gelatin}}&nbspgelatin <br> {{current_technology.description}}
+                    </div>1
     <!-- The Modal -->
     <div id="myModal" class="modal">
 
