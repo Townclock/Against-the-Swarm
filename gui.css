@@ -43,23 +43,9 @@ body {
     margin: 4px 1.1% 4px 1.1%;
 }
 
-.button {
-    display: block;
-    height: 10%;
-    width: 80%;
-}
-
-.town_button {
-    display: inline-block;
-    height: 20%;
-    width: 33%;
-    margin: auto auto auto auto;
-}
-.combat_button {
-    display: inline-block;
-    height: 20%;
-    width: 32%;
-    margin: auto auto auto auto;
+#button {
+    height: 50px;
+    width: 100px;
 }
 
 .fighter {
@@ -83,7 +69,9 @@ body {
 
 .health_bar {
     width: 100%;
+
     height: 2%;
+
     margin: auto auto 3px auto;
     background-color: red;
     border: 1px solid black;
@@ -199,6 +187,7 @@ body {
     top: 150px;
     height: 100%;
     }
+
 #resource_display .resource {
     background-color: DB8C44;
     color:black;
@@ -209,12 +198,14 @@ body {
     display: inline-block;
     width: 30%;
     margin-right:0px;
+
 }
 .resource {
     background-color: brown;
     color:white;
     margin: 0px 0px 30px 0%;
     border: 2px solid black;
+
     height: auto%;
 }
 .resource span {
@@ -224,14 +215,18 @@ body {
 
 .knight_sprite {
     width: 350px;
-    height: 100%;
+    height: 300px;
     background-image: url("assets/sprites/Knight_Idle.png");
 }
 
-.spider_sprite {
-    width: 350px;
-    height: 300px;
-    background-image: url("assets/sprites/Monster_Spider_Idle.png");
+
+.fire_sprite {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    display: inline-block;
+    margin: auto;
+    background-image: url("assets/sprites/Fire.png");
 }
 
 #resource_names .resource span {
@@ -270,4 +265,54 @@ body {
 #technology_menu {
     background-color: black;
     padding: 5px;
+}
+
+/*used for the stat page on the bottom right corner */
+.stat_page {
+    display: inline-block;
+    position:relative;
+    bottom: 0px;
+    height: 100%;
+    width: 18.2%;
+    background-color: #000000;
+}
+
+.indivdual_page {
+    margin: 2% 2% 1% 2%;
+    display: inline-block;
+    position: absolute;
+    height: 90%;
+    width: 80%;
+    background-color: #445c82;
+}
+
+.list_of_buttons{
+    display: inline-block;
+    position: absolute;
+    margin: 2% 0% 1% 0%;
+    left: 83%;
+    height: 90%;
+    width: 14%;
+    background-color: #4c4a49;
+
+}
+
+.stat_button{
+    position: absolute;
+    outline:#682311 solid 4px;
+    outline-offset: -4px;
+    height: 25%;
+    width: 100%;
+    background-color: #4c4a49;
+
+}
+
+.stat_button_overlay{
+    position: absolute;
+    opacity: 0.5;
+    z-index: 10;
+    height: 25%;
+    width: 100%;
+    background-color: #000000;
+
 }

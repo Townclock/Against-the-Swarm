@@ -20,10 +20,10 @@ function Technology(technology_name,
 }
 
 Technology.prototype.unlock_tech = function(techs, player_inventory){
-    if(player_inventory.fiber >= this.cost.fiber && player_inventory.metal >= this.cost.metal && player_inventory.gelatin >= this.cost.gelatin){
-        player_inventory.decrement("fiber", this.cost.fiber);
-        player_inventory.decrement("metal", this.cost.metal);
-        player_inventory.decrement("gelatin", this.cost.gelatin);
+    if(game.player_inventory.fiber >= this.cost.fiber && game.player_inventory.metal >= this.cost.metal && game.player_inventory.gelatin >= this.cost.gelatin){
+        game.player_inventory.decrement("fiber", this.cost.fiber);
+        game.player_inventory.decrement("metal", this.cost.metal);
+        game.player_inventory.decrement("gelatin", this.cost.gelatin);
         this.unlock();
     }else {
         alert("Cost: " + this.cost.fiber + " fiber / " + this.cost.metal + " metal / " + this.cost.gelatin + " gelatin");
