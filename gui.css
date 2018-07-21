@@ -11,7 +11,6 @@ body {
 .left {
     display: inline-block;
     float: left;
-    width: 25%;
     height: 50%;
     margin: auto auto auto auto;
 }
@@ -49,14 +48,6 @@ body {
     width: 100px;
 }
 
-.click_counter {
-    display: block;
-    width: 25%;
-    height: 5%;
-    margin: 5% auto 15% auto;
-    text-align: center;
-}
-
 .fighter {
     width: 10%;
     padding-top: 100%;
@@ -72,13 +63,15 @@ body {
 
 .character_container{
     display: inline-block;
-    width: auto;
-    height: auto;
+    width: 20%;
+
 }
 
 .health_bar {
     width: 100%;
-    height: 30px;
+
+    height: 2%;
+
     margin: auto auto 3px auto;
     background-color: red;
     border: 1px solid black;
@@ -90,12 +83,6 @@ body {
     padding-top:5%;
     background-color: lime;
     margin-left: 0px;
-}
-
-.follower_row {
-    width: 98%;
-    height: 10%;
-    margin: 4px 1.1% 4px 1.1%;
 }
 
 
@@ -124,23 +111,7 @@ body {
     width: 100%;
     top: -10px;
 }
-
-.town_image{
-    padding: 3px;
-    height: 80px;
-    width: 80px;
-}
-
 .safe_town{
-    position: absolute;
-    display: inline-block;
-    height:auto;
-    top: -20%;
-    background-color: white;
-    border: 2px solid black;
-}
-
-.destroyed_town{
     position: relative;
     display: inline-block;
     height:140%;
@@ -148,10 +119,23 @@ body {
     background-color: white;
     border: 2px solid black;
 }
+
+.town_image{
+    padding: 3px;
+    height: 80px;
+    width: 80px;
+}
+
+.destroyed_town{
+    position: relative;
+    display: inline-block;
+    width: 1%;
+    margin: auto;
+}
 #panel_track {
     position:absolute;
     top:0;
-    width: 200%;
+    width: 150%;
     height: 100%;
     margin: 0px;
 }
@@ -161,6 +145,8 @@ body {
     overflow:hidden;
     margin: 0px;
     height: 100%;
+    width: 20%;
+    display:inline-block;
 }
 .panel_contents {
     margin-top: 150px;
@@ -170,10 +156,13 @@ body {
     overflow:hidden;
     margin: 0px;
     height: 100%;
+    width:79%;
+    display:inline-block;
 }
 #monsters_column {
     position:absolute;
     overflow:hidden;
+    width: 30%;
 }
 #vue-div {
     width: 100%;
@@ -194,29 +183,34 @@ body {
     z-index:2;
     position: absolute;
     left: 0px;
-    max-width: 30%;
+    width: 4%;
     top: 150px;
+    height: 100%;
     }
+
 #resource_display .resource {
     background-color: DB8C44;
     color:black;
+    font-size: 13pt;
+    width: 100%;
     }
 #resource_names {
-    max-width: 30%;
+    display: inline-block;
+    width: 30%;
+    margin-right:0px;
+
 }
-#resource_names .resource {
+.resource {
     background-color: brown;
     color:white;
-    }
-
-.resource {
     margin: 0px 0px 30px 0%;
     border: 2px solid black;
+
     height: auto%;
 }
 .resource span {
     text-align: right;
-    float: right;
+    height: 6%;
 }
 
 .knight_sprite {
@@ -265,28 +259,16 @@ body {
     width: 25%
 }
 
-/* Modal Content/Box */
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+#control_panel {
+    background-color: gray;
 }
-
-/* The Close Button */
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+#action_buttons {
+    background-color: black;
+    padding: 5px;
 }
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+#technology_menu {
+    background-color: black;
+    padding: 5px;
 }
 
 
