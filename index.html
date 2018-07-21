@@ -318,13 +318,13 @@
 
                 <!-- figures out which monster it is and what picture to display-->
                 <div v-if="m.monster_name == 'tank'">
-                    <image class="town_image" src="assets/sprites/Monster_Spider.png"/>
+                    <div class="monster_spider"></div>
                 </div>
                 <div v-if="m.monster_name == 'drone'">
-                    <image class="town_image" src="assets/sprites/Monster_Scalisk.png"/>
+                    <div class="monster_scalisk"></div>
                 </div>
                 <div v-if="m.monster_name == 'warrior'">
-                    <image class="town_image" src="assets/sprites/Monster_Crab.png"/>
+                    <div class="monster_crab"></div>
                 </div>
                 <div v-if="m.monster_name == 'boss'">
                     <image class="town_image" src="assets/sprites/Boss_Monster.png" style="width:300px;height:300px;"/>
@@ -337,7 +337,7 @@
     </div>
 
         <div id="control_panel">
-            <div class="column_2" id="action_buttons">
+            <div class="column_3" id="action_buttons">
                 <div class="column_3">
                     <div v-if="!game.under_siege && !game.engaged">
                         <img id = "button" src = "assets/buttons/Engage_Button.png" onclick = "click_engage_button()">
@@ -381,37 +381,38 @@
             </div>
 
 
-            <div class="column_3">
-
-              <div class="column_2 left" id="technology_menu">
-
-                <div v-for="t in game.technology">
-                  <div v-if="t.has_been_researched">
-                     <div v-bind:style="{color: t.is_researched_color(), visibility: t.visible(game.technology)}">{{t.technology_name}}
-                     </div>
-                  </div>
-                  <div v-else>
-                    <div v-bind:style="{color: t.is_researched_color(), visibility: t.visible(game.technology)}" v-on:click="t.unlock_tech(game.technology, game.player_inventory)">
-                      {{t.technology_name}}
-                    </div>
-                  </div>
-                </div>
-            </div>
-        </div>
+            
         <!-- shows user stats -->
         <div class="stat_page">
             <div class="indivdual_page left">
                 You are on page {{stat_page}}<br>
-
                 <!-- track monster death stats -->
                 <div v-if="stat_page == 1">
-                    Warriors killed: {{game.tracker.warrior_kills}}<br>
-                    Drones killed: {{game.tracker.drone_kills}}<br>
-                    Tanks Killed: {{game.tracker.tank_kills}}<br>
+                    <div>
+                        <div class="column_1" id="technology_menu">
+
+                        <div v-for="t in game.technology">
+                             <div v-if="t.has_been_researched">
+                                <div v-bind:style="{color: t.is_researched_color(), visibility: t.visible(game.technology)}">{{t.technology_name}}
+                                </div>
+                             </div>
+                             <div v-else>
+                                <div v-bind:style="{color: t.is_researched_color(), visibility: t.visible(game.technology)}" v-on:click="t.unlock_tech(game.technology, game.player_inventory)">
+                      {{t.technology_name}}
+                                </div>
+                             </div>
+                        </div>
+                        </div>
+                    </div>
+                    
                 </div>
 
                 <!-- track fighters that have died -->
                 <div v-if="stat_page == 2">
+                    Warriors killed: {{game.tracker.warrior_kills}}<br>
+                    Drones killed: {{game.tracker.drone_kills}}<br>
+                    Tanks Killed: {{game.tracker.tank_kills}}<br><br>
+
                     Fighter deaths: {{game.tracker.fighter_deaths}}<br>
                     Mage deaths: {{game.tracker.mage_deaths}}<br>
                 </div>
