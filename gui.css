@@ -164,7 +164,7 @@ body {
     margin-top: 150px;
 }
 #field_panel {
-    background-color: green;
+    background-image:url('assets/backgrounds/Tile.png');
     overflow:hidden;
     margin: 0px;
     height: 100%;
