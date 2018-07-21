@@ -230,6 +230,18 @@ body {
     background-image: url("assets/sprites/Monster_Spider_Idle.png");
 }
 
+.monster_scalisk {
+    width: 117px;
+    height: 100px;
+    background-image: url("assets/sprites/Monster_Scalisk_Idle.png");
+}
+
+.monster_crab {
+    width: 100px;
+    height: 100px;
+    background-image: url("assets/sprites/Monster_Crab_Idle.png");
+}
+
 .fire_sprite {
     width: 200px;
     height: 200px;
