@@ -62,15 +62,21 @@ function update_fire_animation(){
 }
 
 var knight_current_frame = 1;
+var wizard_current_frame = 1;
 var spider_current_frame = 1;
+var scalisk_current_frame = 1;
+var crab_current_frame = 1;
 function update_animation(){
     update_knight_animation();
+    update_wizard_animation();
     update_spider_animation();
+    update_scalisk_animation();
+    update_crab_animation();
 }
 
 function update_knight_animation(){
     var current_sprite = "-";
-    var scale = 350;
+    var scale = 350 / 3;
     if (knight_current_frame >= 19) {
         knight_current_frame = 1;
     }
@@ -82,16 +88,58 @@ function update_knight_animation(){
     }
 }
 
+function update_wizard_animation(){
+    var current_sprite = "-";
+    var scale = 350 / 3;
+    if (wizard_current_frame >= 24) {
+        wizard_current_frame = 1;
+    }
+    else {
+        wizard_current_frame += 1;
+    }
+    for (i = 0; i < document.getElementsByClassName("magic_user").length; i++) {
+        document.getElementsByClassName("magic_user")[i].style.backgroundPosition = current_sprite + scale * wizard_current_frame + 'px 0%';
+    }
+}
+
 function update_spider_animation(){
     var current_sprite = "-";
-    var scale = 350;
+    var scale = 350 / 3;
     if (spider_current_frame >= 24) {
         spider_current_frame = 1;
     }
     else {
         spider_current_frame += 1;
     }
-    for (i = 0; i < document.getElementsByClassName("spider_sprite").length; i++) {
-        document.getElementsByClassName("spider_sprite")[i].style.backgroundPosition = current_sprite + scale * spider_current_frame + 'px 0%';
+    for (i = 0; i < document.getElementsByClassName("monster_spider").length; i++) {
+        document.getElementsByClassName("monster_spider")[i].style.backgroundPosition = current_sprite + scale * spider_current_frame + 'px 0%';
+    }
+}
+
+function update_scalisk_animation(){
+    var current_sprite = "-";
+    var scale = 300 / 3;
+    if (scalisk_current_frame >= 24) {
+        scalisk_current_frame = 1;
+    }
+    else {
+        scalisk_current_frame += 1;
+    }
+    for (i = 0; i < document.getElementsByClassName("monster_scalisk").length; i++) {
+        document.getElementsByClassName("monster_scalisk")[i].style.backgroundPosition = current_sprite + scale * scalisk_current_frame + 'px 0%';
+    }
+}
+
+function update_crab_animation(){
+    var current_sprite = "-";
+    var scale = 300 / 3;
+    if (crab_current_frame >= 24) {
+        crab_current_frame = 1;
+    }
+    else {
+        crab_current_frame += 1;
+    }
+    for (i = 0; i < document.getElementsByClassName("monster_crab").length; i++) {
+        document.getElementsByClassName("monster_crab")[i].style.backgroundPosition = current_sprite + scale * crab_current_frame + 'px 0%';
     }
 }
