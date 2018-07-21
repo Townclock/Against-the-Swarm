@@ -26,28 +26,28 @@ function Game(){
     this.technology_list_html = "";
 
     this.technology = [
-        new Technology("Meat Cutters", false, 0, 0, 0, [], function(){
+        new Technology("Meat Cutters","Description 1", false, 0, 0, 0, [], function(){
             game.followers.can_hire_meat_processors = true;
             alert("You can now hire Meat Cutters in the Town Panel.")
         }),
-        new Technology("Scale Forgers", false, 10, 0, 0, ["Meat Cutters"], function(){
+        new Technology("Scale Forgers","Description 2", false, 10, 0, 0, ["Meat Cutters"], function(){
             game.followers.can_hire_scales_processors = true;
             alert("You can now hire Scale Forgers in the Town Panel.")
         }),
-        new Technology("Claw Grinders", false, 20, 10, 0, ["Meat Cutters", "Scale Forgers"], function(){
+        new Technology("Claw Grinders","Description 3", false, 20, 10, 0, ["Meat Cutters", "Scale Forgers"], function(){
             game.followers.can_hire_claws_processors = true;
             alert("You can now hire Claw Grinders in the Town Panel.")
         }),
-        new Technology("Fighters", false, 10, 20, 5, ["Meat Cutters", "Scale Forgers", "Claw Grinders"], function(){
+        new Technology("Fighters","Description 4", false, 10, 20, 5, ["Meat Cutters", "Scale Forgers", "Claw Grinders"], function(){
             game.followers.can_hire_fighters = true;
             alert("You can now hire Fighter in the Town Panel.")
         }),
-        new Technology("Miners", false, 10, 40, 15, ["Meat Cutters", "Scale Forgers", "Claw Grinders"], function(){
+        new Technology("Miners","Description 5", false, 10, 40, 15, ["Meat Cutters", "Scale Forgers", "Claw Grinders"], function(){
             game.followers.can_hire_miners = true;
             alert("You can now hire Miners in the Town Panel.")
         }),
 
-       new Technology("Can Hire Crysal", false, 40, 20, 80, ["Can Hire Miners"], function(){
+       new Technology("Can Hire Crysal","", false, 40, 20, 80, ["Can Hire Miners"], function(){
             game.followers.can_hire_ore_processors = true;
             alert("You can now hire Enchanters in the Town Panel.")
        }),
@@ -75,7 +75,7 @@ Game.prototype.change_town = function(){
 		this.current_world++;
 		this.current_town = 0;
 		this.invasion_progress = 0;
-	    while(this.monsters.length > 0) 
+	    while(this.monsters.length > 0)
             this.monsters.pop();
         this.towns = this.world[this.current_world];
     }
@@ -87,7 +87,7 @@ Game.prototype.change_town = function(){
 }
 
 Game.prototype.multi_fight = function(){
-    if (this.monsters.length == 0 && !this.under_siege){ 
+    if (this.monsters.length == 0 && !this.under_siege){
         this.invasion_progress-= .1;
 
         //if you fought back the swarm to the previous town, reclaim mode is set to true and boss is placed.
@@ -278,7 +278,7 @@ Game.prototype.guard = function(){
     fighters = this.fighters;
     monsters = this.monsters;
     
-    if (monsters.length == 0){ 
+    if (monsters.length == 0){
         invasion_progress-= .1;
     }
     if(this.under_siege){
