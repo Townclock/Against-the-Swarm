@@ -19,11 +19,18 @@ function Game(){
         new Fighter( "hero 1", 100, 20),
         ];
 
+var towns = [
+    new Town("Safety", 10, false),
+    new Town("Concern", 35, false),
+    new Town("Worry", 50, false),
+    new Town("Panic", 65, false),
+    new Town("Doom", 80, true)
+];
+var world = [towns];
 
-    this.player_inventory = new Player_Inventory;
+var player_location = world[current_world][current_town].location;
 
-    this.followers = new Followers();
-    this.technology_list_html = "";
+var technology_list_html = "";
 
     this.technology = [
         new Technology("Meat Cutters", false, 0, 0, 0, [], function(){
@@ -72,17 +79,16 @@ Game.prototype.change_town = function(){
 			     new Town("test3", 60,  false),
 			     new Town("test4", 80,  false),
 			     new Town("test5", 100, false)]);
-		this.current_world++;
-		this.current_town = 0;
-		this.invasion_progress = 0;
-	    while(this.monsters.length > 0) 
-            this.monsters.pop();
-        this.towns = this.world[this.current_world];
+		current_world++;
+		current_town = 0;
+		invasion_progress = 0;
+	    while(monsters.length > 0) monsters.pop();
+        towns = world[current_world];
     }
 	else{
-		this.current_town++;
+		current_town++;
 	}
-	this.player_location = this.world[this.current_world][this.current_town].location;
+	player_location = world[current_world][current_town].location;
 
 }
 
@@ -111,18 +117,23 @@ Game.prototype.multi_fight = function(){
             this.monsters.push(new Monster("boss",1000,10));
         }
     }
-    else {
-        if(this.under_siege){
-            this.followers.act;
-            this.increment_follower_resource(1);
-        }
-        if(this.fighters.length != 0 && this.monsters.length != 0){
-            for(f in this.fighters){
+    if(fighters.length != 0 && monsters.length != 0){
+        for(f in fighters){
 
+            //checking to see if fighter is a spell caster
+            if(fighters[f].is_magic && fighters[f].charge != 2)
+                fighters[f].charge ++;
 
-                //checking to see if fighter is a spell caster
-                if(this.fighters[f].is_magic && this.fighters[f].charge <= 2)
-                    this.fighters[f].charge ++;
+            else{
+                //finds random monster. If random monster is already dead, searches for new one
+                var temp = Math.floor(Math.random() * monsters.length);
+            
+                //remove hp from monster and check if monster is dead or not.
+                monsters[temp].hp -= fighters[f].atk;
+                if(fighters[f].is_magic){
+                    monsters[temp].hp -= fighters[f].atk_bonus;
+                    fighters[f].charge = 0;
+                }
 
                 else{
                     //finds random monster. If random monster is already dead, searches for new one
@@ -146,26 +157,27 @@ Game.prototype.multi_fight = function(){
                     }
                 }
             }
+        }
 
-            //same for loop for fighters but instead for monsters
-            for(m in this.monsters){
-                if(this.monsters.length == 0 || this.fighters.length == 0){
-                    if (this.reclaim_mode){
-                        this.reclaim_mode = false;
-                        if (this.monsters.length == 0){
-                            this.current_town--;
-                            this.player_location = this.world[this.current_world][this.current_town].location;
-                            this.invasion_progress -= 10;
-                        }
+        //same for loop for fighters but instead for monsters
+        for(m in monsters){
+            if(monsters.length == 0 || fighters.length == 0){
+                if (reclaim_mode){
+                    reclaim_mode = false;
+                    if (monsters.length == 0){
+                        current_town--;
+                        player_location = world[current_world][current_town].location;
+                        invasion_progress -= 10;
                     }
-                    if(this.engaged && this.fighters.length < 1) {this.disengage(this.fighters, this.monsters);}
-                    break;
                 }
+                if(engaged && fighters.length < 1) {disengage(fighters, monsters);}
+                break;
+            }
 
-                var temp = Math.floor(Math.random() * this.fighters.length);
+            var temp = Math.floor(Math.random() * fighters.length);
 
-                this.fighters[temp].hp -= this.monsters[m].attack_bonus;
-                this.fighters[temp].charge = 0;
+            fighters[temp].hp -= monsters[m].attack_bonus;
+            fighters[temp].charge = 0;
 
                 if(this.fighters[temp].hp <= 0){
                     this.tracker.update(this.fighters[temp].fighter_name);
@@ -173,75 +185,68 @@ Game.prototype.multi_fight = function(){
                 }
             }
         }
-        //if you have beat the boss while trying to reclaim town
-        if(this.monsters.length == 0 || this.fighters.length == 0){
-            if (this.reclaim_mode){
-                this.reclaim_mode = false;
-                this.engaged = false;
-                if (this.monsters.length == 0){
-                    this.current_town--;
-                    this.player_location = this.world[this.current_world][this.current_town].location;
-                    this.invasion_progress -= 10;
+    }
+            if(monsters.length == 0 || fighters.length == 0){
+                if (reclaim_mode){
+                    reclaim_mode = false;
+                    if (monsters.length == 0){
+                        current_town--;
+                        player_location = world[current_world][current_town].location;
+                        invasion_progress -= 10;
+                    }
                 }
+                if(engaged && fighters.length < 1) {disengage(fighters, monsters);}
             }
-            //if(engaged && fighters.length < 1) {disengage(fighters, monsters);}
-        }
-    }
 }
+function rest(fighters, monsters){
+    number_of_clicks++;
 
-Game.prototype.rest = function(){
-    this.number_of_clicks++;
-
-    for(f in this.fighters){
-        this.fighters[f].hp = this.fighters[f].max_hp;
+    for(f in fighters){
+        fighters[f].hp = fighters[f].max_hp;
     }
-    for(var i = 0; i < this.monsters.length; i++)
+    for(var i = 0; i < monsters.length; i++)
     {
-        this.monsters[i].heal();
+        monsters[i].heal();
     }
 
 
-    this.invasion_progress += 2;
+    invasion_progress += 2;
 }
-Game.prototype.engage = function(){
-    this.number_of_clicks++;
-    this.engaged = true;
+function engage(fighters, monsters){
+    number_of_clicks++;
+    engaged = true;
 };
-Game.prototype.disengage = function(){
+function disengage(fighters, monsters){
 
-    this.number_of_clicks++;
-    if(this.reclaim_mode){
-        this.monsters.pop();
-    }
-    this.reclaim_mode = false;
+    number_of_clicks++;
+    reclaim_mode = false;
 
     // monsters make retreat attack
-    for(m in this.monsters){
-        if(this.monsters.length == 0 || this.fighters.length == 0)
+    for(m in monsters){
+        if(monsters.length == 0 || fighters.length == 0)
             break;
 
-        var temp = Math.floor(Math.random() * this.fighters.length);
+        var temp = Math.floor(Math.random() * fighters.length);
 
-        this.fighters[temp].hp -= this.monsters[m].attack_bonus;
-        this.fighters[temp].charge = 0;
+        fighters[temp].hp -= monsters[m].attack_bonus;
+        fighters[temp].charge = 0;
 
-        if(this.fighters[temp].hp < 0){
-            this.fighters.splice(temp,1);
+        if(fighters[temp].hp < 0){
+            fighters.splice(temp,1);
         }
     
             
     }
 
-    console.log(this.under_siege);
     //check whether town is in siege or not
-    if (! this.under_siege || this.reclaim_mode) {
-        this.engaged = false;
+    if (! under_siege) {
+        engaged = false;
     }
     else {
-        this.towns[this.current_town].destroyed = true;
-        this.engaged = false;
-        this.under_siege = false;
-	    this.change_town();
+        towns[current_town].destroyed = true;
+        engaged = false;
+        under_siege = false;
+	change_town();
     }
 
 
@@ -253,31 +258,38 @@ function replace_monster(monster, challenge_level){
     console.log(monsters[0]);
 }
 
-Game.prototype.change_invasion_rate = function(){
-    this.invasion_rate = this.monsters.length/5;
+function change_invasion_rate(monsters){
+    invasion_rate = monsters.length/5;
 }
 
 Game.prototype.increment_follower_resource = function(){
     this.followers.follower_resource += (5 - this.current_town)/10;
 }
 
-Game.prototype.reclaim = function(){
-    if (this.current_town > 0 && this.reclaim_mode == false) {
-        if (this.invasion_progress < this.towns[this.current_town - 1].location) {
-            this.reclaim_mode = true;
-            while (this.monsters.length > 0) {this.monsters.pop();}
-            this.monsters.push( new Monster("protoss",5,40) );
-            this.engaged = true;
+function reclaim(fighters, monsters){
+    if (current_town > 0 && reclaim_mode == false) {
+        if (invasion_progress < towns[current_town - 1].location) {
+            reclaim_mode = true;
+            while (monsters.length > 0) {monsters.pop();}
+            monsters.push( new Monster("protoss",5,40) );
+            engaged = true;
         }
     }
 };
 
+function hire_mage(player_inventory, fighters, follower){
+    if(player_inventory.meat > follower.mage_cost[0]){
+        player_inventory.meat-=50;
+        fighters.push(new Fighter( "Mage",500,50,true));
 
+    }
+    else{
+        alert('not enough materials');
+    }
 
-Game.prototype.guard = function(){
-    fighters = this.fighters;
-    monsters = this.monsters;
-    
+}
+
+function guard(fighters, monsters){
     if (monsters.length == 0){ 
         invasion_progress-= .1;
     }
@@ -289,7 +301,7 @@ Game.prototype.guard = function(){
         for(f in fighters){
             //checking to see if fighter is a spell caster
             if(fighters[f].is_magic){
-                if (fighters[f].charge < 3){
+                if (fighters[f].charge != 2){
                     fighters[f].charge ++;
                 }
                 else{

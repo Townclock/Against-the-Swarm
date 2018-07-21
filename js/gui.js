@@ -2,10 +2,10 @@ var sliding_panel_offset = 0 ;
 
 function slide_panel(engaged){
     var width = document.getElementById("town_panel").offsetWidth;
-    if ( (sliding_panel_offset > -width) && ( game.engaged || game.under_siege)){
+    if ( (sliding_panel_offset > -width) && ( engaged || under_siege)){
         sliding_panel_offset -= 20;
     }
-    if ( (sliding_panel_offset < 0) && ! game.engaged && ! game.under_siege){
+    if ( (sliding_panel_offset < 0) && ! engaged && ! under_siege){
         sliding_panel_offset += 20;
     }
     if (sliding_panel_offset < 5 && sliding_panel_offset > -5){sliding_panel_offset = 0;}
@@ -25,23 +25,38 @@ function update_bar_by_id(id, current, max){
 function update_ui( monster){
     document.getElementById("track_container").style.height  = document.getElementById("panel_track").offsetHeight;
 
-    slide_panel(game.engaged);
+    slide_panel(engaged);
     
 
-    update_bar_by_id("invasion", game.invasion_progress, 100);
+
+    var resources = ["meat", "scales", "claws", "ore", "fiber", "metal", "gelatin", "crystals"];
+    for (i in resources){
+        update_value_by_id(resources[i], player_inventory[resources[i]]);
+    }
+
+    update_value_by_id("follower_resource", follower_resource);
+
+
+    update_bar_by_id("invasion", invasion_progress, 100);
 
     //var width_scalar = document.getElementById("towns").offsetWidth;
     
-    /*var towns_status = ""
+    var towns_status = ""
     for (x in towns){
     if (! towns[x].destroyed) {
-        towns_status += ('<div class="destroyed_town" style="left:' + ((85-towns[x].location)/100 * width_scalar+40) + 'px"> <image class="town_image" src="assets/sprites/Town.png"/> </div>');
+        towns_status = towns_status
+            + '<div class="safe_town" style="left:'
+            + (( (1-(towns[x].location  / 100)) * width_scalar )-20) + 'px">'
+            + '<image class="town_image" src="assets/sprites/Town.png"/> </div>';
     } 
         else {
-            towns_status += ('<div class="destroyed_town" style="left:' + ((85 - towns[x].location)/100 * width_scalar + 40)+ 'px"> <image class="town_image" src="assets/sprites/Destroyed_Town.png"/> </div>');
+        towns_status = towns_status
+            + '<div class="safe_town" style="left:'
+            + (((1-(towns[x].location  / 100)) * width_scalar )-20) + 'px">'
+            + '<image class="town_image" src="assets/sprites/Destroyed_Town.png"/> </div>';
         }
     }
-    update_value_by_id("towns", towns_status);*/
+    update_value_by_id("towns", towns_status);
 
 }
 
