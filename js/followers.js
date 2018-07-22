@@ -26,7 +26,7 @@ function Followers(){
     this.ore_complete = 20;
     this.can_hire_ore_processors = false;
 
-    this.fighters = 1;
+    this.fighters = 3;
     this.can_hire_fighters = false;
     this.magic_users = 0;
     this.can_hire_magic_users = false;

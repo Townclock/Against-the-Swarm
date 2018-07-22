@@ -8,6 +8,7 @@ function Party() {
 	this.ore_processor_count = 0;
 	this.miner_count = 0;
 	this.fighter_count = 0;
+	this.magic_user_count = 0;
 
 	this.add_follower = function(followers, player_inventory) {
 		if(followers.follower_resource > 0 && player_inventory.crystals > 0){
@@ -21,7 +22,7 @@ function Party() {
 		if(this.follower_count > 0){
 			followers.follower_resource++;
 			this.follower_count--;
-			player_inventory.crystals--;
+			player_inventory.crystals++;
 		}
 	}
 	this.add_followers = function(followers, player_inventory) {
@@ -172,7 +173,72 @@ function Party() {
 		}
 	}
 
+	this.add_fighter = function(followers, player_inventory) {
+		if(followers.fighters > 0 && player_inventory.crystals > 0){
+			followers.fighters--;
+			this.fighter_count++;
+			player_inventory.crystals--;
+		}
+	}
+	this.sub_fighter = function(followers, player_inventory) {
+		if(this.fighter_count > 0){
+			followers.fighters++;
+			this.fighter_count--;
+			player_inventory.crystals++;
+		}
+	}
+	this.add_fighters = function(followers, player_inventory) {
+		for(var i = 0; i < skip_increment; i++)
+		{
+			this.add_fighter(followers, player_inventory);
+		}
+	}
+	this.sub_fighters = function(followers, player_inventory) {
+		for(var i = 0; i < skip_increment; i++)
+		{
+			this.sub_fighter(followers, player_inventory);
+		}
+	}
+
+	this.add_magic_user = function(followers, player_inventory) {
+		if(followers.magic_users > 0 && player_inventory.crystals > 0){
+			followers.magic_users--;
+			this.magic_user_count++;
+			player_inventory.crystals--;
+		}
+	}
+	this.sub_magic_user = function(followers, player_inventory) {
+		if(this.magic_user_count > 0){
+			followers.magic_users++;
+			this.magic_user_count--;
+			player_inventory.crystals++;
+		}
+	}
+	this.add_magic_users = function(followers, player_inventory) {
+		for(var i = 0; i < skip_increment; i++)
+		{
+			this.add_magic_user(followers, player_inventory);
+		}
+	}
+	this.sub_magic_users = function(followers, player_inventory) {
+		for(var i = 0; i < skip_increment; i++)
+		{
+			this.sub_magic_user(followers, player_inventory);
+		}
+	}
+
 	this.set_party = function(followers) {
+		game.fighters.length = 0;
+		for(var i = 0; i <this.fighter_count; i++)
+		{
+			game.fighters.push(new Fighter( "Knight", 500, 20, false));
+		}
+		for(var i = 0; i <this.magic_user_count; i++)
+		{
+			game.fighters.push(new Fighter( "Mage",500,100,true));
+		}
+		followers.fighters = this.fighter_count;
+		followers.magic_users = this.magic_user_count;
 		followers.follower_resource = this.follower_count;
 		followers.meat_processors = this.meat_processor_count;
 		followers.claws_processors = this.claws_processor_count;
@@ -189,6 +255,7 @@ function Party() {
 		this.ore_processor_count = 0;
 		this.miner_count = 0;
 		this.fighter_count = 0;
+		this.magic_user_count = 0;
 	}
 
 }
