@@ -15,9 +15,9 @@
 <script src="js/fighter.js"></script>
 <script src="js/game_logic.js"></script>
 <script src="js/Tracker.js"></script>
+<script src="js/party.js"></script>
 
 </div>
-<!-- <script src="js/modal.js"></script> -->
 <script>
     //every variable or function that wants to be called from html has to have reference in //Vue function
 
@@ -53,33 +53,16 @@
             }
        });
         // Get the modal
-        var modal = document.getElementById('myModal');
+        var modal = document.getElementById('teleport_box');
 
         // Get the button that opens the modal
         var btn = document.getElementById("myBtn");
 
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-
-        // When the user clicks on the button, open the modal
+        // When the user clicks on the button, open the modal 
         btn.onclick = function() {
-            console.log('hi');
+            modal_open = true;
             modal.style.display = "block";
         }
-
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-            modal_open = false;
-            modal.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-
-            }
-        };
     }
 
     function click_fight_button(){     game.multi_fight();}
@@ -88,6 +71,13 @@
     function click_disengage_button(){ game.disengage()};
     function click_reclaim_button(){   game.reclaim()};
     function click_guard_button(){   game.guard()};
+    function click_teleport(){
+        var modal = document.getElementById('teleport_box');
+        modal_open = false;
+        modal.style.display = "none";
+        game.party.set_party(game.followers);
+        game.party.reset_counts();
+    };
 
 
     var timer = setInterval(function(){
@@ -95,7 +85,7 @@
             console.log(game.tracker.tank_kills);
 
             //if user is not fighting in town, get more material and update swarm speed
-            if (!game.under_siege && !game.reclaim_mode) {
+            if (!game.under_siege && !game.reclaim_mode && !modal_open) {
                 game.increment_follower_resource();
                 game.followers.followers_act(game);
                 game.change_invasion_rate();
@@ -103,7 +93,7 @@
         
             }
             //code that spawns new enemy every interval
-            if(!game.reclaim_mode){
+            if(!game.reclaim_mode && !modal_open){
 
                 //variable that keeps track of how long until net spawn
                 game.time_elapsed++;
@@ -117,7 +107,7 @@
     , 1000);
 
     var gui_update = setInterval(function(){
-        if(!game.under_siege && !game.reclaim_mode)
+        if(!game.under_siege && !game.reclaim_mode && !modal_open)
             game.invasion_progress += game.invasion_rate/60;
         if (!game.reclaim_mode && game.invasion_progress > game.towns[game.current_town].location){
                 game.under_siege = true;
@@ -188,7 +178,7 @@ function handler(e) {
             <div id="resource_display">
                           <div class="resource">
                     <image src="assets/icons/Follower_Icon.png">
-                    <span id="follower_resource">{{game.followers.follower_resource}}</span></div>
+                    <span id="follower_resource">{{Math.floor(game.followers.follower_resource)}}</span></div>
                     <div class="resource">
                     <image src="assets/icons/Meat_Icon.png">
                     <span id="meat">{{game.player_inventory.meat}}</span></div>
@@ -487,12 +477,103 @@ function handler(e) {
                     <div v-if="holder !=-1" class = "tooltip" v-bind:style="{bottom: height-mouseY, right: width-mouseX}" @mouseover="holder = holder2"> {{current_technology.technology_name}} <br>Cost: {{current_technology.cost.fiber}}&nbspfiber {{current_technology.cost.metal}}&nbspmetal {{current_technology.cost.gelatin}}&nbspgelatin <br> {{current_technology.description}}
                     </div>1
     <!-- The Modal -->
-    <div id="myModal" class="modal">
+    <div id="teleport_box" class="modal">
 
         <!-- Modal content -->
         <div class="modal-content">
-               <span class="close">&times;</span>
-            <p>Some text in the Modal..</p>
+                <p>Crystals: {{game.player_inventory.crystals}}</p>
+                <p>Party: </p>
+                <p>Followers: {{Math.floor(game.followers.follower_resource)}}
+                    <button id = "sub_followers" onclick = "game.party.sub_followers(game.followers, game.player_inventory)">--
+                    </button>
+                    <button id = "sub_followers" onclick = "game.party.sub_follower(game.followers, game.player_inventory)">-
+                    </button>
+                    {{game.party.follower_count}}
+                    <button id = "add_followers" onclick = "game.party.add_follower(game.followers, game.player_inventory)">+
+                    </button>
+                    <button id = "add_followers" onclick = "game.party.add_followers(game.followers, game.player_inventory)">++
+                    </button>
+                </p>
+                <p>Meat Processors: {{game.followers.meat_processors}}
+                    <button id = "sub_meat_processors" onclick = "game.party.sub_meat_processors(game.followers, game.player_inventory)">--
+                    </button>
+                    <button id = "sub_meat_processor" onclick = "game.party.sub_meat_processor(game.followers, game.player_inventory)">-
+                    </button>
+                    {{game.party.meat_processor_count}}
+                    <button id = "add_meat_processor" onclick = "game.party.add_meat_processor(game.followers, game.player_inventory)">+
+                    </button>
+                    <button id = "add_meat_processors" onclick = "game.party.add_meat_processors(game.followers, game.player_inventory)">++
+                    </button>
+                </p>
+                <p>Claw Processors: {{game.followers.claws_processors}}
+                    <button id = "sub_claws_processors" onclick = "game.party.sub_claws_processors(game.followers, game.player_inventory)">--
+                    </button>
+                    <button id = "sub_claws_processor" onclick = "game.party.sub_claws_processor(game.followers, game.player_inventory)">-
+                    </button>
+                    {{game.party.claws_processor_count}}
+                    <button id = "add_claws_processor" onclick = "game.party.add_claws_processor(game.followers, game.player_inventory)">+
+                    </button>
+                    <button id = "add_claws_processors" onclick = "game.party.add_claws_processors(game.followers, game.player_inventory)">++
+                    </button>
+                </p>
+                <p>Scale Processors: {{game.followers.scales_processors}}
+                    <button id = "sub_scales_processors" onclick = "game.party.sub_scales_processors(game.followers, game.player_inventory)">--
+                    </button>
+                    <button id = "sub_scales_processor" onclick = "game.party.sub_scales_processor(game.followers, game.player_inventory)">-
+                    </button>
+                    {{game.party.scales_processor_count}}
+                    <button id = "add_scales_processor" onclick = "game.party.add_scales_processor(game.followers, game.player_inventory)">+
+                    </button>
+                    <button id = "add_scales_processors" onclick = "game.party.add_scales_processors(game.followers, game.player_inventory)">++
+                    </button>
+                </p>
+                <p>Ore Processors: {{game.followers.ore_processors}}
+                    <button id = "sub_ore_processors" onclick = "game.party.sub_ore_processors(game.followers, game.player_inventory)">--
+                    </button>
+                    <button id = "sub_ore_processor" onclick = "game.party.sub_ore_processor(game.followers, game.player_inventory)">-
+                    </button>
+                    {{game.party.ore_processor_count}}
+                    <button id = "add_ore_processor" onclick = "game.party.add_ore_processor(game.followers, game.player_inventory)">+
+                    </button>
+                    <button id = "add_ore_processors" onclick = "game.party.add_ore_processors(game.followers, game.player_inventory)">++
+                    </button>
+                </p>
+                <p>Miners: {{game.followers.miners}}
+                    <button id = "sub_miners" onclick = "game.party.sub_miners(game.followers, game.player_inventory)">--
+                    </button>
+                    <button id = "sub_miner" onclick = "game.party.sub_miner(game.followers, game.player_inventory)">-
+                    </button>
+                    {{game.party.miner_count}}
+                    <button id = "add_miner" onclick = "game.party.add_miner(game.followers, game.player_inventory)">+
+                    </button>
+                    <button id = "add_miners" onclick = "game.party.add_miners(game.followers, game.player_inventory)">++
+                    </button>
+                </p>
+                <p>Fighters: {{game.followers.fighters}}
+                    <button id = "sub_fighters" onclick = "game.party.sub_fighters(game.followers, game.player_inventory)">--
+                    </button>
+                    <button id = "sub_fighter" onclick = "game.party.sub_fighter(game.followers, game.player_inventory)">-
+                    </button>
+                    {{game.party.fighter_count}}
+                    <button id = "add_fighter" onclick = "game.party.add_fighter(game.followers, game.player_inventory)">+
+                    </button>
+                    <button id = "add_fighters" onclick = "game.party.add_fighters(game.followers, game.player_inventory)">++
+                    </button>
+                </p>
+                <p>Enchanters: {{game.followers.magic_users}}
+                    <button id = "sub_magic_users" onclick = "game.party.sub_magic_users(game.followers, game.player_inventory)">--
+                    </button>
+                    <button id = "sub_magic_user" onclick = "game.party.sub_magic_user(game.followers, game.player_inventory)">-
+                    </button>
+                    {{game.party.magic_user_count}}
+                    <button id = "add_magic_user" onclick = "game.party.add_magic_user(game.followers, game.player_inventory)">+
+                    </button>
+                    <button id = "add_magic_users" onclick = "game.party.add_magic_users(game.followers, game.player_inventory)">++
+                    </button>
+                </p>
+                <p><button id = "Teleporter" onclick = "click_teleport()">Teleport
+                    </button>
+                </p>
         </div>
 
     </div>

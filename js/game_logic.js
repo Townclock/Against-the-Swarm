@@ -23,6 +23,7 @@ function Game(){
     this.player_inventory = new Player_Inventory;
 
     this.followers = new Followers();
+    this.party = new Party();
     this.technology_list_html = "";
 
     this.technology = [
@@ -67,6 +68,9 @@ function Game(){
 }
 Game.prototype.change_town = function(){
 	if(this.current_town == 4){
+        var modal = document.getElementById('teleport_box');
+        modal_open = true;
+        modal.style.display = "block";
 		this.world.push( [new Town("test",  20,  false),
 			     new Town("test2", 40,  false),
 			     new Town("test3", 60,  false),
