@@ -22,34 +22,24 @@
     //every variable or function that wants to be called from html has to have reference in //Vue function
 
     var game;
+    game = new Game();
     var vm;
     var modal_open = false;
     window.onload = function(){
-        game = new Game();
+        
         vm = new Vue({
             el: "#vue-div",
             data: {
                 width: window.innerWidth,
-                height: window.innerHeight,
                 game: game,
 
                 stat_page: 1,
-                
-                i: game.invasion_progress,
-                holder: -1,
-                holder2: -1,
-                
-                current_technology: game.technology[0],
-                mouseX: 100,
-                mouseY: 100,
             },
             methods: {
                 update: function(){
-                    vm.i = game.invasion_rate;
-                    vm.towns = game.towns;
-                    vm.width = window.innerWidth;
-                },
-              
+
+                }
+
             }
        });
         // Get the modal
@@ -61,7 +51,7 @@
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
 
-        // When the user clicks on the button, open the modal
+        // When the user clicks on the button, open the modal 
         btn.onclick = function() {
             console.log('hi');
             modal.style.display = "block";
@@ -123,13 +113,13 @@
                 game.under_siege = true;
         }
         update_ui( game.monsters[0]);
-        vm.update();
-        if (vm.holder1 !=0) {
-            vm,holder1 = -1;
-            vm.holder2 = -1;
+        try{
+            vm.width = window.innerWidth;
         }
+        catch(err){
 
-    }, 17);
+        }    
+        }, 17);
 
     var animation_update = setInterval(function(){
         update_animation();
@@ -138,18 +128,6 @@
     var fire_animation_update = setInterval(function(){
         update_fire_animation();
     }, 140);
-    
-    
-function handler(e) {
-    e = e || window.event;
-
-    vm.mouseX = e.pageX;
-    vm.mouseY = e.pageY;
-
-
-    console.log(vm.mouseX, vm.mouseY);
-}
- document.addEventListener('mousemove', handler);
 
 </script>
 
@@ -163,158 +141,150 @@ function handler(e) {
 
         <span style = "position:fixed" v-for="t in game.towns.length">
 
-            <div v-if="!game.towns[game.towns.length-t].destroyed" class="destroyed_town"
-                 v-bind:style="{left: ((100-game.towns[game.towns.length-t].location)/100)*width*.9 - width * .02 + 'px', top:-20+'px'}">
-                <image class="town_image" src="assets/sprites/Town.png"/>
+            <div v-if="!game.towns[game.towns.length-t].destroyed" class="destroyed_town" 
+                 v-bind:style="{left: ((100-game.towns[game.towns.length-t].location)/100)*width*.9 - width * .02 + 'px', top:-20+'px'}"> 
+                <image class="town_image" src="assets/sprites/Town.png" style="position:relative; height:10%; width: 3000%;"/> 
             </div>
 
-            <div v-else class="destroyed_town"
-                 v-bind:style="{left: ((100-game.towns[game.towns.length-t].location)/100)*width*.9 - width * .02 + 'px', top:-20+'px'}">
-                <image class="town_image" src="assets/sprites/Destroyed_Town.png"/>
+            <div v-else class="destroyed_town" 
+                 v-bind:style="{left: ((100-game.towns[game.towns.length-t].location)/100)*width*.9 - width * .02 + 'px', top:-20+'px'}"> 
+                <image class="town_image" src="assets/sprites/Destroyed_Town.png"/> 
             </div>
         </span>
 
         <span v-for="t in game.towns.length">
                 <div v-if= "game.towns.length-t === game.current_town - 1">
                      <div class="fire_sprite"
-                         v-bind:style="{left: ((100-game.towns[game.towns.length-t].location)/100)*width*.9 - width * .02 + 'px', top:-20+'px'}">
-                    </div>
+                         v-bind:style="{left: ((100-game.towns[game.towns.length-t].location)/100)*width*.9 - width * .02 + 'px', top:-20+'px'}"> 
+                    </div>  
                 </div>
         </span>
 
         <div class="invasion" id="invasion" style="width:0px"></div>
     </div>
 
-            <div id="resource_display">
+            <div id="resource_display" >
                           <div class="resource">
-                    <image src="assets/icons/Follower_Icon.png">
+                    <image src="assets/icons/Follower_Icon.png" width="40%" height="4%">
                     <span id="follower_resource">{{game.followers.follower_resource}}</span></div>
                     <div class="resource">
-                    <image src="assets/icons/Meat_Icon.png">
+                    <image src="assets/icons/Meat_Icon.png" style="width: 40%; height: 4%">
                     <span id="meat">{{game.player_inventory.meat}}</span></div>
                     <div class="resource">
-                    <image src="assets/icons/Scale_Icon.png">
+                    <image src="assets/icons/Scale_Icon.png" style="width: 40%; height: 4%">
                     <span id="scales">{{game.player_inventory.scales}}</span></div>
                     <div class="resource">
-                    <image src="assets/icons/Claw_Icon.png">
+                    <image src="assets/icons/Claw_Icon.png" style="width: 40%; height: 4%">
                     <span id="claws">{{game.player_inventory.claws}}</span></div>
 
                     <div class="resource">
-                    <image src="assets/icons/Fiber_Icon.png">
+                    <image src="assets/icons/Fiber_Icon.png" style="width: 40%; height: 4%">
                     <span id="fiber">{{game.player_inventory.fiber}}</span></div>
                     <div class="resource">
-                    <image src="assets/icons/Metal_Icon.png">
+                    <image src="assets/icons/Metal_Icon.png" style="width: 40%; height: 4%">
                     <span id="metal">{{game.player_inventory.metal}}</span></div>
                     <div class="resource">
-                    <image src="assets/icons/Gelatin_Icon.png">
+                    <image src="assets/icons/Gelatin_Icon.png" style="width: 40%; height: 4%">
                     <span id="gelatin">{{game.player_inventory.gelatin}}</span></div>
 
                     <div class="resource">
-                    <image src="assets/icons/Aetherium_Icon.png">
+                    <image src="assets/icons/Aetherium_Icon.png" style="width: 40%; height: 4%">
                     <span id="ore">{{game.player_inventory.ore}}</span></div>
                     <div class="resource">
-                    <image src="assets/icons/Telecrystal_Icon.png">
+                    <image src="assets/icons/Telecrystal_Icon.png" style="width: 40%; height: 4%">
                     <span id="crystals">{{game.player_inventory.crystals}}</span></div>
             </div>
 
 <div id="panel_track" class="column_1">
     <div id="town_panel">
         <div class="panel_contents">
-            <div id="resource_names">
+            <div id="resource_names" style="position:absolute;">
 
-                    <div class="resource">
-                    <image src="assets/icons/Follower_Icon.png">
+                    <div class="resource"style="margin-bottom: 9px">
+
                     <span>Followers</span></div>
-                    <div class="resource">
-                    <image src="assets/icons/Follower_Icon.png">
+                    <div class="resource" style="margin-bottom: 9px">
                     <span>Meat</span></div>
                     <div class="resource">
-                    <image src="assets/icons/Follower_Icon.png">
                     <span>Scales</span></div>
                     <div class="resource">
-                    <image src="assets/icons/Follower_Icon.png">
                     <span>Claws</span></div>
 
                     <div class="resource">
-                    <image src="assets/icons/Fiber_Icon.png">
                     <span>Fiber</span></div>
                     <div class="resource">
-                    <image src="assets/icons/Metal_Icon.png">
                     <span>Metal</span></div>
                     <div class="resource">
-                    <image src="assets/icons/Gelatin_Icon.png">
                     <span>Gelatin</span></div>
 
                     <div class="resource">
-                    <image src="assets/icons/Aetherium_Icon.png">
                     <span>Aetherium</span></div>
                     <div class="resource">
-                    <image src="assets/icons/Telecrystal_Icon.png">
                     <span>Crystals</span></div>
             </div>
 
             <div id="followers_container" class="right" >
                     <div class="follower">
                         <span class="follower_count">
-                        <image src="assets/icons/Meat_Pounder_Icon.png"> {{game.followers.meat_processors}}</span>
-                        <span>Meat Cutter</span>
-                        <button
+                        <image src="assets/icons/Meat_Pounder_Icon.png"style="width: 40px; height: 40px"><br>{{game.followers.meat_processors}}</span>
+                        <span style="position:absolute;">Meat Cutter</span> 
+                        <button style="position:relative; top:-38%"
                         v-bind:disabled="!game.followers.can_hire_meat_processors"
                         onclick="game.followers.hire('meat_processors', 1)"> + </button>
                         </div>
                     
                     <div class="follower">
                         <span class="follower_count">
-                        <image src="assets/icons/Scale_Forger_Icon.png">{{game.followers.scales_processors}}</span>
-                        <span> Scale Forger</span>
-                        <button
+                        <image src="assets/icons/Scale_Forger_Icon.png"style="width: 40px; height: 40px"><br>{{game.followers.scales_processors}}</span>
+                        <span style="position:absolute;"> Scale Forger</span>
+                        <button style="position:relative; top:-38%"
                         v-bind:disabled="!game.followers.can_hire_scales_processors"
                         onclick="game.followers.hire('scales_processors', 1)"> + </button>
                         </div>
                     <div class="follower">
                         <span class="follower_count">
-                        <image src="assets/icons/Claw_Grinder_Icon.png">{{game.followers.claws_processors}}</span>
-                        <span>Claw Grinder</span>
-                        <button
+                        <image src="assets/icons/Claw_Grinder_Icon.png"style="width: 40px; height: 40px"><br>{{game.followers.claws_processors}}</span>
+                        <span style="position:absolute;">Claw Grinder</span>
+                        <button style="position:relative; top:-38%"
                         v-bind:disabled="!game.followers.can_hire_claws_processors"
                         onclick="game.followers.hire('claws_processors', 1)"> + </button>
                         </div>
                     <div class="follower">
                         <span class="follower_count">
-                        <image src="assets/icons/Aether_Miner_Icon.png">{{game.followers.miners}}</span>
-                        <span>Aether Miner</span>
-                        <button
+                        <image src="assets/icons/Aether_Miner_Icon.png"style="width: 40px; height: 40px"><br>{{game.followers.miners}}</span>
+                        <span style="position:absolute;">Aether Miner</span>
+                        <button style="position:relative; top:-38%"
                         v-bind:disabled="!game.followers.can_miners"
                         onclick="game.followers.hire('miners', 1)"> + </button> </div>
                     <div class="follower">
                         <span class="follower_count">
-                        <image src="assets/icons/Enchanter_Icon.png"> {{game.followers.ore_processors}}</span>
-                        <span>Enchanter</span>
-                        <button
+                        <image src="assets/icons/Enchanter_Icon.png"style="width: 40px; height: 40px"><br>{{game.followers.ore_processors}}</span>
+                        <span style="position:absolute;">Enchanter</span>
+                        <button style="position:relative; top:-38%"
                         v-bind:disabled="!game.followers.can_hire_ore_processors"
                         onclick="game.followers.hire('ore_processors', 1)"> + </button></div>
 
 
                     <div class="follower">
                         <span class="follower_count">
-                        <image src="assets/icons/Knight_Icon.png">{{game.followers.fighters}}</span>
-                        <span>Fighter</span>
-                        <button
+                        <image src="assets/icons/Knight_Icon.png"style="width: 40px; height:40px"><br>{{game.followers.fighters}}</span>
+                        <span style="position:absolute;">Fighter</span>
+                        <button style="position:relative; top:-38%"
                         v-bind:disabled="!game.followers.can_hire_fighters"
                         onclick="game.followers.hire_fighter(1, game)"> + </button> </div>
                     <div class="follower">
                         <span class="follower_count">
-                        <image src="assets/icons/Wizard_Icon.png"> {{game.followers.magic_users}}</span>
-                        <span>Magic User</span>
-                        <button
+                        <image src="assets/icons/Wizard_Icon.png"style="width: 40px; height: 40px"><br>{{game.followers.magic_users}}</span>
+                        <span style="position:absolute;">Magic User</span>
+                        <button style="position:relative; top:-38%"
                         v-bind:disabled="!game.followers.can_hire_magic_users"
                         onclick="game.followers.hire_magic_user(1, game)"> + </button></div>
             </div>
         </div>
     </div>
     <div id="field_panel" >
-    <div class="panel_contents">
-        <div class="column_2 center">
+    <div class="panel_contents2" >
+        <div class="column_2 left">
             <div v-for="f in game.fighters" class="character_container" >
                 <div v-on:click="current_fighter = m">{{f.fighter_name}} hp: {{f.hp}}</div>
                 <div class="health_bar">
@@ -322,17 +292,18 @@ function handler(e) {
                 </div>
                 <!-- figures out which type of figher it is and what picture to display-->
                 <div v-if="!f.is_magic">
-                    <div class="knight_sprite"></div>
+                    <div class="knight_sprite"s></div>
                 </div>
                 <div v-if="f.is_magic">
                     <div class="magic_user"></div>
                 </div>
             </div>
+            </div>
         </div>
 
 
 
-        <div class="column_2 right" id="monsters_column">
+        <div class="column_2 right" style ="left: 67%; width:20%" id="monsters_column">
             <div v-for="m in game.monsters" class="character_container">
                 <div v-on:click="current_monster = m">{{m.monster_name}} hp: {{m.hp}}</div>
                 <div class="health_bar" id="monster_health_bar">
@@ -352,9 +323,9 @@ function handler(e) {
                 <div v-if="m.monster_name == 'boss'">
                     <image class="town_image" src="assets/sprites/Boss_Monster.png" style="width:300px;height:300px;"/>
                 </div>
+
             </div>
         </div>
-    </div>
     </div>
     </div>
     </div>
@@ -362,39 +333,39 @@ function handler(e) {
         <div id="control_panel">
             <div class="column_3" id="action_buttons">
                 <div class="column_3">
-                    <div v-if="!game.under_siege && !game.engaged">
-                        <img id = "button" src = "assets/buttons/Engage_Button.png" onclick = "click_engage_button()">
+                    <div v-if="!game.under_siege && !game.engaged && game.fighters.length > 0">
+                    <img id = "button" src = "assets/buttons/Engage_Button.png" onclick = "click_engage_button()" style=" height:45%; width:100%;">
                     </div>
                     <div v-else>
-                        <img id = "button" src = "assets/buttons/Engage_Button_Disabled.png">
+                        <img id = "button" src = "assets/buttons/Engage_Button_Disabled.png" style=" height:45%; width:100%;">
                     </div>
                     <div v-if= "(!game.under_siege && game.engaged) || game.under_siege">
-                        <img id = "button" src = "assets/buttons/Disengage_Button.png" onclick = "click_disengage_button()">
+                        <img id = "button" src = "assets/buttons/Disengage_Button.png" onclick = "click_disengage_button()" style=" height:45%; width:100%;">
                     </div>
                     <div v-else>
-                        <img id = "button" src = "assets/buttons/Disengage_Button_Disabled.png">
+                        <img id = "button" src = "assets/buttons/Disengage_Button_Disabled.png" style=" height:45%; width:100%;">
                     </div>
                 </div>
                 <div class="column_3">
                     <div v-if="!game.under_siege && !game.engaged">
-                        <img id = "button" src = "assets/buttons/Rest_Button.png" onclick = "click_rest_button()">
+                        <img id = "button" src = "assets/buttons/Rest_Button.png" onclick = "click_rest_button()" style=" height:45%; width:100%;">
                     </div>
                     <div v-else>
-                        <img id = "button" src = "assets/buttons/Rest_Button_Disabled.png">
+                        <img id = "button" src = "assets/buttons/Rest_Button_Disabled.png" style=" height:45%; width:100%;">
                     </div>
                     <div v-if= "(!game.under_siege && game.engaged) || game.under_siege">
-                        <img id = "button" src ="assets/buttons/Fight_Button.png" onclick = "click_fight_button()">
+                        <img id = "button" src ="assets/buttons/Fight_Button.png" onclick = "click_fight_button()" style=" height:45%; width:100%;">
                     </div>
                     <div v-else>
-                        <img id = "button" src ="assets/buttons/Fight_Button_Disabled.png">
+                        <img id = "button" src ="assets/buttons/Fight_Button_Disabled.png" style=" height:45%; width:100%;">
                     </div>
                 </div>
                 <div class="column_3">
                     <div v-if= "(!game.under_siege && game.engaged) || game.under_siege">
-                        <img id = "button" src ="assets/buttons/Guard_Button.png" onclick = "click_guard_button()">
+                        <img id = "button" src ="assets/buttons/Guard_Button.png" onclick = "click_guard_button()" style=" height:45%; width:100%;">
                     </div>
                     <div v-else>
-                        <img id = "button" src ="assets/buttons/Guard_Button_Disabled.png">
+                        <img id = "button" src ="assets/buttons/Guard_Button_Disabled.png" style=" height:45%; width:100%;">
                     </div>
                 </div>
 
@@ -404,6 +375,7 @@ function handler(e) {
             </div>
 
 
+            
         <!-- shows user stats -->
         <div class="stat_page">
             <div class="indivdual_page left">
@@ -440,28 +412,8 @@ function handler(e) {
                 </div>
 
                 <!-- fill for 3rd tab -->
-                <div v-if="stat_page == 3">
-                    <div class="column_2 left" id="technology_menu">
-
-                      <div v-for="t in game.technology.length">
-                        <div v-if="game.technology[t-1].has_been_researched">
-                
-                          <div class="technology" @mouseover="holder = t; holder2 = t; current_technology = game.technology[t-1];" @mouseleave="holder = -1" v-bind:style="{'background-color': game.technology[t-1].is_researched_color(), visibility: game.technology[t-1].visible(game.technology)}">{{game.technology[t-1].technology_name}}
-                          </div>
-                
-                        </div>
-
-                        <div v-else>
-               
-                          <div class="technology" @mouseover="holder = t; holder2 = t; current_technology = game.technology[t-1];"@mouseleave="holder = -1" v-bind:style="{'background-color': game.technology[t-1].is_researched_color(), visibility: game.technology[t-1].visible(game.technology)}" v-on:click="game.technology[t-1].unlock_tech(game.technology, game.inventory)">
-                            {{game.technology[t-1].technology_name}}
-                          </div>
-                
-                        </div>
-                      </div>
-                
-                
-                    </div>
+                <div v-if="stat_page == 3"> 
+                    Fill 3
                 </div>
 
                 <!-- fill for 4th tab -->
@@ -484,8 +436,6 @@ function handler(e) {
             </div>
         </div>
     </div>
-                    <div v-if="holder !=-1" class = "tooltip" v-bind:style="{bottom: height-mouseY, right: width-mouseX}" @mouseover="holder = holder2"> {{current_technology.technology_name}} <br>Cost: {{current_technology.cost.fiber}}&nbspfiber {{current_technology.cost.metal}}&nbspmetal {{current_technology.cost.gelatin}}&nbspgelatin <br> {{current_technology.description}}
-                    </div>1
     <!-- The Modal -->
     <div id="myModal" class="modal">
 

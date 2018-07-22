@@ -4,6 +4,8 @@ function Fighter( fname, health, attack, is_magic){
     this.max_hp =       health;
     this.atk    =       attack;
     this.is_magic =     is_magic;
+    this.randomX = Math.floor(Math.random()*30)-15;
+    this.randomY = Math.floor(Math.random()*30)-15;
 }
 
 Fighter.prototype.hp_in_percent = function(){

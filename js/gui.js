@@ -45,11 +45,10 @@ function update_ui( monster){
 
 }
 
-
 var current_fire_frame = 1;
 function update_fire_animation(){
     var current_fire_sprite = "-";
-    var fire_scale = 80;
+    var fire_scale = 200;
     if (current_fire_frame >= 2) {
         current_fire_frame = 1;
     }

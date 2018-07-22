@@ -42,28 +42,22 @@ body {
     display: inline-block;
     margin: 4px 1.1% 4px 1.1%;
 }
+.column_4 {
+    width: 1%;
+    height: auto;
+    display: inline-block;
+    margin: 4px 1.1% 4px 1.1%;
+}
 
 #button {
     height: 50px;
     width: 100px;
 }
 
-.fighter {
-    width: 10%;
-    padding-top: 100%;
-    margin: auto;
-    background-color: blue;
-}
-.monster {
-    width: 10%;
-    padding-top: 100%;
-    margin: auto;
-    background-color: red;
-}
-
 .character_container{
     display: inline-block;
-    width: 10%;
+    width: 15%;
+    height: 15%;
 
 }
 
@@ -148,10 +142,15 @@ body {
     display:inline-block;
 }
 .panel_contents {
-    margin-top: 150px;
+    margin-top: 23%;
+
+}
+.panel_contents2 {
+    margin-top: 7%;
+    margin-left: 5%;
 }
 #field_panel {
-    background-image:url('assets/backgrounds/Tile.png');
+    background-color: green;
     overflow:hidden;
     margin: 0px;
     height: 100%;
@@ -160,8 +159,6 @@ body {
 }
 #monsters_column {
     position:absolute;
-    overflow:hidden;
-    width: 30%;
 }
 #vue-div {
     width: 100%;
@@ -183,8 +180,8 @@ body {
     position: absolute;
     left: 0px;
     width: 4%;
-    top: 150px;
-    height: 100%;
+    top: 15%;
+
     }
 
 #resource_display .resource {
@@ -195,17 +192,19 @@ body {
     }
 #resource_names {
     display: inline-block;
-    width: 30%;
-    margin-right:0px;
-
+    position: absolute;
+    left: 0px;
+    width: 40%;
+    height:120%;
+    top: 15%;
 }
 .resource {
     background-color: brown;
     color:white;
-    margin: 0px 0px 30px 0%;
+    margin: 0px 0px 10px 0%;
     border: 2px solid black;
-
-    height: auto%;
+    width: 20%;
+    height: 4%;
 }
 .resource span {
     text-align: right;
@@ -243,8 +242,8 @@ body {
 }
 
 .fire_sprite {
-    width: 80px;
-    height: 80px;
+    width: 200px;
+    height: 200px;
     position: absolute;
     display: inline-block;
     margin: auto;
@@ -261,9 +260,9 @@ body {
 .follower{
     background-color: brown;
     color:white;
-    margin: 0px 0px 30px 0%;
+    margin: 0px 0px 2% 0%;
     border: 2px solid black;
-    height: auto%;
+    height: 15%;
     display: inline-block;
     width: 90%;
     margin-right:0px;
@@ -273,8 +272,8 @@ body {
     background-color: DB8C44;
     color:black;
     font-size: 13pt;
-    height: auto;
-    width: 25%
+    height: 100%;
+    width: auto;
 }
 
 #control_panel {
@@ -286,31 +285,10 @@ body {
 }
 #technology_menu {
     background-color: black;
-    width: 93%;
-    height: auto%;
     padding: 5px;
 }
 
-.technology {
-    background-color: white;
-    color:white;
-    text-align: center;
-    margin: 0px 0px 5px 0%;
-    border: 2px solid black;
-    height: auto%;
-    display: inline-block;
-    width: 30%;
-    margin-right:0px;
-    float: right;
-}
 
-.tooltip{
-    z-index: 10;
-    position: absolute;
-    width: 220px;
-    height 200px;
-    background-color: #ffffff;
-}
 /*used for the stat page on the bottom right corner */
 .stat_page {
     display: inline-block;
