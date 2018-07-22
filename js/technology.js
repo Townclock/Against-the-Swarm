@@ -1,5 +1,4 @@
 function Technology(technology_name,
-                    description,
                     has_been_researched,
                     fiber_cost,
                     metal_cost,
@@ -7,7 +6,6 @@ function Technology(technology_name,
                     prerequisites,
                     operation) {
   this.technology_name = technology_name;
-  this.description = description;
   this.can_be_researched = true;
   this.has_been_researched = has_been_researched;
   this.cost = {fiber: fiber_cost, metal: metal_cost, gelatin: gelatin_cost};
@@ -60,12 +58,7 @@ Technology.prototype.visible = function(tech_list){
 
 Technology.prototype.is_researched_color = function(){
   if (this.has_been_researched) {
-      return 'green';
-  }else {
-      if(game.player_inventory.fiber >= this.cost.fiber && game.player_inventory.metal >= this.cost.metal && game.player_inventory.gelatin >= this.cost.gelatin) {
-          return 'yellow';
-      } else{
-          return 'red';
-      }
-  }
+      return 'red';
+  }else
+      return 'blue';
 }

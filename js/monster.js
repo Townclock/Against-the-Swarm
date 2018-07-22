@@ -3,7 +3,7 @@ function Monster (monster_name, health, attack, armor) {
     this.hp = health;
     this.max_hp = health;
     this.attack_bonus = attack;
-    this.armor = armor;
+    this.armor = 0;
     this.loot = {meat:5, scales:5, claws:1};
     this.present = true;
 }
