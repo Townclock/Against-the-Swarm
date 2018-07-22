@@ -63,15 +63,16 @@ body {
 
 .character_container{
     display: inline-block;
-    width: 10%;
+    width: 20%;
 
 }
 
 .health_bar {
-    width: 60%;
+    width: 100%;
+
     height: 2%;
 
-    margin-left: 30px;
+    margin: auto auto 3px auto;
     background-color: red;
     border: 1px solid black;
 }
@@ -151,7 +152,7 @@ body {
     margin-top: 150px;
 }
 #field_panel {
-    background-image:url('assets/backgrounds/Tile.png');
+    background-color: green;
     overflow:hidden;
     margin: 0px;
     height: 100%;
@@ -213,42 +214,23 @@ body {
 }
 
 .knight_sprite {
-    width: 117px;
-    height: 100px;
+    width: 350px;
+    height: 300px;
     background-image: url("assets/sprites/Knight_Idle.png");
 }
 
-.magic_user {
-    width: 117px;
-    height: 100px;
-    background-image: url("assets/sprites/Wizard_Idle.png");
-}
-
-.monster_spider {
-    width: 117px;
-    height: 100px;
-    background-image: url("assets/sprites/Monster_Spider_Idle.png");
-}
-
-.monster_scalisk {
-    width: 117px;
-    height: 100px;
-    background-image: url("assets/sprites/Monster_Scalisk_Idle.png");
-}
-
-.monster_crab {
-    width: 100px;
-    height: 100px;
-    background-image: url("assets/sprites/Monster_Crab_Idle.png");
-}
-
 .fire_sprite {
-    width: 80px;
-    height: 80px;
+    width: 200px;
+    height: 200px;
     position: absolute;
     display: inline-block;
     margin: auto;
     background-image: url("assets/sprites/Fire.png");
+}
+.spider_sprite {
+    width: 350px;
+    height: 300px;
+    background-image: url("assets/sprites/Monster_Spider_Idle.png");
 }
 
 #resource_names .resource span {
@@ -286,42 +268,17 @@ body {
 }
 #technology_menu {
     background-color: black;
-    width: 93%;
-    height: auto%;
     padding: 5px;
 }
 
-.technology {
-    background-color: white;
-    color:white;
-    text-align: center;
-    margin: 0px 0px 5px 0%;
-    border: 2px solid black;
-    height: auto%;
-    display: inline-block;
-    width: 30%;
-    margin-right:0px;
-    float: right;
-}
 
-.tooltip{
-    z-index: 10;
-    position: absolute;
-    width: 220px;
-    height 200px;
-    background-color: #ffffff;
-}
 /*used for the stat page on the bottom right corner */
 .stat_page {
     display: inline-block;
     position:relative;
-    float: right;
-    margin-right: 10px;
-    margin-top: 4px;
-    margin-bottom: 4px;
     bottom: 0px;
     height: 100%;
-    width: 50%;
+    width: 18.2%;
     background-color: #000000;
 }
 
