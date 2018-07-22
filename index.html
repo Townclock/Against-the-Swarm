@@ -193,7 +193,7 @@
 
                     <div class="resource">
                     <image src="assets/icons/Follower_Icon.png">
-                    <span>game.followers</span></div>
+                    <span>Followers</span></div>
                     <div class="resource">
                     <image src="assets/icons/Follower_Icon.png">
                     <span>Meat</span></div>
@@ -433,7 +433,6 @@
 
         <!-- Modal content -->
         <div class="modal-content">
-               <span class="close">&times;</span>
                 <p>Crystals: {{game.player_inventory.crystals}}</p>
                 <p>Party: </p>
                 <p>Followers: {{Math.floor(game.followers.follower_resource)}}
@@ -502,8 +501,27 @@
                     <button id = "add_miners" onclick = "game.party.add_miners(game.followers, game.player_inventory)">++
                     </button>
                 </p>
-                <p>Fighters: 
-                    {{game.followers.fighters}}
+                <p>Fighters: {{game.followers.fighters}}
+                    <button id = "sub_fighters" onclick = "game.party.sub_fighters(game.followers, game.player_inventory)">--
+                    </button>
+                    <button id = "sub_fighter" onclick = "game.party.sub_fighter(game.followers, game.player_inventory)">-
+                    </button>
+                    {{game.party.fighter_count}}
+                    <button id = "add_fighter" onclick = "game.party.add_fighter(game.followers, game.player_inventory)">+
+                    </button>
+                    <button id = "add_fighters" onclick = "game.party.add_fighters(game.followers, game.player_inventory)">++
+                    </button>
+                </p>
+                <p>Enchanters: {{game.followers.magic_users}}
+                    <button id = "sub_magic_users" onclick = "game.party.sub_magic_users(game.followers, game.player_inventory)">--
+                    </button>
+                    <button id = "sub_magic_user" onclick = "game.party.sub_magic_user(game.followers, game.player_inventory)">-
+                    </button>
+                    {{game.party.magic_user_count}}
+                    <button id = "add_magic_user" onclick = "game.party.add_magic_user(game.followers, game.player_inventory)">+
+                    </button>
+                    <button id = "add_magic_users" onclick = "game.party.add_magic_users(game.followers, game.player_inventory)">++
+                    </button>
                 </p>
                 <p><button id = "Teleporter" onclick = "click_teleport()">Teleport
                     </button>
