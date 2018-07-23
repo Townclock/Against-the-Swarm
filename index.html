@@ -186,9 +186,9 @@ function handler(e) {
     </div>
 
             <div id="resource_display">
-                          <div class="resource">
+                    <div class="resource">
                     <image src="assets/icons/Follower_Icon.png">
-                    <span id="follower_resource">{{game.followers.follower_resource}}</span></div>
+                    <span id="follower_resource">{{Math.floor(game.followers.follower_resource)}}</span></div>
                     <div class="resource">
                     <image src="assets/icons/Meat_Icon.png">
                     <span id="meat">{{game.player_inventory.meat}}</span></div>
@@ -219,20 +219,21 @@ function handler(e) {
 
 <div id="panel_track" class="column_1">
     <div id="town_panel">
-        <div class="panel_contents">
+      <div class="resource_panel">
+
             <div id="resource_names">
 
                     <div class="resource">
                     <image src="assets/icons/Follower_Icon.png">
                     <span>Followers</span></div>
                     <div class="resource">
-                    <image src="assets/icons/Follower_Icon.png">
+                    <image src="assets/icons/Meat_Icon.png">
                     <span>Meat</span></div>
                     <div class="resource">
-                    <image src="assets/icons/Follower_Icon.png">
+                    <image src="assets/icons/Scale_Icon.png">
                     <span>Scales</span></div>
                     <div class="resource">
-                    <image src="assets/icons/Follower_Icon.png">
+                    <image src="assets/icons/Claw_Icon.png">
                     <span>Claws</span></div>
 
                     <div class="resource">
@@ -293,9 +294,7 @@ function handler(e) {
                         <button
                         v-bind:disabled="!game.followers.can_hire_ore_processors"
                         onclick="game.followers.hire('ore_processors', 1)"> + </button></div>
-
-
-                    <div class="follower">
+                      <div class="follower">
                         <span class="follower_count">
                         <image src="assets/icons/Knight_Icon.png">{{game.followers.fighters}}</span>
                         <span>Fighter</span>
@@ -485,7 +484,9 @@ function handler(e) {
         </div>
     </div>
                     <div v-if="holder !=-1" class = "tooltip" v-bind:style="{bottom: height-mouseY, right: width-mouseX}" @mouseover="holder = holder2"> {{current_technology.technology_name}} <br>Cost: {{current_technology.cost.fiber}}&nbspfiber {{current_technology.cost.metal}}&nbspmetal {{current_technology.cost.gelatin}}&nbspgelatin <br> {{current_technology.description}}
-                    </div>1
+                    </div>
+                    
+                  
     <!-- The Modal -->
     <div id="myModal" class="modal">
 
