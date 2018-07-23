@@ -63,7 +63,7 @@ body {
 
 .character_container{
     display: inline-block;
-    width: 10%;
+    width: 15%;
 
 }
 
@@ -165,7 +165,7 @@ body {
 #monsters_column {
     position:absolute;
     overflow:hidden;
-    width: 30%;
+    width: 10%;
 }
 #vue-div {
     width: 100%;

@@ -67,6 +67,7 @@ function Game(){
     this.tracker = new Tracker();
 }
 Game.prototype.change_town = function(){
+    this.towns[this.current_town].destroyed = true;
 	if(this.current_town == 4){
         var modal = document.getElementById('teleport_box');
         modal_open = true;

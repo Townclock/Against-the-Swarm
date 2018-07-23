@@ -22,15 +22,14 @@
     //every variable or function that wants to be called from html has to have reference in //Vue function
 
     var game;
+    game = new Game();
     var vm;
     var modal_open = false;
     window.onload = function(){
-        game = new Game();
+
         vm = new Vue({
             el: "#vue-div",
             data: {
-                width: window.innerWidth,
-                height: window.innerHeight,
                 game: game,
 
                 stat_page: 1,
@@ -44,11 +43,8 @@
                 mouseY: 100,
             },
             methods: {
-                update: function(){
-                    vm.i = game.invasion_rate;
-                    vm.towns = game.towns;
-                    vm.width = window.innerWidth;
-                },
+                width: function(){return window.innerWidth;},
+                height: function(){return window.innerHeight;}
               
             }
        });
@@ -110,11 +106,14 @@
             game.invasion_progress += game.invasion_rate/60;
         if (!game.reclaim_mode && game.invasion_progress > game.towns[game.current_town].location){
                 game.under_siege = true;
+                if(game.fighters.length == 0){
+                    game.change_town();
+                    game.under_siege = false;
+                }
         }
         update_ui( game.monsters[0]);
-        vm.update();
-        if (vm.holder1 !=0) {
-            vm,holder1 = -1;
+        if (vm != null && vm.holder1 !=0) {
+            vm.holder1 = -1;
             vm.holder2 = -1;
         }
 
@@ -131,9 +130,10 @@
     
 function handler(e) {
     e = e || window.event;
-
-    vm.mouseX = e.pageX;
-    vm.mouseY = e.pageY;
+    if(vm != null){
+        vm.mouseX = e.pageX;
+        vm.mouseY = e.pageY;
+    }
 
 
 }
@@ -152,12 +152,12 @@ function handler(e) {
         <span style = "position:fixed" v-for="t in game.towns.length">
 
             <div v-if="!game.towns[game.towns.length-t].destroyed" class="destroyed_town"
-                 v-bind:style="{left: ((100-game.towns[game.towns.length-t].location)/100)*width*.9 - width * .02 + 'px', top:-20+'px'}">
+                 v-bind:style="{left: ((100-game.towns[game.towns.length-t].location)/100)*width()*.9 - width() * .02 + 'px', top:-20+'px'}">
                 <image class="town_image" src="assets/sprites/Town.png"/>
             </div>
 
             <div v-else class="destroyed_town"
-                 v-bind:style="{left: ((100-game.towns[game.towns.length-t].location)/100)*width*.9 - width * .02 + 'px', top:-20+'px'}">
+                 v-bind:style="{left: ((100-game.towns[game.towns.length-t].location)/100)*width()*.9 - width() * .02 + 'px', top:-20+'px'}">
                 <image class="town_image" src="assets/sprites/Destroyed_Town.png"/>
             </div>
         </span>
@@ -165,7 +165,7 @@ function handler(e) {
         <span v-for="t in game.towns.length">
                 <div v-if= "game.towns.length-t === game.current_town - 1">
                      <div class="fire_sprite"
-                         v-bind:style="{left: ((100-game.towns[game.towns.length-t].location)/100)*width*.9 - width * .02 + 'px', top:-20+'px'}">
+                         v-bind:style="{left: ((100-game.towns[game.towns.length-t].location)/100)*width()*.9 - width() * .02 + 'px', top:-20+'px'}">
                     </div>
                 </div>
         </span>
@@ -301,43 +301,41 @@ function handler(e) {
     </div>
     <div id="field_panel" >
     <div class="panel_contents">
-        <div class="column_2 center">
+        <div class="column_2 center" style="margin-left:5%">
             <div v-for="f in game.fighters" class="character_container" >
-                <div v-on:click="current_fighter = m">{{f.fighter_name}} hp: {{f.hp}}</div>
-                <div class="health_bar">
+                <div class="health_bar" style="position: relative" v-bind:style="{top:f.randomY+'px', left: f.randomX+'px'}">
                     <div class="health" v-bind:style="{width: f.hp_in_percent()}"></div>
                 </div>
                 <!-- figures out which type of figher it is and what picture to display-->
                 <div v-if="!f.is_magic">
-                    <div class="knight_sprite"></div>
+                    <div class="knight_sprite" style="position: relative" v-bind:style="{top:f.randomY+'px', left: f.randomX+'px'}"></div>
                 </div>
                 <div v-if="f.is_magic">
-                    <div class="magic_user"></div>
+                    <div class="magic_user" style="position: relative" v-bind:style="{top:f.randomY+'px', left: f.randomX+'px'}"></div>
                 </div>
             </div>
         </div>
 
 
 
-        <div class="column_2 right" id="monsters_column">
+        <div class="column_2 right" style ="left: 65%; width:20%"id="monsters_column">
             <div v-for="m in game.monsters" class="character_container">
-                <div v-on:click="current_monster = m">{{m.monster_name}} hp: {{m.hp}}</div>
-                <div class="health_bar" id="monster_health_bar">
+                <div class="health_bar" id="monster_health_bar" style="position: relative" v-bind:style="{top:m.randomY+'px', left: m.randomX+'px'}">
                     <div class="health" v-bind:style="{width: m.hp_in_percent()}"></div>
                 </div>
-
+                
                 <!-- figures out which monster it is and what picture to display-->
                 <div v-if="m.monster_name == 'tank'">
-                    <div class="monster_spider"></div>
+                    <div class="monster_spider"style="position: relative" v-bind:style="{top:m.randomY+'px', left: m.randomX+'px'}"></div>
                 </div>
-                <div v-if="m.monster_name == 'drone'">
+                <div v-if="m.monster_name == 'drone'" style="position: relative" v-bind:style="{top:m.randomY+'px', left: m.randomX+'px'}">
                     <div class="monster_scalisk"></div>
                 </div>
-                <div v-if="m.monster_name == 'warrior'">
+                <div v-if="m.monster_name == 'warrior'" style="position: relative" v-bind:style="{top:m.randomY+'px', left: m.randomX+'px'}">
                     <div class="monster_crab"></div>
                 </div>
-                <div v-if="m.monster_name == 'boss'">
-                    <image class="town_image" src="assets/sprites/Boss_Monster.png" style="width:300px;height:300px;"/>
+                <div v-if="m.monster_name == 'boss'" style="position: relative" v-bind:style="{top:m.randomY+'px', left: m.randomX+'px'}">
+                    <image class="town_image" src="assets/sprites/Boss_Monster.png" style="width:300px;height:300px;position:relative;" v-bind:style="{top:m.randomY+'px', left: m.randomX+'px'}"/>
                 </div>
             </div>
         </div>
@@ -349,7 +347,7 @@ function handler(e) {
         <div id="control_panel">
             <div class="column_3" id="action_buttons">
                 <div class="column_3">
-                    <div v-if="!game.under_siege && !game.engaged">
+                    <div v-if="!game.under_siege && !game.engaged && game.fighters.length > 0">
                         <img id = "button" src = "assets/buttons/Engage_Button.png" onclick = "click_engage_button()">
                     </div>
                     <div v-else>
@@ -471,7 +469,7 @@ function handler(e) {
             </div>
         </div>
     </div>
-                    <div v-if="holder !=-1" class = "tooltip" v-bind:style="{bottom: height-mouseY, right: width-mouseX}" @mouseover="holder = holder2"> {{current_technology.technology_name}} <br>Cost: {{current_technology.cost.fiber}}&nbspfiber {{current_technology.cost.metal}}&nbspmetal {{current_technology.cost.gelatin}}&nbspgelatin <br> {{current_technology.description}}
+                    <div v-if="holder !=-1" class = "tooltip" v-bind:style="{bottom: height()-mouseY, right: width()-mouseX}" @mouseover="holder = holder2"> {{current_technology.technology_name}} <br>Cost: {{current_technology.cost.fiber}}&nbspfiber {{current_technology.cost.metal}}&nbspmetal {{current_technology.cost.gelatin}}&nbspgelatin <br> {{current_technology.description}}
                     </div>
                     
                   

@@ -6,6 +6,8 @@ function Monster (monster_name, health, attack, armor) {
     this.armor = armor;
     this.loot = {meat:5, scales:5, claws:1};
     this.present = true;
+    this.randomX = Math.floor(Math.random()*10) -5;
+    this.randomY = Math.floor(Math.random()*10) -5;
 }
 
 Monster.prototype.hp_in_percent = function(){
