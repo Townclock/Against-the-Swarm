@@ -23,6 +23,7 @@ function Game(){
     this.player_inventory = new Player_Inventory;
 
     this.followers = new Followers();
+    this.party = new Party();
     this.technology_list_html = "";
 
     this.technology = [
@@ -67,6 +68,9 @@ function Game(){
 }
 Game.prototype.change_town = function(){
 	if(this.current_town == 4){
+        var modal = document.getElementById('teleport_box');
+        modal_open = true;
+        modal.style.display = "block";
 		this.world.push( [new Town("test",  20,  false),
 			     new Town("test2", 40,  false),
 			     new Town("test3", 60,  false),
@@ -96,19 +100,26 @@ Game.prototype.multi_fight = function(){
             alert('boss incoming');
             this.engaged = true;
             this.reclaim_mode = true;
-            this.monsters.push(new Monster("boss", 1000,10));
+            this.monsters.push(new Monster("boss", 1000,10, 1));
         }
 
         //if you made it to the beginning of the previous world, shift to the next world
         if(this.current_town == 0 && this.invasion_progress <= 0){
-            this.current_world--;
-            this.current_town = 5;
-            this.invasion_progress = 100;
-            this.towns = this.world[this.current_world];
-            alert('boss incoming');
-            this.engaged = true;
-            this.reclaim_mode = true;
-            this.monsters.push(new Monster("boss",1000,10));
+            if(this.current_world == 0)
+            {
+                this.game_over();
+            }
+            else
+            {
+                this.current_world--;
+                this.current_town = 5;
+                this.invasion_progress = 100;
+                this.towns = this.world[this.current_world];
+                alert('boss incoming');
+                this.engaged = true;
+                this.reclaim_mode = true;
+                this.monsters.push(new Monster("boss",1000,10));
+            }
         }
     }
     else {
@@ -327,4 +338,10 @@ Game.prototype.guard = function(){
         }
         if(engaged && fighters.length < 1) {disengage(fighters, monsters);}
     }
+}
+
+Game.prototype.game_over = function(){
+        var modal = document.getElementById('game_over_screen');
+        modal_open = true;
+        modal.style.display = "block";
 }

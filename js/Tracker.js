@@ -33,11 +33,11 @@ Tracker.prototype.update = function(dead_object){
 Tracker.prototype.spawn = function(game){
 	var type = Math.floor(Math.random()*3);
 	if(type == 0)
-		game.monsters.push(new Monster("tank", 50,1));
+		game.monsters.push(new Monster("tank", 50,1,1));
 
 	if(type == 1)
-		game.monsters.push(new Monster("drone", 25,10));
+		game.monsters.push(new Monster("drone", 25,10,1));
 
 	if(type == 2)
-		game.monsters.push(new Monster("warrior", 12,20));
+		game.monsters.push(new Monster("warrior", 12,20,1));
 }
