@@ -11,7 +11,7 @@ function Party() {
 	this.magic_user_count = 0;
 
 	this.add_follower = function(followers, player_inventory) {
-		if(followers.follower_resource > 0 && player_inventory.crystals > 0){
+		if(Math.floor(followers.follower_resource) > 0 && player_inventory.crystals > 0){
 			followers.follower_resource--;
 			this.follower_count++;
 			player_inventory.crystals--;
@@ -39,7 +39,7 @@ function Party() {
 	}
 	
 	this.add_meat_processor = function(followers, player_inventory) {
-		if(followers.meat_processors > 0){
+		if(followers.meat_processors > 0 && player_inventory.crystals > 0){
 			followers.meat_processors--;
 			this.meat_processor_count++;
 			player_inventory.crystals--;
@@ -66,7 +66,7 @@ function Party() {
 	}
 	
 	this.add_claws_processor = function(followers, player_inventory) {
-		if(followers.claws_processors > 0){
+		if(followers.claws_processors > 0 && player_inventory.crystals > 0){
 			followers.claws_processors--;
 			this.claws_processor_count++;
 			player_inventory.crystals--;
@@ -93,7 +93,7 @@ function Party() {
 	}
 
 	this.add_scales_processor = function(followers, player_inventory) {
-		if(followers.scales_processors > 0){
+		if(followers.scales_processors > 0 && player_inventory.crystals > 0){
 			followers.scales_processors--;
 			this.scales_processor_count++;
 			player_inventory.crystals--;
@@ -120,14 +120,14 @@ function Party() {
 	}
 
 	this.add_ore_processor = function(followers, player_inventory) {
-		if(followers.ore_processors > 0){
+		if(followers.ore_processors > 0 && player_inventory.crystals > 0){
 			followers.ore_processors--;
 			this.ore_processor_count++;
 			player_inventory.crystals--;
 		}
 	}
 	this.sub_ore_processor = function(followers, player_inventory) {
-		if(this.ore_processor_count > 0){
+		if(this.ore_processor_count > 0 && player_inventory.crystals > 0){
 			followers.ore_processors++;
 			this.ore_processor_count--;
 			player_inventory.crystals++;
