@@ -2,10 +2,10 @@ var sliding_panel_offset = 0 ;
 
 function slide_panel(engaged){
     var width = document.getElementById("town_panel").offsetWidth;
-    if ( (sliding_panel_offset > -width) && ( engaged || under_siege)){
+    if ( (sliding_panel_offset > -width) && ( game.engaged || game.under_siege)){
         sliding_panel_offset -= 20;
     }
-    if ( (sliding_panel_offset < 0) && ! engaged && ! under_siege){
+    if ( (sliding_panel_offset < 0) && ! game.engaged && ! game.under_siege){
         sliding_panel_offset += 20;
     }
     if (sliding_panel_offset < 5 && sliding_panel_offset > -5){sliding_panel_offset = 0;}
@@ -25,38 +25,10 @@ function update_bar_by_id(id, current, max){
 function update_ui( monster){
     document.getElementById("track_container").style.height  = document.getElementById("panel_track").offsetHeight;
 
-    slide_panel(engaged);
+    slide_panel(game.engaged);
     
 
-
-    var resources = ["meat", "scales", "claws", "ore", "fiber", "metal", "gelatin", "crystals"];
-    for (i in resources){
-        update_value_by_id(resources[i], player_inventory[resources[i]]);
-    }
-
-    update_value_by_id("follower_resource", follower_resource);
-
-
-    update_bar_by_id("invasion", invasion_progress, 100);
-
-    
-    if (! under_siege){
-        for (i in document.getElementsByClassName('combat_button')) {
-            document.getElementsByClassName('combat_button')[i].disabled = !engaged;
-        }
-        for (i in document.getElementsByClassName('town_button')) {
-            document.getElementsByClassName('town_button')[i].disabled = engaged;
-        }
-    }
-    else {
-        for (i in document.getElementsByClassName('combat_button')) {
-            document.getElementsByClassName('combat_button')[i].disabled = false;
-        }
-        for (i in document.getElementsByClassName('town_button')) {
-            document.getElementsByClassName('town_button')[i].disabled = true;
-        }
-    }
-
+    update_bar_by_id("invasion", game.invasion_progress, 100);
 
     //var width_scalar = document.getElementById("towns").offsetWidth;
     
@@ -71,4 +43,104 @@ function update_ui( monster){
     }
     update_value_by_id("towns", towns_status);*/
 
+}
+
+
+var current_fire_frame = 1;
+function update_fire_animation(){
+    var current_fire_sprite = "-";
+    var fire_scale = 80;
+    if (current_fire_frame >= 2) {
+        current_fire_frame = 1;
+    }
+    else {
+        current_fire_frame += 1;
+    }
+   for (i in game.towns){
+        if (document.getElementsByClassName("fire_sprite")[i] !== undefined)
+            document.getElementsByClassName("fire_sprite")[i].style.backgroundPosition = current_fire_sprite + fire_scale * current_fire_frame + 'px 0%';
+   }
+}
+
+var knight_current_frame = 1;
+var wizard_current_frame = 1;
+var spider_current_frame = 1;
+var scalisk_current_frame = 1;
+var crab_current_frame = 1;
+function update_animation(){
+    update_knight_animation();
+    update_wizard_animation();
+    update_spider_animation();
+    update_scalisk_animation();
+    update_crab_animation();
+}
+
+function update_knight_animation(){
+    var current_sprite = "-";
+    var scale = 350 / 3;
+    if (knight_current_frame >= 19) {
+        knight_current_frame = 1;
+    }
+    else {
+        knight_current_frame += 1;
+    }
+    for (i = 0; i < document.getElementsByClassName("knight_sprite").length; i++) {
+        document.getElementsByClassName("knight_sprite")[i].style.backgroundPosition = current_sprite + scale * knight_current_frame + 'px 0%';
+    }
+}
+
+function update_wizard_animation(){
+    var current_sprite = "-";
+    var scale = 350 / 3;
+    if (wizard_current_frame >= 24) {
+        wizard_current_frame = 1;
+    }
+    else {
+        wizard_current_frame += 1;
+    }
+    for (i = 0; i < document.getElementsByClassName("magic_user").length; i++) {
+        document.getElementsByClassName("magic_user")[i].style.backgroundPosition = current_sprite + scale * wizard_current_frame + 'px 0%';
+    }
+}
+
+function update_spider_animation(){
+    var current_sprite = "-";
+    var scale = 350 / 3;
+    if (spider_current_frame >= 24) {
+        spider_current_frame = 1;
+    }
+    else {
+        spider_current_frame += 1;
+    }
+    for (i = 0; i < document.getElementsByClassName("monster_spider").length; i++) {
+        document.getElementsByClassName("monster_spider")[i].style.backgroundPosition = current_sprite + scale * spider_current_frame + 'px 0%';
+    }
+}
+
+function update_scalisk_animation(){
+    var current_sprite = "-";
+    var scale = 300 / 3;
+    if (scalisk_current_frame >= 24) {
+        scalisk_current_frame = 1;
+    }
+    else {
+        scalisk_current_frame += 1;
+    }
+    for (i = 0; i < document.getElementsByClassName("monster_scalisk").length; i++) {
+        document.getElementsByClassName("monster_scalisk")[i].style.backgroundPosition = current_sprite + scale * scalisk_current_frame + 'px 0%';
+    }
+}
+
+function update_crab_animation(){
+    var current_sprite = "-";
+    var scale = 300 / 3;
+    if (crab_current_frame >= 24) {
+        crab_current_frame = 1;
+    }
+    else {
+        crab_current_frame += 1;
+    }
+    for (i = 0; i < document.getElementsByClassName("monster_crab").length; i++) {
+        document.getElementsByClassName("monster_crab")[i].style.backgroundPosition = current_sprite + scale * crab_current_frame + 'px 0%';
+    }
 }
