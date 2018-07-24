@@ -163,7 +163,7 @@ function handler(e) {
         </span>
 
         <span v-for="t in game.towns.length">
-                <div v-if= "game.towns.length-t === game.current_town - 1">
+                <div v-if= "(game.towns.length - t === game.current_town - 1 && game.invasion_progress < game.towns[game.towns.length - t + 1].location) || (game.invasion_progress >= game.towns[game.towns.length - t].location && game.current_town === game.towns.length - t)">
                      <div class="fire_sprite"
                          v-bind:style="{left: ((100-game.towns[game.towns.length-t].location)/100)*width*.9 - width * .02 + 'px', top:-20+'px'}">
                     </div>
