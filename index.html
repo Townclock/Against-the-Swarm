@@ -24,8 +24,8 @@
     var game;
     var vm;
     var modal_open = false;
+    game = new Game();
     window.onload = function(){
-        game = new Game();
         vm = new Vue({
             el: "#vue-div",
             data: {
@@ -40,6 +40,7 @@
                 holder2: -1,
                 
                 current_technology: game.technology[0],
+
                 mouseX: 100,
                 mouseY: 100,
             },
@@ -52,7 +53,7 @@
               
             }
        });
-
+        /*
         var modal = document.getElementById('game_over_screen');
 
         // Get the button that opens the modal
@@ -63,6 +64,7 @@
             modal_open = true;
             modal.style.display = "block";
         }
+        */
     }
 
     function click_fight_button(){     game.multi_fight();}
@@ -112,10 +114,12 @@
                 game.under_siege = true;
         }
         update_ui( game.monsters[0]);
-        vm.update();
-        if (vm.holder1 !=0) {
-            vm,holder1 = -1;
-            vm.holder2 = -1;
+        if(vm != null){
+            vm.update();
+            if (vm.holder1 !=0) {
+                vm,holder1 = -1;
+                vm.holder2 = -1;
+            }
         }
 
     }, 17);
@@ -385,7 +389,7 @@ function handler(e) {
                     </div>
                 </div>
 
-                    <button id="myBtn">Open Modal</button>
+                    <!-- <button id="myBtn">Open Modal</button> -->
                 <div class="column_1">
                 </div>
             </div>

@@ -12,7 +12,7 @@ function Game(){
     this.time_elapsed  = 0;
     
     this.spawn_time = 2;
-    this.monsters = [new Monster("Beetle", 500, 1, 19)];
+    this.monsters = [/* new Monster("Beetle", 500, 1, 19) */];
     this.fighters = [
         new Fighter( "hero 1", 100, 20),
         new Fighter( "hero 1", 100, 20),
