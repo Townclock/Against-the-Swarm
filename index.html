@@ -135,10 +135,10 @@
     
 function handler(e) {
     e = e || window.event;
-
-    vm.mouseX = e.pageX;
-    vm.mouseY = e.pageY;
-
+    if(vm != null){
+        vm.mouseX = e.pageX;
+        vm.mouseY = e.pageY;
+    }
 
 }
  document.addEventListener('mousemove', handler);

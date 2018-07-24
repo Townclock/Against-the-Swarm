@@ -243,7 +243,6 @@ Game.prototype.disengage = function(){
             
     }
 
-    console.log(this.under_siege);
     //check whether town is in siege or not
     if (! this.under_siege || this.reclaim_mode) {
         this.engaged = false;
@@ -259,9 +258,7 @@ Game.prototype.disengage = function(){
 };
 
 function replace_monster(monster, challenge_level){
-    console.log(monsters[0]);
     monsters[0].replace(challenge_level);
-    console.log(monsters[0]);
 }
 
 Game.prototype.change_invasion_rate = function(){

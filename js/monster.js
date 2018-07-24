@@ -21,7 +21,6 @@ Monster.prototype.die = function(){
     game.player_inventory.increment("meat", this.loot.meat);
     game.player_inventory.increment("scales", this.loot.scales);
     game.player_inventory.increment("claws", this.loot.claws);
-    console.log(game.player_inventory);
 //invasion_progress--;
 }
 Monster.prototype.attack = function(player){

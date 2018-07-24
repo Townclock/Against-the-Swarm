@@ -46,11 +46,7 @@ function Followers(){
         if (number_to_hire <= this.follower_resource) {
             this.follower_resource -= number_to_hire;
             this[job] += number_to_hire;
-            }
-        else {
-            console.log("Not enough followers");
         }
-    console.log("hire was called")
     }
 
     this.hire_fighter = function(number_to_hire, game){
@@ -58,9 +54,6 @@ function Followers(){
             this.follower_resource -= number_to_hire*this.fighter_cost;
             this.fighters += number_to_hire;
             game.fighters.push(new Fighter( "Knight", 500, 20, false));
-            }
-        else {
-            console.log("Not enough followers");
         }
     }
     this.hire_magic_user = function(number_to_hire, game){
@@ -68,9 +61,6 @@ function Followers(){
             this.follower_resource -= number_to_hire*this.magic_user_cost;
             this.magic_users += number_to_hire;
             game.fighters.push(new Fighter( "Mage",500,100,true));
-            }
-        else {
-            console.log("Not enough followers");
         }
     }
 
